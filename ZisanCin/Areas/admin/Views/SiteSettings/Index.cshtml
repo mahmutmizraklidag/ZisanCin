@@ -1,0 +1,259 @@
+﻿@model IEnumerable<SiteSetting>
+
+@{
+    ViewData["Title"] = "Site Ayarları";
+    var ayar = Model.FirstOrDefault();
+}
+
+<style>
+    :root {
+        --glass-bg: rgba(255, 255, 255, 0.95);
+    }
+
+    body {
+        background-color: #f0f2f5;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .config-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 20px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.04);
+        transition: transform 0.3s ease;
+        height: 100%;
+    }
+
+        .config-card:hover {
+            transform: translateY(-5px);
+        }
+
+    .icon-box {
+        width: 48px;
+        height: 48px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .label-muted {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #adb5bd;
+        font-weight: 700;
+        margin-bottom: 4px;
+        display: block;
+    }
+
+    .value-text {
+        color: #2b2d42;
+        font-weight: 600;
+        word-break: break-all;
+    }
+
+    .logo-container {
+        background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+        border-radius: 16px;
+        padding: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 140px;
+        margin-bottom: 20px;
+    }
+
+    .social-link-item {
+        padding: 10px;
+        border-radius: 12px;
+        background: #f8f9fa;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        border: 1px solid #eee;
+    }
+
+        .social-link-item i {
+            font-size: 1.2rem;
+            width: 30px;
+        }
+</style>
+
+<div class="container-fluid py-5 px-4">
+    <div class="row align-items-center mb-5">
+        <div class="col-md-7">
+            <h1 class="h3 fw-bold text-dark mb-1">Site Konfigürasyonu</h1>
+            <p class="text-muted mb-0">Kurumsal kimlik, iletişim ve teknik altyapı ayarlarını yönetin.</p>
+        </div>
+        <div class="col-md-5 text-md-end mt-3 mt-md-0">
+            @if (ayar == null)
+            {
+                <a asp-action="Create" class="btn btn-primary px-4 py-2 rounded-pill shadow">
+                    <i class="bi bi-plus-circle me-2"></i> Ayarları Yapılandır
+                </a>
+            }
+            else
+            {
+                <div class="btn-group shadow-sm rounded-pill overflow-hidden">
+                    <a asp-action="Edit" asp-route-id="@ayar.Id" class="btn btn-warning text-white px-4 border-0">
+                        <i class="bi bi-pencil-square me-2"></i> Düzenle
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@ayar.Id" class="btn btn-danger px-4 border-0">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+
+    @if (ayar != null)
+    {
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <div class="card config-card p-4">
+                    <div class="icon-box bg-info bg-opacity-10 text-info">
+                        <i class="bi bi-palette-fill fs-4"></i>
+                    </div>
+                    <h5 class="fw-bold mb-3">Marka Kimliği</h5>
+                    <div class="logo-container">
+                        @if (!string.IsNullOrEmpty(ayar.Logo))
+                        {
+                            <img src="/img/@ayar.Logo" alt="Site Logo" class="img-fluid" style="max-height: 70px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));">
+                        }
+                        else
+                        {
+                            <div class="text-white opacity-50"><i class="bi bi-image fs-1"></i></div>
+                        }
+                    </div>
+                    <span class="label-muted">Sistem Kayıt ID</span>
+                    <div class="value-text">#@ayar.Id</div>
+                </div>
+            </div>
+
+            <div class="col-lg-8">
+                <div class="card config-card p-4">
+                    <div class="icon-box bg-success bg-opacity-10 text-success">
+                        <i class="bi bi-geo-alt-fill fs-4"></i>
+                    </div>
+                    <h5 class="fw-bold mb-4">İletişim & Lokasyon</h5>
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <span class="label-muted">Telefon Hattı</span>
+                            <div class="value-text">@ayar.Phone</div>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="label-muted">E-Posta Adresi</span>
+                            <div class="value-text">@ayar.Email</div>
+                        </div>
+                        <div class="col-md-12">
+                            <span class="label-muted">Merkez Adres</span>
+                            <div class="value-text">@ayar.Address</div>
+                        </div>
+                        <div class="col-md-12">
+                            <span class="label-muted">Google Haritalar</span>
+                            <div class="value-text text-truncate">
+                                <a href="@ayar.mapLink" target="_blank" class="text-decoration-none">
+                                    <i class="bi bi-map me-1"></i> Haritayı Yeni Sekmede Aç
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card config-card p-4">
+                    <div class="icon-box bg-primary bg-opacity-10 text-primary">
+                        <i class="bi bi-share-fill fs-4"></i>
+                    </div>
+                    <h5 class="fw-bold mb-4">Sosyal Medya Kanalları</h5>
+                    <div class="row">
+                        @{
+                            var socials = new List<(string icon, string color, string val)> {
+                                        ("facebook", "#1877F2", ayar.Facebook),
+                                        ("instagram", "#E4405F", ayar.Instagram),
+                                        ("twitter-x", "#000000", ayar.Twitter),
+                                        ("linkedin", "#0A66C2", ayar.LinkedIn),
+                                        ("youtube", "#FF0000", ayar.YouTube)
+                                        };
+                        }
+                        @foreach (var s in socials)
+                        {
+                            <div class="col-md-6">
+                                <div class="social-link-item">
+                                    <i class="bi bi-@s.icon me-2" style="color: @s.color"></i>
+                                    <span class="small text-truncate">@(string.IsNullOrEmpty(s.val) ? "Tanımlanmamış" : s.val)</span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card config-card p-4">
+                    <div class="icon-box bg-warning bg-opacity-10 text-warning">
+                        <i class="bi bi-google fs-4"></i>
+                    </div>
+                    <h5 class="fw-bold mb-4">SEO Global Ayarları</h5>
+                    <span class="label-muted">Site Meta Title</span>
+                    <div class="value-text mb-3">@ayar.MetaTitle</div>
+
+                    <span class="label-muted">Global Keywords</span>
+                    <div class="mb-3">
+                        @if (!string.IsNullOrEmpty(ayar.Keywords))
+                        {
+                            foreach (var key in ayar.Keywords.Split(','))
+                            {
+                                <span class="badge bg-white text-dark border me-1 mb-1 fw-normal">@key.Trim()</span>
+                            }
+                        }
+                    </div>
+
+                    <span class="label-muted">Global Description</span>
+                    <div class="small text-secondary fst-italic">@ayar.MetaDescription</div>
+                </div>
+            </div>
+
+            <div class="col-12 mb-5">
+                <div class="card config-card p-4 border-start border-4 border-dark">
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="icon-box bg-dark bg-opacity-10 text-dark mb-0 me-3">
+                            <i class="bi bi-shield-lock-fill fs-4"></i>
+                        </div>
+                        <h5 class="fw-bold mb-0">SMTP Mail Sunucu Ayarları</h5>
+                    </div>
+                    <div class="row g-4">
+                        <div class="col-md-3">
+                            <span class="label-muted">Host Server</span>
+                            <code class="value-text">@ayar.SmtpServer</code>
+                        </div>
+                        <div class="col-md-2">
+                            <span class="label-muted">Port</span>
+                            <code class="value-text">@ayar.SmtpPort</code>
+                        </div>
+                        <div class="col-md-4">
+                            <span class="label-muted">Sistem E-Postası</span>
+                            <div class="value-text">@ayar.SmtpEmail</div>
+                        </div>
+                        <div class="col-md-3 text-md-end">
+                            <span class="label-muted">Güvenlik</span>
+                            <span class="badge bg-success shadow-sm">SSL/TLS Aktif</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="text-center py-5">
+            <i class="bi bi-exclamation-circle display-1 text-muted opacity-25"></i>
+            <h4 class="mt-3 text-muted">Sistem Yapılandırması Bulunamadı</h4>
+            <p>Lütfen ilk kurulum ayarlarını oluşturun.</p>
+        </div>
+    }
+</div>

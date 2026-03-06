@@ -1,0 +1,176 @@
+﻿@model Slider
+
+@{
+    ViewData["Title"] = "Slider Düzenle";
+}
+
+<style>
+    .form-card {
+        background: #fff;
+        border-radius: 20px;
+        border: none;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+
+    .form-control {
+        border-radius: 12px;
+        padding: 12px 15px;
+        border: 1px solid #e9ecef;
+        background-color: #f8f9fa;
+        transition: all 0.3s ease;
+    }
+
+        .form-control:focus {
+            background-color: #fff;
+            border-color: #4361ee;
+            box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.1);
+        }
+
+    .section-header {
+        border-left: 5px solid #4361ee;
+        padding-left: 15px;
+        margin-bottom: 25px;
+    }
+
+    .image-preview-container {
+        position: relative;
+        border-radius: 16px;
+        overflow: hidden;
+        border: 2px solid #eee;
+        background: #fdfdfd;
+        min-height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .image-preview-container img {
+            max-width: 100%;
+            max-height: 300px;
+            object-fit: contain;
+        }
+
+    .upload-label {
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #adb5bd;
+        letter-spacing: 1px;
+    }
+</style>
+
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <div>
+            <h2 class="fw-bold text-dark mb-1">Slider İçeriğini Güncelle</h2>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0 small">
+                    <li class="breadcrumb-item"><a asp-action="Index" class="text-decoration-none text-muted">Slider Yönetimi</a></li>
+                    <li class="breadcrumb-item active text-primary">Düzenle</li>
+                </ol>
+            </nav>
+        </div>
+        <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4 shadow-sm">
+            <i class="bi bi-arrow-left me-1"></i> Listeye Dön
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <form asp-action="Edit" enctype="multipart/form-data">
+                <input type="hidden" asp-for="Id" />
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger rounded-4 d-none"></div>
+
+                <div class="card form-card">
+                    <div class="card-body p-4 p-md-5">
+
+                        <div class="section-header">
+                            <h5 class="fw-bold mb-0">İçerik Ayarları</h5>
+                            <small class="text-muted">Görsel üzerinde görünecek başlık ve alt metinleri belirleyin.</small>
+                        </div>
+
+                        <div class="row g-4 mb-5">
+                            <div class="col-md-12">
+                                <label asp-for="Title" class="form-label fw-bold">Slider Ana Başlık</label>
+                                <input asp-for="Title" class="form-control" placeholder="Örn: Yeni Nesil Kahve Deneyimi" />
+                                <span asp-validation-for="Title" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label asp-for="Description" class="form-label fw-bold">Slider Alt Metni</label>
+                                <input asp-for="Description" class="form-control" placeholder="Kısa ve çarpıcı bir açıklama yazın..." />
+                                <span asp-validation-for="Description" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <div class="section-header">
+                            <h5 class="fw-bold mb-0">Slider Görseli</h5>
+                            <small class="text-muted">Yüksek çözünürlüklü yatay görseller (1920x1080) önerilir.</small>
+                        </div>
+
+                        <div class="row g-4 align-items-start">
+                            <div class="col-md-6">
+                                <span class="upload-label d-block mb-2">Mevcut Durum</span>
+                                <div class="image-preview-container shadow-sm">
+                                    @if (!string.IsNullOrEmpty(Model.Image))
+                                    {
+                                        <img src="/img/@Model.Image" alt="Current Slider" id="currentImage">
+                                    }
+                                    else
+                                    {
+                                        <div class="text-muted small"><i class="bi bi-image fs-1 opacity-25"></i><br>Görsel Yok</div>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <span class="upload-label d-block mb-2">Yeni Görsel Yükle</span>
+                                <div class="p-4 border-2 border-dashed rounded-4 bg-light text-center mb-3">
+                                    <i class="bi bi-cloud-arrow-up fs-2 text-primary opacity-50"></i>
+                                    <input asp-for="Image" type="file" class="form-control mt-2" id="imageInput" />
+                                </div>
+
+                                <div id="previewWrapper" class="d-none mt-3">
+                                    <span class="upload-label d-block mb-2 text-success">Yeni Görsel Önizlemesi</span>
+                                    <div class="image-preview-container border-success shadow-sm">
+                                        <img id="previewImage" src="#" alt="New Preview">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-5 border-top pt-4 text-end">
+                            <button type="submit" class="btn btn-warning text-dark btn-lg rounded-pill px-5 shadow-sm fw-bold">
+                                <i class="bi bi-save2 me-2"></i> Değişiklikleri Kaydet
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // İyileştirilmiş Görsel Önizleme Mantığı
+        document.getElementById("imageInput").addEventListener("change", function (event) {
+            const [file] = event.target.files;
+            const preview = document.getElementById("previewImage");
+            const wrapper = document.getElementById("previewWrapper");
+            const current = document.getElementById("currentImage");
+
+            if (file) {
+                preview.src = URL.createObjectURL(file);
+                wrapper.classList.remove("d-none");
+                if(current) current.classList.add("opacity-50");
+            } else {
+                wrapper.classList.add("d-none");
+                if(current) current.classList.remove("opacity-50");
+            }
+        });
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

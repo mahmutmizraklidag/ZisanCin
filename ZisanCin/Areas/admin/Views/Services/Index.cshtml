@@ -1,0 +1,219 @@
+﻿@model IEnumerable<Service>
+
+@{
+    ViewData["Title"] = "Hizmet Yönetimi";
+}
+
+<style>
+    :root {
+        --glass-bg: rgba(255, 255, 255, 0.95);
+    }
+
+    body {
+        background-color: #f0f2f5;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .admin-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    }
+
+    .table thead th {
+        background-color: transparent;
+        text-transform: uppercase;
+        font-size: 0.7rem;
+        letter-spacing: 0.05rem;
+        font-weight: 700;
+        color: #6c757d;
+        border-bottom: 1px solid #eee;
+        padding: 15px;
+    }
+
+    .service-img {
+        width: 60px;
+        height: 40px;
+        object-fit: cover;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        transition: 0.3s;
+    }
+
+        .service-img:hover {
+            transform: scale(1.1);
+        }
+
+    /* Durum Rozetleri */
+    .status-badge {
+        padding: 6px 12px;
+        border-radius: 8px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .badge-active {
+        background: #e6fcf5;
+        color: #0ca678;
+    }
+
+    .badge-inactive {
+        background: #fff5f5;
+        color: #e03131;
+    }
+
+    /* İşlem Butonları */
+    .btn-action {
+        width: 34px;
+        height: 34px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        border: none;
+        transition: 0.3s;
+    }
+
+    .btn-edit {
+        background: rgba(67, 97, 238, 0.1);
+        color: #4361ee;
+    }
+
+    .btn-delete {
+        background: rgba(230, 57, 70, 0.1);
+        color: #e63946;
+    }
+
+    .btn-action:hover {
+        transform: translateY(-2px);
+        filter: brightness(0.95);
+    }
+</style>
+
+<div class="container-fluid py-5 px-4">
+    <div class="row align-items-center mb-5">
+        <div class="col-md-6">
+            <h1 class="h3 fw-bold text-dark mb-1">Hizmet Portföyü</h1>
+            <p class="text-muted mb-0">Sunduğunuz hizmetleri ve vitrin ayarlarını buradan yönetin.</p>
+        </div>
+        <div class="col-md-6 text-md-end mt-3 mt-md-0">
+            <a asp-action="Create" class="btn btn-primary px-4 py-2 rounded-pill shadow-sm">
+                <i class="bi bi-plus-lg me-2"></i> Yeni Hizmet Ekle
+            </a>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="admin-card p-3 d-flex align-items-center">
+                <div class="bg-primary bg-opacity-10 p-3 rounded-circle me-3">
+                    <i class="bi bi-briefcase text-primary"></i>
+                </div>
+                <div>
+                    <h6 class="mb-0 fw-bold">@Model.Count()</h6>
+                    <small class="text-muted">Toplam Hizmet</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="admin-card p-3 d-flex align-items-center">
+                <div class="bg-success bg-opacity-10 p-3 rounded-circle me-3">
+                    <i class="bi bi-house-door text-success"></i>
+                </div>
+                <div>
+                    <h6 class="mb-0 fw-bold">@Model.Count(x => x.IsHome)</h6>
+                    <small class="text-muted">Anasayfada Vitrin</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card admin-card border-0">
+        <div class="p-4 border-bottom d-flex justify-content-between align-items-center bg-white rounded-top-4">
+            <div class="position-relative w-25">
+                <i class="bi bi-search position-absolute text-muted" style="left: 12px; top: 10px;"></i>
+                <input type="text" id="searchInput" class="form-control ps-5 border-radius-10" placeholder="Hizmetlerde ara...">
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table align-middle table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th class="ps-4">Görsel</th>
+                        <th>Hizmet Tanımı</th>
+                        <th>Vitrin Durumu</th>
+                        <th>URL Yapısı</th>
+                        <th class="text-end pe-4">Yönetim</th>
+                    </tr>
+                </thead>
+                <tbody id="blogTable">
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="ps-4">
+                                @if (!string.IsNullOrEmpty(item.Image))
+                                {
+                                    <img src="/img/@item.Image" alt="" class="service-img">
+                                }
+                                else
+                                {
+                                    <div class="service-img bg-light d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-image text-muted"></i>
+                                    </div>
+                                }
+                            </td>
+                            <td>
+                                <div class="fw-bold text-dark">@item.Title</div>
+                                <small class="text-muted">Hizmet Detay Sayfası</small>
+                            </td>
+                            <td>
+                                @if (item.IsHome)
+                                {
+                                    <span class="status-badge badge-active">
+                                        <i class="bi bi-check-circle-fill me-2"></i> Anasayfada
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="status-badge badge-inactive">
+                                        <i class="bi bi-x-circle-fill me-2"></i> Gizli
+                                    </span>
+                                }
+                            </td>
+                            <td>
+                                <code class="small text-primary">/@item.Slug</code>
+                            </td>
+                            <td class="text-end pe-4">
+                                <div class="d-flex justify-content-end gap-2">
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn-action btn-edit" title="Düzenle">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn-action btn-delete" title="Sil">
+                                        <i class="bi bi-trash3-fill"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById("searchInput").addEventListener("keyup", function () {
+            const value = this.value.toLowerCase();
+            const rows = document.querySelectorAll("#blogTable tr");
+            rows.forEach(row => {
+                row.style.display = row.innerText.toLowerCase().includes(value) ? "" : "none";
+            });
+        });
+    </script>
+}

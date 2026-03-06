@@ -1,0 +1,113 @@
+﻿@model Faq
+
+@{
+    ViewData["Title"] = "SSS Silme Onayı";
+}
+
+<style>
+    .delete-container {
+        max-width: 800px;
+        margin: auto;
+    }
+
+    .warning-card {
+        background: #ffffff;
+        border-radius: 24px;
+        border: none;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+        overflow: hidden;
+    }
+
+    .danger-banner {
+        background: #fff5f5;
+        border-left: 5px solid #e63946;
+        padding: 20px;
+        border-radius: 12px;
+    }
+
+    .faq-preview-box {
+        background: #f8f9fa;
+        border-radius: 16px;
+        padding: 30px;
+        border: 1px solid #eee;
+    }
+
+    .info-label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #adb5bd;
+        font-weight: 700;
+        margin-bottom: 8px;
+        display: block;
+    }
+
+    .question-display {
+        color: #2b2d42;
+        font-weight: 700;
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+    }
+
+    .answer-display {
+        color: #6c757d;
+        line-height: 1.6;
+        font-size: 1rem;
+        border-top: 1px solid #dee2e6;
+        padding-top: 20px;
+    }
+
+    .action-bar {
+        background: #f8f9fa;
+        padding: 25px 35px;
+        border-top: 1px solid #eee;
+    }
+</style>
+
+<div class="container py-5 delete-container">
+    <div class="text-center mb-5">
+        <h2 class="fw-bold text-dark mb-1">SSS Kaydını Sil</h2>
+        <p class="text-muted">Bu soru ve cevap sistemden kalıcı olarak kaldırılacaktır.</p>
+    </div>
+
+    <div class="card warning-card">
+        <div class="p-4 p-md-5">
+            <div class="danger-banner d-flex align-items-center mb-5">
+                <div class="bg-danger text-white rounded-circle p-2 me-3 d-flex align-items-center justify-content-center shadow-sm" style="width: 45px; height: 45px; flex-shrink: 0;">
+                    <i class="bi bi-trash3-fill fs-5"></i>
+                </div>
+                <div>
+                    <h6 class="mb-1 fw-bold text-danger">Onay Gerekiyor</h6>
+                    <p class="text-muted small mb-0">Bu içeriği sildiğinizde web sitenizdeki SSS bölümünden de anında kalkacaktır.</p>
+                </div>
+            </div>
+
+            <div class="faq-preview-box shadow-sm">
+                <div>
+                    <span class="info-label">Soru</span>
+                    <div class="question-display">@Model.Question</div>
+                </div>
+
+                <div>
+                    <span class="info-label">Cevap İçeriği</span>
+                    <div class="answer-display">
+                        @Html.Raw(Model.Answer)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="action-bar d-flex justify-content-between align-items-center">
+            <a asp-action="Index" class="btn btn-link text-decoration-none text-secondary fw-bold p-0">
+                <i class="bi bi-chevron-left me-1"></i> Vazgeç
+            </a>
+
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="Id" />
+                <button type="submit" class="btn btn-danger px-5 py-2 rounded-pill fw-bold shadow-lg">
+                    <i class="bi bi-trash3-fill me-2"></i> Onayla ve Sil
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

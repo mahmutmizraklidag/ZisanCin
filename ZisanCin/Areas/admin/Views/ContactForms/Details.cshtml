@@ -1,0 +1,150 @@
+﻿@model ContactForm
+
+@{
+    ViewData["Title"] = "Mesaj Detayı";
+}
+
+<style>
+    .message-container {
+        max-width: 900px;
+        margin: auto;
+    }
+
+    .message-card {
+        background: #ffffff;
+        border-radius: 24px;
+        border: none;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+        overflow: hidden;
+    }
+
+    .message-header {
+        background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+        padding: 40px;
+        color: white;
+    }
+
+    .info-box {
+        background: #f8f9fa;
+        border-radius: 16px;
+        padding: 20px;
+        height: 100%;
+        border: 1px solid #eee;
+        transition: 0.3s;
+    }
+
+        .info-box:hover {
+            background: #fff;
+            border-color: #4361ee;
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.05);
+        }
+
+    .label-text {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #adb5bd;
+        font-weight: 700;
+        margin-bottom: 8px;
+        display: block;
+    }
+
+    .value-text {
+        font-weight: 600;
+        color: #2b2d42;
+        word-break: break-word;
+    }
+
+    .message-body-box {
+        background: #ffffff;
+        border-left: 5px solid #4361ee;
+        border-radius: 12px;
+        padding: 25px;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        color: #4a4e69;
+        white-space: pre-line; /* Mesajdaki satır boşluklarını korur */
+    }
+
+    .avatar-circle {
+        width: 60px;
+        height: 60px;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+</style>
+
+<div class="container py-5 message-container">
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-action="Index" class="text-decoration-none">Gelen Kutusu</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Mesaj Detayı</li>
+        </ol>
+    </nav>
+
+    <div class="card message-card">
+        <div class="message-header text-center">
+            <div class="d-flex justify-content-center">
+                <div class="avatar-circle">
+                    @(Model.Name != null ? Model.Name.Substring(0, 1).ToUpper() : "?")
+                </div>
+            </div>
+            <h2 class="fw-bold mb-1">@Model.Name</h2>
+            <p class="mb-0 opacity-75">@Model.Subject</p>
+        </div>
+
+        <div class="card-body p-4 p-md-5">
+            <div class="row g-4 mb-5">
+                <div class="col-md-4">
+                    <div class="info-box">
+                        <span class="label-text"><i class="bi bi-envelope-at me-2"></i>E-Posta</span>
+                        <div class="value-text">@Model.Email</div>
+                        <a href="mailto:@Model.Email" class="btn btn-sm btn-link p-0 text-primary text-decoration-none mt-2">Yanıtla</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="info-box">
+                        <span class="label-text"><i class="bi bi-telephone me-2"></i>Telefon</span>
+                        <div class="value-text">@(Model.Phone ?? "Belirtilmemiş")</div>
+                        @if (!string.IsNullOrEmpty(Model.Phone))
+                        {
+                            <a href="tel:@Model.Phone" class="btn btn-sm btn-link p-0 text-primary text-decoration-none mt-2">Ara</a>
+                        }
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="info-box">
+                        <span class="label-text"><i class="bi bi-tag me-2"></i>Konu</span>
+                        <div class="value-text">@Model.Subject</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <span class="label-text mb-3"><i class="bi bi-chat-left-quote me-2"></i>Mesaj İçeriği</span>
+                <div class="message-body-box shadow-sm">
+                    @Model.Message
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer bg-light p-4 d-flex justify-content-between align-items-center border-0">
+            <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4">
+                <i class="bi bi-arrow-left me-2"></i> Listeye Dön
+            </a>
+
+            <div class="btn-group">
+                <a href="/admin/ContactForms/Delete/@Model.Id" class="btn btn-danger rounded-pill px-4 shadow-sm">
+                    <i class="bi bi-trash3 me-2"></i> Mesajı Sil
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

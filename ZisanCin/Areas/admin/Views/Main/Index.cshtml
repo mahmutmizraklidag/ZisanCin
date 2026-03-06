@@ -1,0 +1,228 @@
+﻿@model IEnumerable<ContactForm>
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<style>
+    :root {
+        --primary-gradient: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+        --glass-bg: rgba(255, 255, 255, 0.9);
+    }
+
+    body {
+        background-color: #f0f2f5;
+        font-family: 'Inter', sans-serif;
+    }
+
+    /* İstatistik Kartları */
+    .stat-card {
+        background: #fff;
+        border-radius: 20px;
+        border: none;
+        padding: 25px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+        transition: transform 0.3s ease;
+    }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+    .icon-shape {
+        width: 50px;
+        height: 50px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+
+    /* Hoş Geldiniz Kartı */
+    .welcome-banner {
+        background: var(--primary-gradient);
+        border-radius: 24px;
+        padding: 40px;
+        color: white;
+        margin-bottom: 40px;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .welcome-banner img {
+            position: absolute;
+            right: 40px;
+            bottom: 0;
+            height: 120%;
+            opacity: 0.2;
+        }
+
+    /* Hızlı Aksiyonlar */
+    .action-btn {
+        background: #fff;
+        border: 1px solid #eee;
+        border-radius: 15px;
+        padding: 15px;
+        text-align: center;
+        text-decoration: none;
+        color: #343a40;
+        transition: all 0.2s;
+        display: block;
+        height: 100%;
+    }
+
+        .action-btn:hover {
+            background: var(--primary-gradient);
+            color: #fff;
+            border-color: transparent;
+        }
+
+    /* Son Gelenler Tablosu */
+    .latest-card {
+        background: #fff;
+        border-radius: 20px;
+        border: none;
+        overflow: hidden;
+    }
+</style>
+
+<div class="container-fluid py-4 px-4">
+
+    <div class="welcome-banner shadow-lg">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h1 class="fw-bold mb-2">Merhaba, Yönetici! 👋</h1>
+                <p class="lead opacity-75">Siten bugün harika görünüyor. İşte son gelişmeler ve kontrol etmen gerekenler.</p>
+                <div class="d-flex gap-3 mt-4">
+                    <a href="/" target="_blank" class="btn btn-light rounded-pill px-4 fw-bold">
+                        <i class="bi bi-box-arrow-up-right me-2"></i> Siteyi Görüntüle
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-5">
+        <div class="col-md-3">
+            <div class="stat-card">
+                <div class="icon-shape bg-primary bg-opacity-10 text-primary">
+                    <i class="bi bi-chat-left-dots-fill"></i>
+                </div>
+                <h6 class="text-muted small fw-bold">YENİ MESAJLAR</h6>
+                <h3 class="fw-bold mb-0">12</h3>
+                <small class="text-success fw-bold"><i class="bi bi-arrow-up"></i> %5 artış</small>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card">
+                <div class="icon-shape bg-success bg-opacity-10 text-success">
+                    <i class="bi bi-journal-richtext"></i>
+                </div>
+                <h6 class="text-muted small fw-bold">BLOG YAZILARI</h6>
+                <h3 class="fw-bold mb-0">48</h3>
+                <small class="text-muted small">Yayında olan içerik</small>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card">
+                <div class="icon-shape bg-warning bg-opacity-10 text-warning">
+                    <i class="bi bi-briefcase-fill"></i>
+                </div>
+                <h6 class="text-muted small fw-bold">HİZMETLER</h6>
+                <h3 class="fw-bold mb-0">9</h3>
+                <small class="text-muted small">Vitrindeki hizmet sayısı</small>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card">
+                <div class="icon-shape bg-info bg-opacity-10 text-info">
+                    <i class="bi bi-people-fill"></i>
+                </div>
+                <h6 class="text-muted small fw-bold">EKİP ÜYELERİ</h6>
+                <h3 class="fw-bold mb-0">15</h3>
+                <small class="text-muted small">Aktif personel</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="card latest-card shadow-sm">
+                <div class="card-header bg-white p-4 border-0 d-flex justify-content-between align-items-center">
+                    <h5 class="fw-bold mb-0">Son Gelen Mesajlar</h5>
+                    <a asp-controller="ContactForms" asp-action="Index" class="btn btn-sm btn-light rounded-pill px-3">Tümünü Gör</a>
+                </div>
+                <div class="table-responsive px-4 pb-4">
+                    <table class="table align-middle border-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th class="border-0 rounded-start">Gönderen</th>
+                                <th class="border-0">Konu</th>
+                                <th class="border-0 text-end rounded-end">Tarih</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="fw-bold">@item.Name</div>
+                                        <small class="text-muted">@item.Email</small>
+                                    </td>
+                                    <td><span class="badge bg-light text-dark border">@item.Subject</span></td>
+                                    <td class="text-end small text-muted">@item.CreateDate</td>
+                                </tr>
+                            }
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <h5 class="fw-bold mb-4 ps-2">Hızlı İşlemler</h5>
+            <div class="row g-3">
+                <div class="col-6">
+                    <a asp-controller="Blogs" asp-action="Create" class="action-btn shadow-sm">
+                        <i class="bi bi-pencil-square fs-3 d-block mb-2 text-primary"></i>
+                        <span class="small fw-bold">Yazı Ekle</span>
+                    </a>
+                </div>
+                <div class="col-6">
+                    <a asp-controller="Sliders" asp-action="Create" class="action-btn shadow-sm">
+                        <i class="bi bi-images fs-3 d-block mb-2 text-success"></i>
+                        <span class="small fw-bold">Slider Yükle</span>
+                    </a>
+                </div>
+                <div class="col-6">
+                    <a asp-controller="SiteSettings" asp-action="Edit" class="action-btn shadow-sm">
+                        <i class="bi bi-gear-fill fs-3 d-block mb-2 text-warning"></i>
+                        <span class="small fw-bold">Ayarlar</span>
+                    </a>
+                </div>
+                <div class="col-6">
+                    <a asp-controller="Faqs" asp-action="Create" class="action-btn shadow-sm">
+                        <i class="bi bi-question-circle-fill fs-3 d-block mb-2 text-info"></i>
+                        <span class="small fw-bold">SSS Ekle</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="card border-0 rounded-4 mt-4 bg-dark text-white p-4">
+                <h6 class="fw-bold"><i class="bi bi-lightning-charge-fill text-warning me-2"></i>Sistem Durumu</h6>
+                <hr class="opacity-25">
+                <div class="d-flex justify-content-between small mb-2">
+                    <span>Sunucu Yanıtı</span>
+                    <span class="text-success">Harika (12ms)</span>
+                </div>
+                <div class="d-flex justify-content-between small">
+                    <span>Güvenlik Katmanı</span>
+                    <span class="text-success">SSL Aktif</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

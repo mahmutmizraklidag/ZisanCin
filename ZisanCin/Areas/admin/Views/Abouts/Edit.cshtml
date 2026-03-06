@@ -1,0 +1,224 @@
+﻿@model About
+
+@{
+    ViewData["Title"] = "İçerik Düzenle";
+}
+
+<style>
+    .form-card {
+        background: #fff;
+        border-radius: 20px;
+        border: none;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+
+    .nav-pills .nav-link {
+        color: #6c757d;
+        font-weight: 500;
+        padding: 12px 20px;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+    }
+
+        .nav-pills .nav-link.active {
+            background-color: #4361ee;
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
+        }
+
+    .form-label {
+        font-size: 0.9rem;
+        color: #495057;
+        margin-bottom: 8px;
+    }
+
+    .form-control, .form-select {
+        border-radius: 10px;
+        padding: 12px;
+        border: 1px solid #e0e0e0;
+    }
+
+        .form-control:focus {
+            border-color: #4361ee;
+            box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.1);
+        }
+
+    .preview-container {
+        position: relative;
+        display: inline-block;
+        border-radius: 15px;
+        overflow: hidden;
+        border: 2px dashed #dee2e6;
+        padding: 5px;
+    }
+
+        .preview-container img {
+            border-radius: 12px;
+            max-width: 100%;
+            height: auto;
+        }
+
+    .section-title {
+        border-left: 4px solid #4361ee;
+        padding-left: 15px;
+        margin-bottom: 25px;
+        font-weight: 700;
+        color: #343a40;
+    }
+</style>
+
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1 text-dark">İçeriği Güncelle</h2>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a asp-action="Index" class="text-decoration-none text-muted">Hakkımızda Listesi</a></li>
+                    <li class="breadcrumb-item active text-primary" aria-current="page">Düzenle</li>
+                </ol>
+            </nav>
+        </div>
+        <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4">
+            <i class="bi bi-arrow-left me-2"></i> Vazgeç
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <form asp-action="Edit" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger rounded-3 d-none"></div>
+
+                <ul class="nav nav-pills mb-4 gap-2" id="editTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active shadow-sm" id="general-tab" data-bs-toggle="pill" data-bs-target="#general" type="button" role="tab">
+                            <i class="bi bi-info-circle me-2"></i> Genel Bilgiler
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link shadow-sm" id="home-tab" data-bs-toggle="pill" data-bs-target="#home-settings" type="button" role="tab">
+                            <i class="bi bi-house me-2"></i> Ana Sayfa Ayarları
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link shadow-sm" id="seo-tab" data-bs-toggle="pill" data-bs-target="#seo" type="button" role="tab">
+                            <i class="bi bi-search me-2"></i> SEO Yapılandırması
+                        </button>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="editTabContent">
+                    <div class="tab-pane fade show active" id="general" role="tabpanel">
+                        <div class="card form-card p-4">
+                            <h5 class="section-title">Hakkımızda Sayfa İçeriği</h5>
+                            <div class="row g-4">
+                                <div class="col-md-12">
+                                    <label asp-for="Title" class="form-label fw-bold">Sayfa Başlığı</label>
+                                    <input asp-for="Title" class="form-control" placeholder="Örn: Hikayemiz ve Vizyonumuz" />
+                                    <span asp-validation-for="Title" class="text-danger small"></span>
+                                </div>
+                                <div class="col-md-12">
+                                    <label asp-for="Description" class="form-label fw-bold">Detaylı İçerik</label>
+                                    <textarea id="AboutEditor" asp-for="Description" class="form-control"></textarea>
+                                    <span asp-validation-for="Description" class="text-danger small"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label asp-for="Image" class="form-label fw-bold">Sayfa Görseli</label>
+                                    <input asp-for="Image" type="file" class="form-control mb-3" id="imageInput" />
+                                    <div class="preview-container mt-2 shadow-sm">
+                                        <label class="small text-muted d-block p-2 bg-light">Önizleme</label>
+                                        <img id="previewImage" src="@(string.IsNullOrEmpty(Model.Image) ? "#" : "/img/" + Model.Image)"
+                                             class="@(string.IsNullOrEmpty(Model.Image) ? "d-none" : "")" style="max-height: 250px;" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="home-settings" role="tabpanel">
+                        <div class="card form-card p-4">
+                            <h5 class="section-title">Ana Sayfa Görünümü</h5>
+                            <div class="row g-4">
+                                <div class="col-md-12">
+                                    <label asp-for="HomeTitle" class="form-label fw-bold">Özet Başlık</label>
+                                    <input asp-for="HomeTitle" class="form-control" placeholder="Ana sayfada görünecek başlık" />
+                                    <span asp-validation-for="HomeTitle" class="text-danger small"></span>
+                                </div>
+                                <div class="col-md-12">
+                                    <label asp-for="HomeDescription" class="form-label fw-bold">Özet Metin</label>
+                                    <textarea asp-for="HomeDescription" class="form-control" rows="4" placeholder="Kısa bir özet giriniz..."></textarea>
+                                </div>
+                                <div class="col-md-6">
+                                    <label asp-for="HomeImage" class="form-label fw-bold">Ana Sayfa Görseli</label>
+                                    <input asp-for="HomeImage" type="file" class="form-control mb-3" id="imageInput2" />
+                                    <div class="preview-container shadow-sm">
+                                        <img id="previewImage2" src="@(string.IsNullOrEmpty(Model.HomeImage) ? "#" : "/img/" + Model.HomeImage)"
+                                             class="@(string.IsNullOrEmpty(Model.HomeImage) ? "d-none" : "")" style="max-height: 250px;" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="seo" role="tabpanel">
+                        <div class="card form-card p-4">
+                            <h5 class="section-title">Arama Motoru Optimizasyonu (SEO)</h5>
+                            <div class="row g-4">
+                                <div class="col-md-12">
+                                    <label asp-for="MetaTitle" class="form-label fw-bold">SEO Başlığı (Meta Title)</label>
+                                    <input asp-for="MetaTitle" class="form-control" placeholder="Google arama sonuç başlığı" />
+                                </div>
+                                <div class="col-md-12">
+                                    <label asp-for="MetaDescription" class="form-label fw-bold">Meta Açıklaması</label>
+                                    <textarea asp-for="MetaDescription" class="form-control" rows="3"></textarea>
+                                </div>
+                                <div class="col-md-12">
+                                    <label asp-for="Keywords" class="form-label fw-bold">Anahtar Kelimeler</label>
+                                    <input asp-for="Keywords" class="form-control" placeholder="Kelime, Arasına, Virgül, Koyun" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-5 mb-5 bg-white p-3 rounded-pill shadow-sm d-flex justify-content-end gap-2">
+                    <button type="reset" class="btn btn-light rounded-pill px-4">Sıfırla</button>
+                    <button type="submit" class="btn btn-primary rounded-pill px-5 fw-bold">
+                        <i class="bi bi-save me-2"></i> Değişiklikleri Kaydet
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Optimize edilmiş görsel önizleme fonksiyonu
+        function setupPreview(inputId, previewId) {
+            document.getElementById(inputId).addEventListener("change", function (event) {
+                const [file] = event.target.files;
+                const preview = document.getElementById(previewId);
+                if (file) {
+                    preview.src = URL.createObjectURL(file);
+                    preview.classList.remove("d-none");
+                }
+            });
+        }
+
+        setupPreview("imageInput", "previewImage");
+        setupPreview("imageInput2", "previewImage2");
+
+        // Jodit Editor
+        document.addEventListener("DOMContentLoaded", function () {
+            const editor = new Jodit('#AboutEditor', {
+                height: 400,
+                theme: "default",
+                toolbarButtonSize: "middle",
+                buttons: "bold,italic,underline,strikethrough,|,eraser,ul,ol,font,fontsize,paragraph,lineHeight,|,image,table,link,|,align,undo,redo,source"
+            });
+        });
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

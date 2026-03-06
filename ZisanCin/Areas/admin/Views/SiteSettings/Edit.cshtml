@@ -1,0 +1,274 @@
+﻿@model SiteSetting
+
+@{
+    ViewData["Title"] = "Site Ayarlarını Güncelle";
+}
+
+<style>
+    .form-card {
+        background: #fff;
+        border-radius: 24px;
+        border: none;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.04);
+    }
+
+    /* Tab Stil Optimizasyonu */
+    .nav-pills .nav-link {
+        color: #6c757d;
+        font-weight: 600;
+        padding: 12px 24px;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        border: 1px solid transparent;
+        background: #fff;
+    }
+
+        .nav-pills .nav-link.active {
+            background-color: #4361ee;
+            color: #fff;
+            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.2);
+        }
+
+        .nav-pills .nav-link:not(.active):hover {
+            background-color: #f8f9fa;
+            border-color: #dee2e6;
+        }
+
+    /* Input ve Form Grupları */
+    .form-label {
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: #495057;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+    }
+
+        .form-label i {
+            margin-right: 8px;
+            font-size: 1rem;
+            color: #4361ee;
+        }
+
+    .form-control {
+        border-radius: 12px;
+        padding: 12px 16px;
+        border: 1px solid #e0e6ed;
+        background-color: #fcfdfe;
+        transition: all 0.2s;
+    }
+
+        .form-control:focus {
+            background-color: #fff;
+            border-color: #4361ee;
+            box-shadow: 0 0 0 4px rgba(67, 97, 238, 0.08);
+        }
+
+    .section-title {
+        border-left: 4px solid #4361ee;
+        padding-left: 15px;
+        margin-bottom: 30px;
+        font-weight: 800;
+        color: #2b2d42;
+    }
+
+    .logo-edit-preview {
+        background: #f8f9fa;
+        border-radius: 16px;
+        padding: 20px;
+        border: 2px dashed #dee2e6;
+        text-align: center;
+    }
+</style>
+
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <div>
+            <h2 class="fw-bold text-dark mb-1">Sistem Yapılandırması</h2>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0 small text-muted">
+                    <li class="breadcrumb-item"><a asp-action="Index" class="text-decoration-none">Genel Bakış</a></li>
+                    <li class="breadcrumb-item active">Ayarları Düzenle</li>
+                </ol>
+            </nav>
+        </div>
+        <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4 shadow-sm">
+            <i class="bi bi-x-lg me-2"></i> Vazgeç
+        </a>
+    </div>
+
+    <form asp-action="Edit" enctype="multipart/form-data">
+        <input type="hidden" asp-for="Id" />
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger rounded-4 d-none"></div>
+
+        <ul class="nav nav-pills mb-4 gap-2" id="configTab" role="tablist">
+            <li class="nav-item">
+                <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#contact" type="button">
+                    <i class="bi bi-geo-alt me-2"></i> İletişim & Marka
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="pill" data-bs-target="#social" type="button">
+                    <i class="bi bi-share me-2"></i> Sosyal Medya
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="pill" data-bs-target="#seo" type="button">
+                    <i class="bi bi-google me-2"></i> SEO & Meta
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="pill" data-bs-target="#smtp" type="button">
+                    <i class="bi bi-shield-lock me-2"></i> SMTP Ayarları
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content border-0">
+            <div class="tab-pane fade show active" id="contact">
+                <div class="card form-card p-4 p-md-5">
+                    <h5 class="section-title">Kurumsal İletişim Bilgileri</h5>
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <label asp-for="Phone" class="form-label"><i class="bi bi-telephone"></i> @Html.DisplayNameFor(m => m.Phone)</label>
+                            <input asp-for="Phone" class="form-control" placeholder="+90 5xx ..." />
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="Email" class="form-label"><i class="bi bi-envelope"></i> @Html.DisplayNameFor(m => m.Email)</label>
+                            <input asp-for="Email" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="Address" class="form-label"><i class="bi bi-geo"></i> Adres Bilgisi</label>
+                            <input asp-for="Address" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="mapLink" class="form-label"><i class="bi bi-map"></i> Google Harita Linki</label>
+                            <input asp-for="mapLink" class="form-control" />
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label"><i class="bi bi-image"></i> Site Logosu</label>
+                            <div class="row align-items-center">
+                                <div class="col-md-4">
+                                    <div class="logo-edit-preview">
+                                        @if (!string.IsNullOrEmpty(Model.Logo))
+                                        {
+                                            <img src="/img/@Model.Logo" class="img-fluid mb-2" style="max-height: 80px;" id="currentLogo" />
+                                        }
+                                        <img id="previewImage" src="#" class="img-fluid d-none" style="max-height: 80px;" />
+                                        <p class="small text-muted mb-0 mt-2">Görsel Önizleme</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <input asp-for="Logo" type="file" class="form-control" id="imageInput" />
+                                    <small class="text-muted mt-2 d-block">Şeffaf arka planlı (PNG) logo kullanılması önerilir.</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="social">
+                <div class="card form-card p-4 p-md-5">
+                    <h5 class="section-title">Sosyal Ağ Bağlantıları</h5>
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <label asp-for="Facebook" class="form-label"><i class="bi bi-facebook"></i> Facebook Kullanıcı Adı</label>
+                            <input asp-for="Facebook" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="Instagram" class="form-label"><i class="bi bi-instagram"></i> Instagram Kullanıcı Adı</label>
+                            <input asp-for="Instagram" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="Twitter" class="form-label"><i class="bi bi-twitter-x"></i> Twitter / X</label>
+                            <input asp-for="Twitter" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="LinkedIn" class="form-label"><i class="bi bi-linkedin"></i> LinkedIn</label>
+                            <input asp-for="LinkedIn" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="YouTube" class="form-label"><i class="bi bi-youtube"></i> YouTube Kanal Adı</label>
+                            <input asp-for="YouTube" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="YouTubeLink" class="form-label"><i class="bi bi-play-circle"></i> Tanıtım Videosu (URL)</label>
+                            <input asp-for="YouTubeLink" class="form-control" placeholder="https://youtube.com/watch?v=..." />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="seo">
+                <div class="card form-card p-4 p-md-5">
+                    <h5 class="section-title">Global SEO Yapılandırması</h5>
+                    <div class="row g-4">
+                        <div class="col-md-12">
+                            <label asp-for="MetaTitle" class="form-label"><i class="bi bi-type-h1"></i> Global Meta Başlık</label>
+                            <input asp-for="MetaTitle" class="form-control" />
+                        </div>
+                        <div class="col-md-12">
+                            <label asp-for="Keywords" class="form-label"><i class="bi bi-hash"></i> Global Anahtar Kelimeler</label>
+                            <input asp-for="Keywords" class="form-control" placeholder="kelime, kelime, kelime" />
+                        </div>
+                        <div class="col-md-12">
+                            <label asp-for="MetaDescription" class="form-label"><i class="bi bi-card-text"></i> Global Meta Açıklama</label>
+                            <textarea asp-for="MetaDescription" class="form-control" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="smtp">
+                <div class="card form-card p-4 p-md-5">
+                    <h5 class="section-title">E-Posta (SMTP) Sunucu Ayarları</h5>
+                    <div class="row g-4">
+                        <div class="col-md-8">
+                            <label asp-for="SmtpServer" class="form-label"><i class="bi bi-server"></i> SMTP Host / Server</label>
+                            <input asp-for="SmtpServer" class="form-control" placeholder="mail.siteadresi.com" />
+                        </div>
+                        <div class="col-md-4">
+                            <label asp-for="SmtpPort" class="form-label"><i class="bi bi-plug"></i> Port</label>
+                            <input asp-for="SmtpPort" class="form-control" placeholder="587" />
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="SmtpEmail" class="form-label"><i class="bi bi-person-badge"></i> SMTP Kullanıcı Adı (Email)</label>
+                            <input asp-for="SmtpEmail" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="EmailPassword" class="form-label"><i class="bi bi-key"></i> SMTP Şifre</label>
+                            <input asp-for="EmailPassword" type="password" class="form-control" placeholder="********" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-5 mb-5 p-3 bg-white rounded-pill shadow-sm d-flex justify-content-end gap-3 px-4 border">
+            <button type="reset" class="btn btn-light rounded-pill px-4">Değişiklikleri Sıfırla</button>
+            <button type="submit" class="btn btn-warning text-dark fw-bold rounded-pill px-5 shadow-sm">
+                <i class="bi bi-cloud-arrow-up-fill me-2"></i> Konfigürasyonu Güncelle
+            </button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        // İyileştirilmiş Görsel Önizleme
+        document.getElementById("imageInput").addEventListener("change", function (event) {
+            const [file] = event.target.files;
+            const preview = document.getElementById("previewImage");
+            const current = document.getElementById("currentLogo");
+            if (file) {
+                preview.src = URL.createObjectURL(file);
+                preview.classList.remove("d-none");
+                if(current) current.classList.add("opacity-25");
+            }
+        });
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

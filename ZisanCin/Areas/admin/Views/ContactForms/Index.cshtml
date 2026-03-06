@@ -1,0 +1,232 @@
+﻿@{
+    ViewData["Title"] = "İletişim Formları";
+}
+
+<style>
+    :root {
+        --glass-bg: rgba(255, 255, 255, 0.95);
+        --primary-soft: rgba(67, 97, 238, 0.1);
+    }
+
+    body {
+        background-color: #f0f2f5;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .admin-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+
+    /* Tablo Başlıkları */
+    #messagesTable thead th {
+        background-color: transparent;
+        text-transform: uppercase;
+        font-size: 0.7rem;
+        letter-spacing: 0.05rem;
+        font-weight: 700;
+        color: #6c757d;
+        border-bottom: 2px solid #f8f9fa;
+        padding: 18px;
+    }
+
+    /* Satır Stilleri */
+    #messagesTable tbody tr {
+        transition: all 0.2s;
+        cursor: pointer;
+    }
+
+        #messagesTable tbody tr:hover {
+            background-color: #fcfcff !important;
+            transform: scale(1.002);
+        }
+
+    /* Avatar ve İsim Grubu */
+    .user-info {
+        display: flex;
+        align-items: center;
+    }
+
+    .user-avatar {
+        width: 35px;
+        height: 35px;
+        background: var(--primary-soft);
+        color: #4361ee;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        margin-right: 12px;
+    }
+
+    /* İşlem Butonları */
+    .btn-action {
+        width: 34px;
+        height: 34px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        border: none;
+        transition: 0.3s;
+    }
+
+    .btn-details {
+        background: rgba(67, 97, 238, 0.1);
+        color: #4361ee;
+    }
+
+        .btn-details:hover {
+            background: #4361ee;
+            color: #fff;
+        }
+
+    .btn-delete {
+        background: rgba(230, 57, 70, 0.1);
+        color: #e63946;
+    }
+
+        .btn-delete:hover {
+            background: #e63946;
+            color: #fff;
+        }
+
+    /* Badge Stilleri */
+    .subject-badge {
+        font-size: 0.75rem;
+        padding: 5px 10px;
+        border-radius: 8px;
+        background: #f1f3f5;
+        color: #495057;
+        max-width: 150px;
+        display: inline-block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* DataTable Overrides */
+    .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+        background: #4361ee !important;
+        border-color: #4361ee !important;
+        color: white !important;
+        border-radius: 8px;
+    }
+</style>
+
+<div class="container-fluid py-5 px-4">
+    <div class="row align-items-center mb-5">
+        <div class="col-md-6">
+            <h1 class="h3 fw-bold text-dark mb-1">Gelen Kutusu</h1>
+            <p class="text-muted mb-0">Web sitesi üzerinden gönderilen tüm formlar burada listelenir.</p>
+        </div>
+        <div class="col-md-6 text-md-end mt-3 mt-md-0">
+            <button onclick="location.reload();" class="btn btn-white bg-white border rounded-pill px-4 shadow-sm">
+                <i class="bi bi-arrow-clockwise me-2"></i> Yenile
+            </button>
+        </div>
+    </div>
+
+    <div class="card admin-card border-0">
+        <div class="card-body p-4">
+            <div class="table-responsive">
+                <table id="messagesTable" class="table align-middle w-100 border-0">
+                    <thead>
+                        <tr>
+                            <th>Ad Soyad</th>
+                            <th>İletişim Bilgileri</th>
+                            <th>Konu</th>
+                            <th>Mesaj Özeti</th>
+                            <th class="text-end">İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @* DataTable AJAX ile dolacak *@
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#messagesTable').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "filter": true,
+                "ajax": {
+                    "url": "/admin/ContactForms/GetContactMessages",
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.13.6/i18n/tr.json"
+                },
+                "columns": [
+                    {
+                        "data": "name",
+                        "render": function (data) {
+                            let initial = data ? data.charAt(0).toUpperCase() : '?';
+                            return `
+                                <div class="user-info">
+                                    <div class="user-avatar">${initial}</div>
+                                    <div class="fw-bold text-dark">${data}</div>
+                                </div>`;
+                        }
+                    },
+                    {
+                        "data": "email",
+                        "render": function (data, type, row) {
+                            return `
+                                <div class="small">
+                                    <div class="text-dark"><i class="bi bi-envelope me-1 text-muted"></i>${data}</div>
+                                    <div class="text-muted"><i class="bi bi-telephone me-1"></i>${row.phone || '-'}</div>
+                                </div>`;
+                        }
+                    },
+                    {
+                        "data": "subject",
+                        "render": function(data) {
+                            return `<span class="subject-badge shadow-sm border">${data}</span>`;
+                        }
+                    },
+                    {
+                        "data": "message",
+                        "render": function (data) {
+                            if (!data) return "";
+                            return `<span class="text-muted small">${data.length > 45 ? data.substr(0, 45) + '...' : data}</span>`;
+                        }
+                    },
+                    {
+                        "data": "id",
+                        "render": function (data) {
+                            return `
+                                <div class="d-flex justify-content-end gap-2">
+                                    <a href="/admin/ContactForms/Details/${data}" class="btn-action btn-details" title="Oku">
+                                        <i class="bi bi-chat-left-text-fill"></i>
+                                    </a>
+                                    <a href="/admin/ContactForms/Delete/${data}" class="btn-action btn-delete" title="Sil">
+                                        <i class="bi bi-trash3-fill"></i>
+                                    </a>
+                                </div>`;
+                        },
+                        "orderable": false
+                    }
+                ],
+                "order": [[0, "desc"]],
+                "drawCallback": function() {
+                    $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
+                }
+            });
+        });
+    </script>
+}

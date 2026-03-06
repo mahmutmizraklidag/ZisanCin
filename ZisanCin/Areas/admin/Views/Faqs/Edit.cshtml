@@ -1,0 +1,111 @@
+﻿@model Faq
+
+@{
+    ViewData["Title"] = "SSS Düzenle";
+}
+
+<style>
+    .form-card {
+        background: #fff;
+        border-radius: 20px;
+        border: none;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+
+    .form-control {
+        border-radius: 12px;
+        padding: 12px 15px;
+        border: 1px solid #e9ecef;
+        background-color: #f8f9fa;
+        transition: all 0.3s ease;
+    }
+
+        .form-control:focus {
+            background-color: #fff;
+            border-color: #4361ee;
+            box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.1);
+        }
+
+    .section-header {
+        border-left: 5px solid #4361ee;
+        padding-left: 15px;
+        margin-bottom: 25px;
+    }
+
+    .form-label {
+        font-size: 0.9rem;
+        color: #495057;
+        margin-bottom: 8px;
+    }
+</style>
+
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold text-dark mb-1">SSS Güncelle</h2>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0 small">
+                    <li class="breadcrumb-item"><a asp-action="Index" class="text-decoration-none">SSS Yönetimi</a></li>
+                    <li class="breadcrumb-item active text-primary">Düzenle</li>
+                </ol>
+            </nav>
+        </div>
+        <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4 shadow-sm">
+            <i class="bi bi-arrow-left me-1"></i> Vazgeç
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <div class="card form-card">
+                <div class="card-body p-4 p-md-5">
+                    <form asp-action="Edit" enctype="multipart/form-data">
+                        <input type="hidden" asp-for="Id" />
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger rounded-3 d-none"></div>
+
+                        <div class="section-header">
+                            <h5 class="fw-bold mb-0">Soru & Cevap Bilgileri</h5>
+                            <small class="text-muted">Kullanıcıların en çok sorduğu soruları detaylandırın.</small>
+                        </div>
+
+                        <div class="row g-4">
+                            <div class="col-md-12">
+                                <label asp-for="Question" class="form-label fw-bold">Soru Cümlesi</label>
+                                <input asp-for="Question" class="form-control" placeholder="Örn: Kargo süreci nasıl işliyor?" />
+                                <span asp-validation-for="Question" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label asp-for="Answer" class="form-label fw-bold">Detaylı Cevap</label>
+                                <textarea id="AboutEditor" asp-for="Answer" class="form-control"></textarea>
+                                <span asp-validation-for="Answer" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <div class="text-end mt-5 border-top pt-4">
+                            <button type="submit" class="btn btn-primary btn-lg rounded-pill px-5 shadow">
+                                <i class="bi bi-save2 me-2"></i> Değişiklikleri Kaydet
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const editor = new Jodit('#AboutEditor', {
+                height: 400,
+                placeholder: "Cevabı buraya detaylıca yazın...",
+                buttons: "bold,italic,underline,strikethrough,|,ul,ol,font,fontsize,paragraph,|,image,table,link,|,align,undo,redo,source",
+                theme: "default"
+            });
+        });
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

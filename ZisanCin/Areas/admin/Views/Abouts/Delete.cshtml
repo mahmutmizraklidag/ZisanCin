@@ -1,0 +1,170 @@
+﻿@model About
+
+@{
+    ViewData["Title"] = "İçeriği Sil";
+}
+
+<style>
+    .delete-container {
+        max-width: 900px;
+        margin: auto;
+    }
+
+    .warning-banner {
+        background: #fff5f5;
+        border-left: 5px solid #ff4d4d;
+        border-radius: 12px;
+    }
+
+    .item-preview-card {
+        background: #fff;
+        border-radius: 16px;
+        border: 1px solid #f0f0f0;
+        overflow: hidden;
+    }
+
+    .info-label {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #95a5a6;
+        font-weight: 700;
+        margin-bottom: 2px;
+    }
+
+    .info-value {
+        color: #2c3e50;
+        font-weight: 500;
+        margin-bottom: 15px;
+    }
+
+    .img-wrapper {
+        position: relative;
+        border-radius: 12px;
+        overflow: hidden;
+        height: 180px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+        .img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+    .img-caption {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0,0,0,0.6);
+        color: #fff;
+        font-size: 0.75rem;
+        padding: 5px;
+        text-align: center;
+        backdrop-filter: blur(4px);
+    }
+
+    .action-bar {
+        background: #f8f9fa;
+        border-radius: 0 0 16px 16px;
+        padding: 20px 30px;
+        border-top: 1px solid #eee;
+    }
+</style>
+
+<div class="container py-5 delete-container">
+    <div class="text-center mb-5">
+        <div class="display-6 fw-bold text-dark">Kaydı Silmek İstiyor Musunuz?</div>
+        <p class="text-muted">Bu işlem veri tabanından kalıcı olarak silinecektir.</p>
+    </div>
+
+    <div class="card item-preview-card shadow-lg border-0">
+        <div class="p-4">
+            <div class="warning-banner p-3 d-flex align-items-center mb-4">
+                <div class="bg-danger text-white rounded-circle p-2 me-3 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                    <i class="bi bi-exclamation-octagon-fill fs-5"></i>
+                </div>
+                <div>
+                    <h6 class="mb-0 fw-bold text-danger">Kalıcı Silme İşlemi</h6>
+                    <small class="text-secondary">"@Model.Title" başlıklı içerik tüm bağlı verileriyle birlikte silinecek.</small>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-5">
+                    <div class="row g-2">
+                        <div class="col-12">
+                            <div class="img-wrapper">
+                                @if (!string.IsNullOrEmpty(Model.Image))
+                                {
+                                    <img src="/img/@Model.Image" alt="Sayfa Görseli">
+                                    <div class="img-caption">Sayfa Görseli</div>
+                                }
+                                else
+                                {
+                                    <div class="h-100 bg-light d-flex align-items-center justify-content-center text-muted small italic">Görsel Yok</div>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-12 mt-2">
+                            <div class="img-wrapper" style="height: 120px;">
+                                @if (!string.IsNullOrEmpty(Model.HomeImage))
+                                {
+                                    <img src="/img/@Model.HomeImage" alt="Ana Sayfa Görseli">
+                                    <div class="img-caption">Ana Sayfa Görseli</div>
+                                }
+                                else
+                                {
+                                    <div class="h-100 bg-light d-flex align-items-center justify-content-center text-muted small">Ana Sayfa Görseli Yok</div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-7">
+                    <div class="ps-md-3">
+                        <div class="info-label">Sayfa Başlığı</div>
+                        <div class="info-value fs-5 fw-bold text-primary">@Model.Title</div>
+
+                        <div class="info-label">Ana Sayfa Başlığı</div>
+                        <div class="info-value">@Model.HomeTitle</div>
+
+                        <div class="info-label">SEO Meta Başlık</div>
+                        <div class="info-value">@Model.MetaTitle ?? <span class="text-muted italic">Belirtilmemiş</span></div>
+
+                        <div class="info-label">Anahtar Kelimeler</div>
+                        <div class="d-flex flex-wrap gap-1 mb-3">
+                            @if (!string.IsNullOrEmpty(Model.Keywords))
+                            {
+                                foreach (var word in Model.Keywords.Split(','))
+                                {
+                                    <span class="badge bg-light text-secondary border">@word.Trim()</span>
+                                }
+                            }
+                            else
+                            {
+                                <span class="text-muted small">Yok</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="action-bar d-flex justify-content-between align-items-center">
+            <a asp-action="Index" class="btn btn-link text-decoration-none text-secondary fw-semibold">
+                <i class="bi bi-chevron-left"></i> Listeye Geri Dön
+            </a>
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="Id" />
+                <div class="btn-group shadow-sm">
+                    <button type="submit" class="btn btn-danger px-4 py-2 fw-bold">
+                        <i class="bi bi-trash3-fill me-2"></i> Onayla ve Sil
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

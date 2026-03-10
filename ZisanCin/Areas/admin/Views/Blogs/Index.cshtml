@@ -173,13 +173,27 @@
     <script>
         $(document).ready(function () {
             $('#myTable').DataTable({
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.13.6/i18n/tr.json"
+                language: {
+                    emptyTable: "Tabloda veri bulunmuyor",
+                    info: "_TOTAL_ kayıttan _START_ - _END_ arasındaki kayıtlar gösteriliyor",
+                    infoEmpty: "Kayıt yok",
+                    infoFiltered: "(_MAX_ kayıt içerisinden bulunan)",
+                    lengthMenu: "_MENU_ kayıt göster",
+                    loadingRecords: "Yükleniyor...",
+                    processing: "İşleniyor...",
+                    search: "Ara:",
+                    zeroRecords: "Eşleşen kayıt bulunamadı",
+                    paginate: {
+                        first: "İlk",
+                        last: "Son",
+                        next: "Sonraki",
+                        previous: "Önceki"
+                    }
                 },
-                "pageLength": 10,
-                "order": [[2, "desc"]], // Tarihe göre sırala
-                "columnDefs": [
-                    { "orderable": false, "targets": [0, 4] }
+                pageLength: 10,
+                order: [[2, "desc"]],
+                columnDefs: [
+                    { orderable: false, targets: [0, 4] }
                 ]
             });
         });

@@ -1,49 +1,93 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="tr" data-theme-color="skin-6">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ZisanCin</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/ZisanCin.styles.css" asp-append-version="true" />
+
+    <!-- Character Encoding -->
+    <meta charset="UTF-8">
+
+    <!-- Responsive Design -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Title -->
+    <title>ClinicMaster - Diet & Nutrition Tailwind CSS Template | Zişan CİN</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="title" content="ClinicMaster - Diet & Nutrition Tailwind CSS Template | DexignZone">
+    <meta name="description" content="ClinicMaster is a Diet & Nutrition Tailwind CSS template crafted for dietitians, nutritionists, and health coaches. It features a clean, responsive design, modern UI, and easy customization for wellness and fitness websites.">
+    <meta name="keywords" content="ClinicMaster, Diet Template, Nutrition Template, Health Coach Template, Tailwind CSS Template, Fitness Website Template, Nutritionist HTML Template, Wellness Template, Responsive Health Template, DexignZone">
+    <meta name="author" content="DexignZone">
+    <meta name="robots" content="index, follow">
+
+    <!-- CANONICAL URL -->
+    <link rel="canonical" href="https://clinicmaster.dexignzone.com/tailwind/dieting/index.html">
+
+    <!-- FAVICONS ICON -->
+    <link rel="icon" type="image/png" href="/images/favicon.png">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="ClinicMaster - Diet & Nutrition Tailwind CSS Template | DexignZone">
+    <meta property="og:description" content="ClinicMaster is a Diet & Nutrition Tailwind CSS template crafted for dietitians, nutritionists, and health coaches. It features a clean, responsive design, modern UI, and easy customization for wellness and fitness websites.">
+    <meta property="og:url" content="https://clinicmaster.dexignzone.com/tailwind/social-image.png">
+    <meta property="og:image" content="https://clinicmaster.dexignzone.com/tailwind/social-image.png">
+    <meta property="og:site_name" content="ClinicMaster">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ClinicMaster - Diet & Nutrition Tailwind CSS Template | DexignZone">
+    <meta name="twitter:description" content="ClinicMaster is a Diet & Nutrition Tailwind CSS template crafted for dietitians, nutritionists, and health coaches. It features a clean, responsive design, modern UI, and easy customization for wellness and fitness websites.">
+    <meta name="twitter:image" content="https://clinicmaster.dexignzone.com/tailwind/social-image.png">
+
+    <!-- IE Compatibility -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="format-detection" content="telephone=no">
+
+    <link rel="stylesheet" type="text/css" href="/assets/vendor/swiper/swiper-bundle.min.css">
+
+    <link rel="stylesheet" type="text/css" href="/assets/icons/fontawesome/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="/assets/icons/flaticon/flaticon.css">
+    <link rel="stylesheet" type="text/css" href="/assets/icons/feather/css/iconfont.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ZisanCin</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
+<body id="bg" class="bg-light">
+    <div class="page-wraper">
+        <div class="fixed size-full left-0 top-0 z-9999999 flex items-center justify-center bg-white" id="dzPreloader">
+            <div>
+                <span class="size-12 rounded-full border-2 border-secondary border-b-transparent box-border animate-rotation mx-auto block mb-5 absolute right-7.5 top-10 after:box-border after:absolute after:inset-0 after:m-auto after:border-2 after:border-primary after:border-t-transparent after:size-6 after:rounded-full after:animate-rotationBack after:origin-center"></span>
+                <img src="@Url.Content("~/images/logo.gif")" alt="/" class="w-100 block mx-auto">
+                <span class="loader"></span>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+        </div>
+        @await Component.InvokeAsync("Navbar")
+        <div id="smooth-wrapper">
+            <div id="smooth-content">
+               
+                    @RenderBody()
+               
+                @await Component.InvokeAsync("Footer")
+            </div>
+           
+        </div>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - ZisanCin - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <!-- JAVASCRIPT FILES ========================================= -->
+    <script src="@Url.Content("~/assets/vendor/swiper/swiper-bundle.min.js")"></script>
+    <script src="@Url.Content("~/assets/vendor/imagesloaded/imagesloaded.js")"></script>
+    <script defer src="@Url.Content("~/assets/vendor/gsap/gsap.min.js")"></script>
+    <script defer src="@Url.Content("~/assets/vendor/gsap/ScrollSmoother.js")"></script>
+    <script defer src="@Url.Content("~/assets/vendor/gsap/ScrollTrigger.min.js")"></script>
+    <script src="@Url.Content("~/assets/vendor/xmenu/xmenu.js")"></script>
+    <script src="@Url.Content("~/assets/js/dz.carousel.js")"></script>
+    <script src="@Url.Content("~/assets/js/dz.ajax.js")"></script>
+    <script src="@Url.Content("~/assets/js/animation.js")"></script>
+    <script src="@Url.Content("~/assets/js/custom.js")"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

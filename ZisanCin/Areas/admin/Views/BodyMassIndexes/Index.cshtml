@@ -1,77 +1,410 @@
 ﻿@model IEnumerable<ZisanCin.Entities.BodyMassIndex>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Vücut Kitle İndeksi Kayıtları";
 }
 
-<h1>Index</h1>
+<div class="container-fluid py-4">
+    <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-header bg-white border-0 pt-4 pb-3 px-4">
+            <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+                <div>
+                    <h2 class="mb-1 fw-bold">Vücut Kitle İndeksi Kayıtları</h2>
+                    <p class="text-muted mb-0">Tüm başvuruları buradan görüntüleyebilir, detaylarını inceleyebilir ve silebilirsiniz.</p>
+                </div>
+                <div class="text-muted fw-semibold">
+                    Toplam Kayıt: <span id="recordCount">@Model.Count()</span>
+                </div>
+            </div>
+        </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Phone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Age)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Gender)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Height)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Weight)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Result)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Phone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Age)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Gender)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Height)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Weight)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Result)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+        <div class="card-body px-4 pb-4">
+            @Html.AntiForgeryToken()
+
+            <div id="ajaxAlert"></div>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle" id="bmiTable">
+                    <thead class="table-light">
+                        <tr>
+                            <th style="width: 70px;">#</th>
+                            <th>Ad Soyad</th>
+                            <th>Telefon</th>
+                            <th>Yaş</th>
+                            <th>Cinsiyet</th>
+                            <th>VKI</th>
+                            <th>Durum</th>
+                            <th>Tarih</th>
+                            <th class="text-end" style="width: 180px;">İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr id="row-@item.Id">
+                                    <td class="fw-semibold">@item.Id</td>
+                                    <td>@item.Name</td>
+                                    <td>@(string.IsNullOrWhiteSpace(item.Phone) ? "-" : item.Phone)</td>
+                                    <td>@item.Age</td>
+                                    <td>@item.Gender</td>
+                                    <td>@item.Result.ToString("0.00")</td>
+                                    <td>
+                                        <span class="badge rounded-pill @GetStatusClass(item.Status)">
+                                            @(string.IsNullOrWhiteSpace(item.Status) ? "-" : item.Status)
+                                        </span>
+                                    </td>
+                                    <td>@item.CreateDate.ToString("dd.MM.yyyy HH:mm")</td>
+                                    <td class="text-end">
+                                        <button type="button"
+                                                class="btn btn-sm btn-outline-primary btn-detail"
+                                                data-id="@item.Id">
+                                            Detay
+                                        </button>
+
+                                        <button type="button"
+                                                class="btn btn-sm btn-outline-danger btn-delete"
+                                                data-id="@item.Id"
+                                                data-name="@item.Name">
+                                            Sil
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr id="emptyRow">
+                                <td colspan="9" class="text-center py-4 text-muted">
+                                    Henüz kayıt bulunmuyor.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Detay Modal -->
+<div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content border-0 shadow rounded-4">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold" id="detailModalLabel">Kayıt Detayı</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+            </div>
+
+            <div class="modal-body pt-3">
+                <div id="detailLoading" class="text-center py-4 d-none">
+                    <div class="spinner-border text-primary" role="status"></div>
+                    <div class="mt-2 text-muted">Detay yükleniyor...</div>
+                </div>
+
+                <div id="detailContent" class="row g-3">
+                    <div class="col-md-6">
+                        <div class="detail-box">
+                            <div class="detail-label">Ad Soyad</div>
+                            <div class="detail-value" id="dName">-</div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="detail-box">
+                            <div class="detail-label">Telefon</div>
+                            <div class="detail-value" id="dPhone">-</div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="detail-box">
+                            <div class="detail-label">Yaş</div>
+                            <div class="detail-value" id="dAge">-</div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="detail-box">
+                            <div class="detail-label">Cinsiyet</div>
+                            <div class="detail-value" id="dGender">-</div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="detail-box">
+                            <div class="detail-label">VKI</div>
+                            <div class="detail-value" id="dResult">-</div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="detail-box">
+                            <div class="detail-label">Boy (cm)</div>
+                            <div class="detail-value" id="dHeight">-</div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="detail-box">
+                            <div class="detail-label">Kilo (kg)</div>
+                            <div class="detail-value" id="dWeight">-</div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="detail-box">
+                            <div class="detail-label">Durum</div>
+                            <div class="detail-value" id="dStatus">-</div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="detail-box">
+                            <div class="detail-label">Eklenme Tarihi</div>
+                            <div class="detail-value" id="dCreateDate">-</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer border-0 pt-0">
+                <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Silme Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow rounded-4">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold text-danger" id="deleteModalLabel">Kayıt Sil</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+            </div>
+
+            <div class="modal-body">
+                <p class="mb-2">Aşağıdaki kaydı silmek istediğinize emin misiniz?</p>
+                <div class="alert alert-light border rounded-3 mb-0">
+                    <strong id="deleteItemName">-</strong>
+                </div>
+            </div>
+
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Vazgeç</button>
+                <button type="button" class="btn btn-danger rounded-pill px-4" id="confirmDeleteBtn">Sil</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@functions {
+    public string GetStatusClass(string? status)
+    {
+        if (string.IsNullOrWhiteSpace(status))
+            return "bg-secondary";
+
+        var s = status.ToLower();
+
+        if (s.Contains("normal"))
+            return "bg-success";
+
+        if (s.Contains("zayıf") || s.Contains("zayif"))
+            return "bg-warning text-dark";
+
+        if (s.Contains("obez") || s.Contains("fazla"))
+            return "bg-danger";
+
+        return "bg-primary";
+    }
 }
-    </tbody>
-</table>
+
+<style>
+    .detail-box {
+        background: #f8f9fa;
+        border-radius: 16px;
+        padding: 16px;
+        height: 100%;
+        border: 1px solid #eef1f4;
+    }
+
+    .detail-label {
+        font-size: 13px;
+        color: #6c757d;
+        margin-bottom: 6px;
+    }
+
+    .detail-value {
+        font-size: 16px;
+        font-weight: 600;
+        color: #212529;
+        word-break: break-word;
+    }
+
+    .table > :not(caption) > * > * {
+        vertical-align: middle;
+    }
+
+    .btn {
+        transition: all .2s ease;
+    }
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+</style>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const detailModalEl = document.getElementById('detailModal');
+            const deleteModalEl = document.getElementById('deleteModal');
+
+            const detailModal = new bootstrap.Modal(detailModalEl);
+            const deleteModal = new bootstrap.Modal(deleteModalEl);
+
+            const detailLoading = document.getElementById("detailLoading");
+            const detailContent = document.getElementById("detailContent");
+            const ajaxAlert = document.getElementById("ajaxAlert");
+            const recordCount = document.getElementById("recordCount");
+
+            const detailUrl = '@Url.Action("GetById", "BodyMassIndexes", new { area = "admin" })';
+            const deleteUrl = '@Url.Action("DeleteAjax", "BodyMassIndexes", new { area = "admin" })';
+
+            let selectedDeleteId = 0;
+
+            function showAlert(message, type = "success") {
+                ajaxAlert.innerHTML = `
+                    <div class="alert alert-${type} alert-dismissible fade show rounded-3" role="alert">
+                        ${message}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Kapat"></button>
+                    </div>
+                `;
+            }
+
+            function bindDetailButtons() {
+                document.querySelectorAll(".btn-detail").forEach(button => {
+                    button.removeEventListener("click", detailClickHandler);
+                    button.addEventListener("click", detailClickHandler);
+                });
+            }
+
+            function bindDeleteButtons() {
+                document.querySelectorAll(".btn-delete").forEach(button => {
+                    button.removeEventListener("click", deleteClickHandler);
+                    button.addEventListener("click", deleteClickHandler);
+                });
+            }
+
+            async function detailClickHandler() {
+                const id = this.getAttribute("data-id");
+
+                detailLoading.classList.remove("d-none");
+                detailContent.classList.add("d-none");
+                detailModal.show();
+
+                try {
+                    const response = await fetch(`${detailUrl}?id=${id}`, {
+                        method: "GET",
+                        headers: {
+                            "X-Requested-With": "XMLHttpRequest"
+                        }
+                    });
+
+                    const result = await response.json();
+
+                    if (!result.success) {
+                        showAlert(result.message || "Detay bilgisi alınamadı.", "danger");
+                        detailModal.hide();
+                        return;
+                    }
+
+                    document.getElementById("dName").textContent = result.data.name;
+                    document.getElementById("dPhone").textContent = result.data.phone;
+                    document.getElementById("dAge").textContent = result.data.age;
+                    document.getElementById("dGender").textContent = result.data.gender;
+                    document.getElementById("dHeight").textContent = result.data.height + " cm";
+                    document.getElementById("dWeight").textContent = result.data.weight + " kg";
+                    document.getElementById("dResult").textContent = result.data.result;
+                    document.getElementById("dStatus").textContent = result.data.status;
+                    document.getElementById("dCreateDate").textContent = result.data.createDate;
+
+                    detailLoading.classList.add("d-none");
+                    detailContent.classList.remove("d-none");
+                }
+                catch (error) {
+                    detailModal.hide();
+                    showAlert("Detay bilgisi alınırken bir hata oluştu.", "danger");
+                }
+            }
+
+            function deleteClickHandler() {
+                selectedDeleteId = this.getAttribute("data-id");
+                const name = this.getAttribute("data-name");
+
+                document.getElementById("deleteItemName").textContent = name;
+                deleteModal.show();
+            }
+
+            document.getElementById("confirmDeleteBtn").addEventListener("click", async function () {
+                if (!selectedDeleteId) return;
+
+                const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+                const row = document.getElementById(`row-${selectedDeleteId}`);
+
+                const body = new URLSearchParams();
+                body.append("id", selectedDeleteId);
+                body.append("__RequestVerificationToken", token);
+
+                try {
+                    const response = await fetch(deleteUrl, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+                            "X-Requested-With": "XMLHttpRequest"
+                        },
+                        body: body.toString()
+                    });
+
+                    const result = await response.json();
+
+                    if (!result.success) {
+                        showAlert(result.message || "Silme işlemi başarısız oldu.", "danger");
+                        deleteModal.hide();
+                        return;
+                    }
+
+                    if (row) {
+                        row.remove();
+                    }
+
+                    const currentCount = document.querySelectorAll("#bmiTable tbody tr[id^='row-']").length;
+                    recordCount.textContent = currentCount;
+
+                    if (currentCount === 0) {
+                        document.querySelector("#bmiTable tbody").innerHTML = `
+                            <tr id="emptyRow">
+                                <td colspan="9" class="text-center py-4 text-muted">
+                                    Henüz kayıt bulunmuyor.
+                                </td>
+                            </tr>
+                        `;
+                    }
+
+                    deleteModal.hide();
+                    showAlert(result.message || "Kayıt silindi.", "success");
+                    selectedDeleteId = 0;
+                }
+                catch (error) {
+                    showAlert("Silme işlemi sırasında bir hata oluştu.", "danger");
+                    deleteModal.hide();
+                }
+            });
+
+            bindDetailButtons();
+            bindDeleteButtons();
+        });
+    </script>
+}

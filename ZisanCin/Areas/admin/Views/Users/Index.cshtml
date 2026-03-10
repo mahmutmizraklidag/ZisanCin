@@ -1,0 +1,201 @@
+﻿@model IEnumerable<User>
+
+@{
+    ViewData["Title"] = "Kullanıcı Yönetimi";
+}
+
+<style>
+    :root {
+        --glass-bg: rgba(255, 255, 255, 0.95);
+    }
+
+    body {
+        background-color: #f0f2f5;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .admin-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 20px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.05);
+    }
+
+    /* Kullanıcı Avatarı */
+    .user-icon {
+        width: 40px;
+        height: 40px;
+        background: rgba(67, 97, 238, 0.1);
+        color: #4361ee;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+    }
+
+    /* Şifre Alanı */
+    .password-wrapper {
+        background: #f8f9fa;
+        padding: 6px 12px;
+        border-radius: 8px;
+        border: 1px solid #eee;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 150px;
+        justify-content: space-between;
+    }
+
+    .password-text {
+        font-family: 'Monaco', 'Consolas', monospace;
+        letter-spacing: 2px;
+        color: #6c757d;
+        font-size: 0.9rem;
+    }
+
+    /* İşlem Butonları */
+    .btn-action {
+        width: 36px;
+        height: 36px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        transition: 0.3s;
+        border: none;
+    }
+
+    .btn-edit {
+        background: rgba(67, 97, 238, 0.1);
+        color: #4361ee;
+    }
+
+        .btn-edit:hover {
+            background: #4361ee;
+            color: #fff;
+        }
+
+    .btn-delete {
+        background: rgba(230, 57, 70, 0.1);
+        color: #e63946;
+    }
+
+        .btn-delete:hover {
+            background: #e63946;
+            color: #fff;
+        }
+
+    /* DataTable Header */
+    #myTable thead th {
+        background-color: transparent;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 0.05rem;
+        font-weight: 700;
+        color: #adb5bd;
+        border-bottom: 2px solid #f8f9fa;
+        padding: 20px;
+    }
+</style>
+
+<div class="container-fluid py-5 px-4">
+    <div class="row align-items-center mb-5">
+        <div class="col-md-6">
+            <h1 class="h3 fw-bold text-dark mb-1">Yönetici Paneli Erişimi</h1>
+            <p class="text-muted mb-0">Sisteme giriş yapabilecek yetkili kullanıcıları yönetin.</p>
+        </div>
+        <div class="col-md-6 text-md-end mt-3 mt-md-0">
+            <a asp-action="Create" class="btn btn-primary px-4 py-2 rounded-pill shadow-sm">
+                <i class="bi bi-person-plus-fill me-2"></i> Yeni Yönetici Ekle
+            </a>
+        </div>
+    </div>
+
+    <div class="card admin-card border-0">
+        <div class="card-body p-4">
+            <div class="table-responsive">
+                <table id="myTable" class="table align-middle border-0">
+                    <thead>
+                        <tr>
+                            <th class="ps-4">Kullanıcı Bilgisi</th>
+                            <th>Erişim Anahtarı (Şifre)</th>
+                            <th class="text-end pe-4">İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="ps-4">
+                                    <div class="d-flex align-items-center">
+                                        <div class="user-icon me-3">
+                                            <i class="bi bi-person-circle"></i>
+                                        </div>
+                                        <div>
+                                            <div class="fw-bold text-dark">@item.Username</div>
+                                            <small class="text-muted">Sistem Yöneticisi</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="password-wrapper">
+                                        <span class="password-text" data-password="@item.password">••••••••</span>
+                                        <button type="button" class="btn btn-sm p-0 toggle-password text-primary" title="Göster/Gizle">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                                <td class="text-end pe-4">
+                                    <div class="d-flex justify-content-end gap-2">
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn-action btn-edit" title="Düzenle">
+                                            <i class="bi bi-pencil-fill"></i>
+                                        </a>
+                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn-action btn-delete" title="Sil">
+                                            <i class="bi bi-trash3-fill"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // DataTable Başlatma
+            $('#myTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.13.6/i18n/tr.json"
+                },
+                "columnDefs": [
+                    { "orderable": false, "targets": [1, 2] }
+                ]
+            });
+
+            // Gelişmiş Şifre Göster/Gizle
+            $('.toggle-password').on('click', function () {
+                const wrapper = $(this).closest('.password-wrapper');
+                const textSpan = wrapper.find('.password-text');
+                const icon = $(this).find('i');
+                const realPassword = textSpan.attr('data-password');
+
+                if (textSpan.text().includes('•')) {
+                    textSpan.text(realPassword);
+                    textSpan.css('letter-spacing', '0');
+                    icon.removeClass('bi-eye').addClass('bi-eye-slash');
+                } else {
+                    textSpan.text('••••••••');
+                    textSpan.css('letter-spacing', '2px');
+                    icon.removeClass('bi-eye-slash').addClass('bi-eye');
+                }
+            });
+        });
+    </script>
+}

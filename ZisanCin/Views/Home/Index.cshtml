@@ -1,8 +1,682 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model ZisanCin.Entities.BodyMassIndex
+<main class="page-content">
+    <div class="relative z-1 bg-linear-(--banner-2-gradient) overflow-hidden sm:bg-center bg-left bgxl-cover 2xl:h-237.5 xl:h-205 lg:h-170 md:h-150 h-auto"
+         style="background-image: url(images/hero-banner/banner-1.webp);">
+        <div class="container h-full">
+            <div class="h-full xl:pt-0 lg:pt-7.5 sm:pt-33.75 pt-30">
+                <div class="row items-end h-full">
+                    <div class="md:w-1/2 w-full self-center">
+                        <div class="relative ml-2.5 z-1">
+                            <span class="2xxl:text-6xl 2xl:text-4xxl text-3xl relative text-primary-second font-arizonia before:absolute before:top-[-65%] before:right-[105%] before:w-8 before:h-12.5 before:animate-move4 before:bg-no-repeat before:bg-bottom before:bg-contain before:bg-sub-title-before after:absolute after:-bottom-1.25 after:left-0 after:size-full after:bg-no-repeat after:bg-bottom after:bg-contain after:bg-sub-title-after max-xl:before:hidden">
+                                Best
+                                Nutrition
+                            </span>
+                            <h1 class="2xxl:text-7xl xl:text-5xxl md:text-[36px] sm:text-3xxl text-2xxl font-bold leading-[1.2] mt-2.5 mb-1.25 text-white wow fadeInUp"
+                                data-wow-delay="0.2s" data-wow-duration="0.8s">
+                                Fuel Your Body, Nourish
+                                Your Life
+                            </h1>
+                            <p class="xl:text-xl lg:text-lg text-base font-medium lg:mb-7.5 mb-5 text-white">
+                                It is a long established fact that a reader will be distracted by the
+                                readable content of a page when looking at its layout. The point of
+                                using Lorem Ipsum is that it has
+                            </p>
+                            <div class="flex flex-wrap items-center wow fadeInUp" data-wow-delay="0.8s"
+                                 data-wow-duration="0.8s">
+                                <a href="about-us.html"
+                                   class="btn btn-lg btn-white hover-secondary group wow fadeInUp"
+                                   data-wow-delay="0.6s" data-wow-duration="0.8s">
+                                    About Us
+                                    <span class="size-11 min-w-11 bg-secondary rounded-2lg text-white inline-flex items-center justify-center -my-2.75 -mr-4.5 ml-3 group-hover:bg-white group-hover:text-heading">
+                                        <i class="feather icon-arrow-right group-hover:animate-toRightFromLeft"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 w-full">
+                        <div class="2xxl:ml-7.5 2xxl:w-180 2xl:w-162.5 xl:w-145 lg:w-120 sm:w-92.5 w-75 max-md:mx-auto">
+                            <img src="images/hero-banner/1.png" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="h-full w-20 min-w-20 absolute bottom-0 flex justify-between items-center flex-col py-10 px-3.75 right-0 border-r border-black/10 max-2xxl:hidden">
+            <ul class="flex gap-7.5 [writing-mode:tb-rl]">
+                <li>
+                    <a class="text-sm uppercase text-white tracking-[1px]"
+                       href="https://www.instagram.com/">Instagram</a>
+                </li>
+                <li>
+                    <a class="text-sm uppercase text-white tracking-[1px]"
+                       href="https://www.facebook.com/">Facebook</a>
+                </li>
+                <li>
+                    <a class="text-sm uppercase text-white tracking-[1px]"
+                       href="https://x.com/">twitter</a>
+                </li>
+            </ul>
+            <a href="contact-us.html"
+               class="btn btn-white btn-sm !py-2 !px-4 shadow-btn [writing-mode:tb-rl] !rounded-2xl hover:!bg-primary hover:!border-primary">
+                LET'S
+                TALK
+            </a>
+        </div>
+        <div class="absolute animate-move4 h-auto md:top-1/4 top-[65%] md:right-2/5 sm:right-1/5 right-[10%] max-xl:w-15 max-lg:!w-12.5">
+            <img src="images/hero-banner/item1.png" alt="">
+        </div>
+        <div class="absolute animate-move4 h-auto bottom-[33%] left-[5%] max-2xxl:hidden">
+            <img src="images/hero-banner/item2.png" alt="">
+        </div>
+        <div class="absolute animate-move4 h-auto sm:bottom-[10%] bottom-[22%] lg:left-[30%] md:left-2/5 left-[5%] max-xl:w-17.5 max-sm:!w-12.5">
+            <img src="images/hero-banner/item3.png" alt="">
+        </div>
+    </div>
+
+
+    @*About*@
+    <section class="2xxl:py-25 xl:17.5 md:py-12.5 sm:py-10 py-7.5 max-lg:!pt-25 bg-white overflow-hidden">
+        <div class="container">
+            <div class="row 2xxl:py-36.25 xl:py-25 py-0 items-center">
+                <div class="lg:w-1/2 w-full mb-12.5">
+                    <div class="2xl:pr-5 lg:pr-7.5 lg:pl-21.25 relative">
+                        <div class="rounded-full z-1 lg:border-[10px] border-[5px] border-light relative overflow-hidden max-lg:mx-auto lg:w-auto md:w-115 sm:w-87.5 w-57.5">
+                            <img src="images/about/img1.webp" alt="" class="rounded-full">
+                        </div>
+                        <div class="absolute top-1/2 left-1/2 h-auto 2xl:w-187.5 xl:w-152.5 lg:w-115 md:w-155 sm:w-117.5 w-82.5 xl:ml-10 lg:ml-12.5 md:ml-5 ml-2.5 2xl:-mt-2.5 animate-circleWrapper">
+                            <img src="images/about/bg.png" alt="">
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:w-1/2 w-full 2xl:!pl-25 lg:!pl-15 !pl-2.5">
+                    <div class="sm:mb-7.5 mb-5">
+                        <div class="text-primary font-semibold leading-5 uppercase text-lg inline-flex gap-1.25 items-center wow fadeInUp"
+                             data-wow-delay="0.2s" data-wow-duration="0.8s">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <g clip-path="url(#clip0_271_265)">
+                                    <path d="M10.2201 4.75678L7.26892 6.20938C5.43504 7.11203 3.34137 6.35712 2.43872 4.52319L2.28418 4.20923L5.11059 2.75663C6.94448 1.85398 9.1629 2.60889 10.0655 4.44282L10.2201 4.75678Z"
+                                          stroke="var(--primary)" stroke-width="1.5"
+                                          stroke-miterlimit="10" stroke-linecap="round"
+                                          stroke-linejoin="round" />
+                                    <path d="M10.2202 4.75609V3.63537C10.2202 2.22374 11.152 0.981554 12.5072 0.586426"
+                                          stroke="var(--primary)" stroke-width="1.5"
+                                          stroke-miterlimit="10" stroke-linecap="round"
+                                          stroke-linejoin="round" />
+                                    <circle cx="13.2289" cy="14.7057" r="0.586417"
+                                            fill="var(--primary)" />
+                                    <circle cx="11.3483" cy="15.9028" r="0.586417"
+                                            fill="var(--primary)" />
+                                    <path d="M4.55515 6.4092C3.23681 7.78575 2.38721 9.69267 2.38721 11.7492C2.38721 15.9821 5.81865 19.4136 10.0515 19.4136C14.2969 19.4136 17.7159 15.9946 17.7159 11.7492C17.7159 7.58238 14.3907 4.19219 10.249 4.08741C10.1265 4.08433 10.0039 4.09273 9.88307 4.11263"
+                                          stroke="var(--primary)" stroke-width="1.5"
+                                          stroke-miterlimit="10" stroke-linecap="round"
+                                          stroke-linejoin="round" />
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_271_2656">
+                                        <rect width="20" height="20" fill="white" />
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                            About Us
+                        </div>
+                        <h2 class="2xxl:text-5xxl xl:text-4xxl lg:text-4xl sm:text-3xxl text-2xxl font-bold capitalize wow fadeInUp"
+                            data-wow-delay="0.2s" data-wow-duration="0.8s">
+                            Transforming Lives
+                            <br>Through Nutrition
+                        </h2>
+                        <p class="xl:text-lg sm:text-base text-sm font-light max-w-212.5 mx-auto"
+                           data-wow-delay="0.4s" data-wow-duration="0.8s">
+                            It is a long established fact
+                            that a reader will be distracted by the readable content of a page when
+                            looking at its layout.
+                        </p>
+                    </div>
+                    <ul class="flex flex-wrap text-secondary font-medium mb-7.5 wow fadeInUp"
+                        data-wow-delay="0.6s" data-wow-duration="0.8s">
+                        <li class="sm:w-[45%] w-full mb-3.75 me-3.75 bg-light py-3.75 pr-5 pl-12.5 rounded-xxl leading-normal relative before:absolute before:left-5 before:font-black before:content-['\f109'] before:font-['flaticon'] before:text-primary before:top-3.5">
+                            Nutrition program
+                        </li>
+                        <li class="sm:w-[45%] w-full mb-3.75 me-3.75 bg-light py-3.75 pr-5 pl-12.5 rounded-xxl leading-normal relative before:absolute before:left-5 before:font-black before:content-['\f109'] before:font-['flaticon'] before:text-primary before:top-3.5">
+                            Daily recipes
+                        </li>
+                        <li class="sm:w-[45%] w-full mb-3.75 me-3.75 bg-light py-3.75 pr-5 pl-12.5 rounded-xxl leading-normal relative before:absolute before:left-5 before:font-black before:content-['\f109'] before:font-['flaticon'] before:text-primary before:top-3.5">
+                            Consultation
+                        </li>
+                        <li class="sm:w-[45%] w-full mb-3.75 me-3.75 bg-light py-3.75 pr-5 pl-12.5 rounded-xxl leading-normal relative before:absolute before:left-5 before:font-black before:content-['\f109'] before:font-['flaticon'] before:text-primary before:top-3.5">
+                            Support 24/7
+                        </li>
+                    </ul>
+                    <div class="flex flex-wrap items-center wow fadeInUp" data-wow-delay="0.8s"
+                         data-wow-duration="0.8s">
+                        <a href="appointment.html" class="btn btn-lg btn-icon btn-primary wow fadeInUp"
+                           data-wow-delay="0.6s" data-wow-duration="0.8s"
+                           style="visibility: visible; animation-duration: 0.8s; animation-delay: 0.6s; animation-name: fadeInUp;">
+                            Read More
+                            <span class="size-11 min-w-11 bg-white rounded-2lg text-heading inline-flex items-center justify-center -my-2.75 -mr-4.5 ml-3">
+                                <i class="feather icon-arrow-right group-hover:animate-toRightFromLeft"></i>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    @*Services*@
+    <section class="2xxl:py-25 xl:17.5 md:py-12.5 sm:py-10 py-7.5 bg-light">
+        <div class="container">
+            <div class="3xl:-mx-22.5 2xxl:-mx-15 xl:-mx-5">
+                <div class="sm:mb-7.5 mb-5 text-center">
+                    <span class="text-primary font-semibold leading-5 uppercase text-lg inline-flex gap-1.25 items-center">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <g clip-path="url(#clip0_271_265)">
+                                <path d="M10.2201 4.75678L7.26892 6.20938C5.43504 7.11203 3.34137 6.35712 2.43872 4.52319L2.28418 4.20923L5.11059 2.75663C6.94448 1.85398 9.1629 2.60889 10.0655 4.44282L10.2201 4.75678Z"
+                                      stroke="var(--primary)" stroke-width="1.5" stroke-miterlimit="10"
+                                      stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M10.2202 4.75609V3.63537C10.2202 2.22374 11.152 0.981554 12.5072 0.586426"
+                                      stroke="var(--primary)" stroke-width="1.5" stroke-miterlimit="10"
+                                      stroke-linecap="round" stroke-linejoin="round" />
+                                <circle cx="13.2289" cy="14.7057" r="0.586417" fill="var(--primary)" />
+                                <circle cx="11.3483" cy="15.9028" r="0.586417" fill="var(--primary)" />
+                                <path d="M4.55515 6.4092C3.23681 7.78575 2.38721 9.69267 2.38721 11.7492C2.38721 15.9821 5.81865 19.4136 10.0515 19.4136C14.2969 19.4136 17.7159 15.9946 17.7159 11.7492C17.7159 7.58238 14.3907 4.19219 10.249 4.08741C10.1265 4.08433 10.0039 4.09273 9.88307 4.11263"
+                                      stroke="var(--primary)" stroke-width="1.5" stroke-miterlimit="10"
+                                      stroke-linecap="round" stroke-linejoin="round" />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_271_2654">
+                                    <rect width="20" height="20" fill="white" />
+                                </clipPath>
+                            </defs>
+                        </svg>Our Services
+                    </span>
+                    <h2 class="2xxl:text-5xxl lg:text-[38px] sm:text-[32px] text-2xxl font-bold capitalize mb-0">
+                        The Best Quality Service<br> You Can Get
+                    </h2>
+                </div>
+                <div class="row box-hover-wrapper">
+                    <div class="xl:w-1/4 md:w-1/2 w-full mb-7.5 wow fadeInUp">
+                        <div class="rounded-xxl h-full relative flex flex-col bg-white duration-700 box-hover [.box-hover.active]:bg-primary">
+                            <div class="relative overflow-hidden rounded-t-xxl">
+                                <img src="images/services/img1.webp" alt="" class="w-full">
+                            </div>
+                            <div class="p-7.5 flex-1 flex-col flex">
+                                <h3 class="text-xl mb-2.5 duration-700 [.box-hover.active_&]:text-white">
+                                    Nutritional Counseling
+                                </h3>
+                                <p class="mb-6.25 duration-700 [.box-hover.active_&]:text-white">
+                                    It is a
+                                    long established fact that a reader will be distracted.
+                                </p>
+                                <a href="service-detail.html"
+                                   class="mt-auto font-medium text-primary duration-700 [.box-hover.active_&]:text-white">
+                                    View
+                                    All Details <i class="feather icon-arrow-right-circle inline-block text-base"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="xl:w-1/4 md:w-1/2 w-full mb-7.5 wow fadeInUp">
+                        <div class="rounded-xxl h-full relative flex flex-col bg-white duration-700 box-hover [.box-hover.active]:bg-primary active">
+                            <div class="relative overflow-hidden rounded-t-xxl">
+                                <img src="images/services/img2.webp" alt="" class="w-full">
+                            </div>
+                            <div class="p-7.5 flex-1 flex-col flex">
+                                <h3 class="text-xl mb-2.5 duration-700 [.box-hover.active_&]:text-white">
+                                    Weight Management
+                                </h3>
+                                <p class="mb-6.25 duration-700 [.box-hover.active_&]:text-white">
+                                    It is a
+                                    long established fact that a reader will be distracted.
+                                </p>
+                                <a href="service-detail.html"
+                                   class="mt-auto font-medium text-primary duration-700 [.box-hover.active_&]:text-white">
+                                    View
+                                    All Details <i class="feather icon-arrow-right-circle inline-block text-base"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="xl:w-1/4 md:w-1/2 w-full mb-7.5 wow fadeInUp">
+                        <div class="rounded-xxl h-full relative flex flex-col bg-white duration-700 box-hover [.box-hover.active]:bg-primary">
+                            <div class="relative overflow-hidden rounded-t-xxl">
+                                <img src="images/services/img3.webp" alt="" class="w-full">
+                            </div>
+                            <div class="p-7.5 flex-1 flex-col flex">
+                                <h3 class="text-xl mb-2.5 duration-700 [.box-hover.active_&]:text-white">
+                                    Meal Planning Services
+                                </h3>
+                                <p class="mb-6.25 duration-700 [.box-hover.active_&]:text-white">
+                                    It is a
+                                    long established fact that a reader will be distracted.
+                                </p>
+                                <a href="service-detail.html"
+                                   class="mt-auto font-medium text-primary duration-700 [.box-hover.active_&]:text-white">
+                                    View
+                                    All Details <i class="feather icon-arrow-right-circle inline-block text-base"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="xl:w-1/4 md:w-1/2 w-full mb-7.5 wow fadeInUp">
+                        <div class="rounded-xxl h-full relative flex flex-col bg-white duration-700 box-hover [.box-hover.active]:bg-primary">
+                            <div class="relative overflow-hidden rounded-t-xxl">
+                                <img src="images/services/img4.webp" alt="" class="w-full">
+                            </div>
+                            <div class="p-7.5 flex-1 flex-col flex">
+                                <h3 class="text-xl mb-2.5 duration-700 [.box-hover.active_&]:text-white">
+                                    Nutrition Education
+                                </h3>
+                                <p class="mb-6.25 duration-700 [.box-hover.active_&]:text-white">
+                                    It is a
+                                    long established fact that a reader will be distracted.
+                                </p>
+                                <a href="service-detail.html"
+                                   class="mt-auto font-medium text-primary duration-700 [.box-hover.active_&]:text-white">
+                                    View
+                                    All Details <i class="feather icon-arrow-right-circle inline-block text-base"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+  
+  
+
+@*VKİ*@
+<section class="bg-light content-wrapper style-35">
+    <div class="row gx-0">
+        <div class="lg:w-7/12 w-full">
+            <div class="relative h-full">
+                <img src="images/background/img.png" alt="" class="h-full object-cover">
+                <div class="absolute top-1/2 left-1/2 -translate-1/2 text-3xxl">
+                    <button data-type="youtube" data-src="https://www.youtube.com/embed/o8OgzQdA70c"
+                            class="sm:size-25 sm:min-w-25 sm:leading-25 size-17.5 min-w-17.5 leading-17.5 text-center rounded-full bg-white text-black inline-block md:text-[32px] text-2xl">
+                        <i class="fa fa-play"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="lg:w-5/12 w-full">
+            <div class="bg-secondary h-full xl:py-31.25 xl:px-20 sm:py-21.25 sm:px-12.5 py-12.5 px-7.5 wow fadeInUp"
+                 data-wow-delay="0.4s"
+                 style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInUp;">
+                <div class="2xl:w-105 w-full">
+                    <div class="mb-10">
+                        <h2 class="2xxl:text-5xl lg:text-[38px] sm:text-[32px] text-2xxl font-bold capitalize mb-0 text-white">
+                            Vücut Kitle İndeksini <br class="hidden lg:block">Hesapla
+                        </h2>
+                    </div>
+
+                    <div class="custom-tab">
+                        <ul class="flex flex-wrap gap-3 mb-5" id="myTab1" role="tablist">
+                            <li class="tab-title active" role="presentation">
+                                <button type="button" class="text-2xs font-semibold py-1.75 px-3.75 rounded-[7px] uppercase bg-[#32382A] text-white/50 [.tab-title.active_&]:text-black [.tab-title.active_&]:bg-primary-second duration-500 active">
+                                    Metrik
+                                </button>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content-area" id="myTabContent">
+                            <div class="tab-content active">
+                                <form id="bmiForm" class="bmi-form">
+                                    @Html.AntiForgeryToken()
+
+                                    <div class="relative mb-5">
+                                        <label asp-for="Name" class="block mb-2 text-base text-white font-medium"></label>
+                                        <input asp-for="Name"
+                                               placeholder="Ad Soyad"
+                                               class="h-15 py-3.75 px-6.25 rounded-2xl border border-white/50 bg-white/[0.08] text-white text-2sm block w-full" />
+                                        <span class="text-danger text-sm field-validation-valid" data-valmsg-for="Name"></span>
+                                    </div>
+
+                                    <div class="relative mb-5">
+                                        <label asp-for="Phone" class="block mb-2 text-base text-white font-medium"></label>
+                                        <input asp-for="Phone"
+                                               placeholder="Telefon"
+                                               class="h-15 py-3.75 px-6.25 rounded-2xl border border-white/50 bg-white/[0.08] text-white text-2sm block w-full" />
+                                        <span class="text-danger text-sm field-validation-valid" data-valmsg-for="Phone"></span>
+                                    </div>
+
+                                    <div class="relative mb-5">
+                                        <label asp-for="Age" class="block mb-2 text-base text-white font-medium"></label>
+                                        <input asp-for="Age" type="number" min="1" max="120"
+                                               placeholder="Yaş"
+                                               class="h-15 py-3.75 px-6.25 rounded-2xl border border-white/50 bg-white/[0.08] text-white text-2sm block w-full" />
+                                        <span class="text-danger text-sm field-validation-valid" data-valmsg-for="Age"></span>
+                                    </div>
+
+                                    <div class="relative mb-5">
+                                        <label asp-for="Gender" class="block mb-2 text-base text-white font-medium"></label>
+                                        <select asp-for="Gender"
+                                                class="h-15 py-3.75 px-6.25 rounded-2xl border border-white/50 bg-white/[0.08] text-white text-2sm block w-full">
+                                            <option value="">Cinsiyet Seçiniz</option>
+                                            <option value="Erkek">Erkek</option>
+                                            <option value="Kadın">Kadın</option>
+                                        </select>
+                                        <span class="text-danger text-sm field-validation-valid" data-valmsg-for="Gender"></span>
+                                    </div>
+
+                                    <div class="relative mb-5">
+                                        <label asp-for="Height" class="block mb-2 text-base text-white font-medium"></label>
+                                        <input asp-for="Height" type="number" step="0.1" min="50" max="250"
+                                               placeholder="CM"
+                                               class="h-15 py-3.75 px-6.25 rounded-2xl border border-white/50 bg-white/[0.08] text-white text-2sm block w-full" />
+                                        <span class="text-danger text-sm field-validation-valid" data-valmsg-for="Height"></span>
+                                    </div>
+
+                                    <div class="relative mb-5">
+                                        <label asp-for="Weight" class="block mb-2 text-base text-white font-medium"></label>
+                                        <input asp-for="Weight" type="number" step="0.1" min="10" max="500"
+                                               placeholder="KG"
+                                               class="h-15 py-3.75 px-6.25 rounded-2xl border border-white/50 bg-white/[0.08] text-white text-2sm block w-full" />
+                                        <span class="text-danger text-sm field-validation-valid" data-valmsg-for="Weight"></span>
+                                    </div>
+
+                                    <button id="bmiSubmitBtn" name="submit" type="submit" value="Submit"
+                                            class="btn btn-lg btn-icon btn-primary">
+                                        Hesapla
+                                        <span class="size-11 min-w-11 bg-white rounded-2lg text-heading inline-flex items-center justify-center -my-2.75 -mr-4.5 ml-3">
+                                            <i class="feather icon-arrow-right group-hover:animate-toRightFromLeft"></i>
+                                        </span>
+                                    </button>
+                                </form>
+
+                                <div id="bmiResultBox" class="mt-6 hidden">
+                                    <div class="p-4 rounded-2xl border border-white/30 bg-white/[0.08] text-white">
+                                        <p class="mb-2"><strong>VKI:</strong> <span id="bmiValue"></span></p>
+                                        <p class="mb-0"><strong>Durum:</strong> <span id="bmiStatus"></span></p>
+                                    </div>
+                                </div>
+
+                                <div id="bmiErrorBox" class="mt-4 hidden">
+                                    <div class="p-4 rounded-2xl border border-red-400/30 bg-red-500/10 text-white">
+                                        <span id="bmiErrorText"></span>
+                                    </div>
+                                </div>
+
+                                <div id="bmiSuccessBox" class="mt-4 hidden">
+                                    <div class="p-4 rounded-2xl border border-green-400/30 bg-green-500/10 text-white">
+                                        <span id="bmiSuccessText"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        document.getElementById("bmiForm").addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const form = this;
+            const submitBtn = document.getElementById("bmiSubmitBtn");
+            const resultBox = document.getElementById("bmiResultBox");
+            const errorBox = document.getElementById("bmiErrorBox");
+            const successBox = document.getElementById("bmiSuccessBox");
+            const errorText = document.getElementById("bmiErrorText");
+            const successText = document.getElementById("bmiSuccessText");
+
+            document.querySelectorAll("[data-valmsg-for]").forEach(x => x.textContent = "");
+            errorBox.classList.add("hidden");
+            successBox.classList.add("hidden");
+
+            submitBtn.disabled = true;
+
+            try {
+                const formData = new FormData(form);
+
+                const response = await fetch('@Url.Action("CalculateBmiAjax", "Home")', {
+                    method: "POST",
+                    body: formData,
+                    headers: {
+                        "RequestVerificationToken": formData.get("__RequestVerificationToken")
+                    }
+                });
+
+                const data = await response.json();
+
+                if (!data.success) {
+                    if (data.errors) {
+                        for (const key in data.errors) {
+                            const span = document.querySelector(`[data-valmsg-for='${key}']`);
+                            if (span) {
+                                span.textContent = data.errors[key];
+                            }
+                        }
+                    }
+
+                    if (data.message) {
+                        errorText.textContent = data.message;
+                        errorBox.classList.remove("hidden");
+                    }
+
+                    return;
+                }
+
+                document.getElementById("bmiValue").textContent = data.bmi;
+                document.getElementById("bmiStatus").textContent = data.status;
+                resultBox.classList.remove("hidden");
+
+                successText.textContent = data.message;
+                successBox.classList.remove("hidden");
+
+                form.reset();
+            } catch (err) {
+                errorText.textContent = "İşlem sırasında bir hata oluştu.";
+                errorBox.classList.remove("hidden");
+            } finally {
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+    @*Blog*@
+    <section class="2xxl:py-25 xl:17.5 md:py-12.5 sm:py-10 py-7.5 bg-light overlay-primary-light">
+        <div class="container">
+            <div class="mb-7.5 row items-end">
+                <div class="xl:w-7/12 md:w-3/4 w-full wow fadeInUp" data-wow-delay="0.2s"
+                     data-wow-duration="0.8s">
+                    <span class="text-primary font-semibold leading-5 uppercase text-lg inline-flex gap-1.25 items-center">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <g clip-path="url(#clip0_271_265)">
+                                <path d="M10.2201 4.75678L7.26892 6.20938C5.43504 7.11203 3.34137 6.35712 2.43872 4.52319L2.28418 4.20923L5.11059 2.75663C6.94448 1.85398 9.1629 2.60889 10.0655 4.44282L10.2201 4.75678Z"
+                                      stroke="var(--color-primary)" stroke-width="1.5"
+                                      stroke-miterlimit="10" stroke-linecap="round"
+                                      stroke-linejoin="round"></path>
+                                <path d="M10.2202 4.75609V3.63537C10.2202 2.22374 11.152 0.981554 12.5072 0.586426"
+                                      stroke="var(--color-primary)" stroke-width="1.5"
+                                      stroke-miterlimit="10" stroke-linecap="round"
+                                      stroke-linejoin="round"></path>
+                                <circle cx="13.2289" cy="14.7057" r="0.586417"
+                                        fill="var(--color-primary)"></circle>
+                                <circle cx="11.3483" cy="15.9028" r="0.586417"
+                                        fill="var(--color-primary)"></circle>
+                                <path d="M4.55515 6.4092C3.23681 7.78575 2.38721 9.69267 2.38721 11.7492C2.38721 15.9821 5.81865 19.4136 10.0515 19.4136C14.2969 19.4136 17.7159 15.9946 17.7159 11.7492C17.7159 7.58238 14.3907 4.19219 10.249 4.08741C10.1265 4.08433 10.0039 4.09273 9.88307 4.11263"
+                                      stroke="var(--color-primary)" stroke-width="1.5"
+                                      stroke-miterlimit="10" stroke-linecap="round"
+                                      stroke-linejoin="round"></path>
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_271_2652">
+                                    <rect width="20" height="20" fill="white"></rect>
+                                </clipPath>
+                            </defs>
+                        </svg>Our Services
+                    </span>
+                    <h2 class="2xxl:text-5xxl lg:text-[38px] sm:text-[32px] text-2xxl capitalize mb-0">
+                        News And Update
+                    </h2>
+                </div>
+                <div class="xl:w-5/12 md:w-1/4 w-full lg:text-end max-md:hidden wow fadeInUp"
+                     data-wow-delay="0.4s" data-wow-duration="0.8s">
+                    <a href="blog-details.html" class="font-medium underline text-primary">
+                        View All Post
+                        <i class="feather icon-arrow-right inline-block text-base"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="xl:w-1/3 md:w-1/2 mb-7.5 wow fadeInUp" data-wow-delay="0.6s"
+                     data-wow-duration="0.8s">
+                    <div class="relative z-1 p-5 filter drop-shadow-[0_0_12.5px_rgba(var(--secondary-rgb),0.07)] h-full duration-200 after:bg-white after:absolute after:size-full after:top-0 after:left-0 after:-z-1 after:mask-[url(../images/bg02.svg)] after:mask-position-[right_bottom] after:rounded-3xl after:rounded-ee-none hover:-translate-y-2 group">
+                        <div class="rounded-xxl h-62.5 mb-3.75 overflow-hidden relative before:absolute before:top-0 before:-left-[75%] before:z-0 before:block before:w-1/2 before:h-full before:skew-x-[-25deg] before:bg-linear-(--img-hover-gradient) group-hover:before:animate-dzShine">
+                            <img src="images/blog/grid/pic1.webp" alt="" class="size-full object-cover">
+                        </div>
+                        <div class="p-2.5">
+                            <h3 class="xl:text-2xl text-xl font-semibold mb-2">
+                                <a href="blog-details.html">Healthy Eating Habits for a Better Life</a>
+                            </h3>
+                            <p class="text-2sm">
+                                It is a long established fact that a reader will be
+                                distracted by the readable content.
+                            </p>
+                            <div class="mb-0 mt-6.25 mr-8.75">
+                                <ul class="flex items-center flex-wrap gap-1.25">
+                                    <li class="bg-primary text-white rounded-xxl font-medium text-2xs py-1.25 pr-3.75 pl-5.75 leading-[1.4] relative inline-flex mr-1.25 items-center gap-1 flex-wrap after:absolute after:size-1.5 after:rounded-full after:bg-white after:left-2.5">
+                                        17 May 2025
+                                    </li>
+                                    <li class="bg-primary text-white rounded-xxl font-medium text-2xs py-1.25 pr-3.75 pl-5.75 leading-[1.4] relative inline-flex mr-1.25 items-center gap-1 flex-wrap after:absolute after:size-1.5 after:rounded-full after:bg-white after:left-2.5">
+                                        By <a href="javascript:void(0);">Nashid Martines</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <a href="blog-details.html"
+                           class="btn btn-square btn-secondary !rounded-full !size-12 min-w-12 !absolute right-0 bottom-0">
+                            <i class="feather icon-arrow-up-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="xl:w-1/3 md:w-1/2 mb-7.5 wow fadeInUp" data-wow-delay="0.8s"
+                     data-wow-duration="0.8s">
+                    <div class="relative z-1 p-5 filter drop-shadow-[0_0_12.5px_rgba(var(--secondary-rgb),0.07)] h-full duration-200 after:bg-white after:absolute after:size-full after:top-0 after:left-0 after:-z-1 after:mask-[url(../images/bg02.svg)] after:mask-position-[right_bottom] after:rounded-3xl after:rounded-ee-none hover:-translate-y-2 group">
+                        <div class="rounded-xxl h-62.5 mb-3.75 overflow-hidden relative before:absolute before:top-0 before:-left-[75%] before:z-0 before:block before:w-1/2 before:h-full before:skew-x-[-25deg] before:bg-linear-(--img-hover-gradient) group-hover:before:animate-dzShine">
+                            <img src="images/blog/grid/pic2.webp" alt="" class="size-full object-cover">
+                        </div>
+                        <div class="dz-info">
+                            <h3 class="xl:text-2xl text-xl font-semibold mb-2">
+                                <a href="blog-details.html">
+                                    Discover the Power of Balanced Daily
+                                    Nutrition
+                                </a>
+                            </h3>
+                            <p class="text-2sm">
+                                It is a long established fact that a reader will be
+                                distracted by the readable content.
+                            </p>
+                            <div class="mb-0 mt-6.25 mr-8.75">
+                                <ul class="flex items-center flex-wrap gap-1.25">
+                                    <li class="bg-primary text-white rounded-xxl font-medium text-2xs py-1.25 pr-3.75 pl-5.75 leading-[1.4] relative inline-flex mr-1.25 items-center gap-1 flex-wrap after:absolute after:size-1.5 after:rounded-full after:bg-white after:left-2.5">
+                                        17 May 2025
+                                    </li>
+                                    <li class="bg-primary text-white rounded-xxl font-medium text-2xs py-1.25 pr-3.75 pl-5.75 leading-[1.4] relative inline-flex mr-1.25 items-center gap-1 flex-wrap after:absolute after:size-1.5 after:rounded-full after:bg-white after:left-2.5">
+                                        By <a href="javascript:void(0);">Nashid Martines</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <a href="blog-details.html"
+                           class="btn btn-square btn-secondary !rounded-full !size-12 min-w-12 !absolute right-0 bottom-0">
+                            <i class="feather icon-arrow-up-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="xl:w-1/3 md:w-1/2 mb-7.5 wow fadeInUp" data-wow-delay="1.0s"
+                     data-wow-duration="0.8s">
+                    <div class="relative z-1 p-5 filter drop-shadow-[0_0_12.5px_rgba(var(--secondary-rgb),0.07)] h-full duration-200 after:bg-white after:absolute after:size-full after:top-0 after:left-0 after:-z-1 after:mask-[url(../images/bg02.svg)] after:mask-position-[right_bottom] after:rounded-3xl after:rounded-ee-none hover:-translate-y-2 group">
+                        <div class="rounded-xxl h-62.5 mb-3.75 overflow-hidden relative before:absolute before:top-0 before:-left-[75%] before:z-0 before:block before:w-1/2 before:h-full before:skew-x-[-25deg] before:bg-linear-(--img-hover-gradient) group-hover:before:animate-dzShine">
+                            <img src="images/blog/grid/pic3.webp" alt="" class="size-full object-cover">
+                        </div>
+                        <div class="dz-info">
+                            <h3 class="xl:text-2xl text-xl font-semibold mb-2">
+                                <a href="blog-details.html">
+                                    Eat Well, Live Strong, Stay Energized
+                                    Always
+                                </a>
+                            </h3>
+                            <p class="text-2sm">
+                                It is a long established fact that a reader will be
+                                distracted by the readable content.
+                            </p>
+                            <div class="mb-0 mt-6.25 mr-8.75">
+                                <ul class="flex items-center flex-wrap gap-1.25">
+                                    <li class="bg-primary text-white rounded-xxl font-medium text-2xs py-1.25 pr-3.75 pl-5.75 leading-[1.4] relative inline-flex mr-1.25 items-center gap-1 flex-wrap after:absolute after:size-1.5 after:rounded-full after:bg-white after:left-2.5">
+                                        17 May 2025
+                                    </li>
+                                    <li class="bg-primary text-white rounded-xxl font-medium text-2xs py-1.25 pr-3.75 pl-5.75 leading-[1.4] relative inline-flex mr-1.25 items-center gap-1 flex-wrap after:absolute after:size-1.5 after:rounded-full after:bg-white after:left-2.5">
+                                        By <a href="javascript:void(0);">Nashid Martines</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <a href="blog-details.html"
+                           class="btn btn-square btn-secondary !rounded-full !size-12 min-w-12 !absolute right-0 bottom-0">
+                            <i class="feather icon-arrow-up-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    @*CTA*@
+    <section class="bg-no-repeat bg-cover bg-center"
+             style="background-image: url(images/background/bg2.png);">
+        <div class="container">
+            <div class="row">
+                <div class="md:w-5/12 w-full order-2 md:order-1 p-0">
+                    <div class="md:absolute bottom-0 left-0 md:w-1/2 w-full overflow-hidden">
+                        <img src="images/background/img3.png" alt="" class="w-full">
+                    </div>
+                </div>
+                <div class="md:w-7/12 w-full order-1 md:order-2">
+                    <div class="2xxl:py-37.5 2xl:py-35 xl:py-30 lg:py-25 py-12.5 md:ml-10">
+                        <div class="relative z-2">
+                            <h2 class="2xxl:text-6xxl xl:text-5xxl sm:text-4xxl text-[32px] font-bold capitalize sm:mb-7.5 mb-3.75 !text-white"
+                                data-wow-delay="0.2s" data-wow-duration="0.8s">
+                                Want to schedule an
+                                appointment?
+                            </h2>
+                            <a href="appointment.html" class="btn btn-lg btn-white group wow fadeInUp"
+                               data-wow-delay="0.6s" data-wow-duration="0.8s">
+                                Read More
+                                <span class="size-11 min-w-11 bg-secondary rounded-2lg text-white inline-flex items-center justify-center -my-2.75 -mr-4.5 ml-3 group-hover:bg-white group-hover:text-heading">
+                                    <i class="feather icon-arrow-right group-hover:animate-toRightFromLeft"></i>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="absolute animate-move4 h-auto bottom-[10%] right-1/5 max-lg:hidden">
+            <img src="images/banner/item1.png" alt="">
+        </div>
+        <div class="absolute animate-move4 h-auto top-[15%] left-[5%] max-lg:hidden">
+            <img src="images/banner/item2.png" alt="">
+        </div>
+        <div class="absolute animate-move4 h-auto top-1/5 right-[12%] max-lg:hidden">
+            <img src="images/banner/item3.png" alt="">
+        </div>
+    </section>
+</main>
+

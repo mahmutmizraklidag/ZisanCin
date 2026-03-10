@@ -1,0 +1,128 @@
+﻿@model User
+
+@{
+    ViewData["Title"] = "Yeni Yönetici Ekle";
+}
+
+<style>
+    .form-card {
+        background: #fff;
+        border-radius: 20px;
+        border: none;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        max-width: 700px;
+        margin: auto;
+    }
+
+    .form-control {
+        border-radius: 12px;
+        padding: 12px 15px;
+        border: 1px solid #e9ecef;
+        background-color: #f8f9fa;
+        transition: all 0.3s ease;
+    }
+
+        .form-control:focus {
+            background-color: #fff;
+            border-color: #28a745;
+            box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.1);
+        }
+
+    .section-header {
+        border-left: 5px solid #28a745;
+        padding-left: 15px;
+        margin-bottom: 30px;
+    }
+
+    .input-group-text {
+        border-radius: 0 12px 12px 0;
+        background-color: #f8f9fa;
+        border-color: #e9ecef;
+    }
+
+    .btn-save {
+        background-color: #28a745;
+        border: none;
+        color: white;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+
+        .btn-save:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+        }
+</style>
+
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h2 class="fw-bold text-dark mb-1">Yeni Yönetici Tanımla</h2>
+        <p class="text-muted">Sisteme erişebilecek yeni bir kullanıcı hesabı oluşturun.</p>
+    </div>
+
+    <div class="card form-card shadow-lg">
+        <div class="card-body p-4 p-md-5">
+            <form asp-action="Create" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger rounded-3 d-none"></div>
+
+                <div class="section-header">
+                    <h5 class="fw-bold mb-0">Erişim Yetkilendirme</h5>
+                    <small class="text-muted">Giriş için kullanılacak kimlik bilgileri.</small>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-md-12">
+                        <label asp-for="Username" class="form-label fw-bold">Kullanıcı Adı</label>
+                        <div class="position-relative">
+                            <i class="bi bi-person position-absolute text-muted" style="left: 15px; top: 13px;"></i>
+                            <input asp-for="Username" class="form-control ps-5" placeholder="Sistem giriş ismi belirleyin" />
+                        </div>
+                        <span asp-validation-for="Username" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label asp-for="password" class="form-label fw-bold">Erişim Şifresi</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-white border-end-0"><i class="bi bi-shield-lock text-muted"></i></span>
+                            <input asp-for="password"
+                                   class="form-control border-start-0"
+                                   placeholder="Güçlü bir şifre oluşturun"
+                                   type="password"
+                                   id="passwordInput" />
+                            <button type="button" class="btn btn-outline-secondary border-start-0 px-3" id="togglePassword" style="border-radius: 0 12px 12px 0;">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
+                        <span asp-validation-for="password" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mt-5 pt-4 border-top">
+                    <a asp-action="Index" class="btn btn-link text-decoration-none text-secondary p-0 fw-bold">
+                        <i class="bi bi-chevron-left me-1"></i> Listeye Dön
+                    </a>
+                    <button type="submit" class="btn btn-save px-5 py-2 rounded-pill shadow-sm">
+                        <i class="bi bi-person-plus-fill me-2"></i> Hesabı Oluştur
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const togglePassword = document.getElementById("togglePassword");
+        const passwordInput = document.getElementById("passwordInput");
+
+        togglePassword.addEventListener("click", function () {
+            const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+            passwordInput.setAttribute("type", type);
+
+            const icon = this.querySelector("i");
+            icon.classList.toggle("bi-eye");
+            icon.classList.toggle("bi-eye-slash");
+        });
+    });
+</script>

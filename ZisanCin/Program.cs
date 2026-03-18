@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using ZisanCin.Data;
+using ZisanCin.Entities;
+using ZisanCin.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,6 +47,28 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.Use((context, next) =>
+{
+    var dbcontext = context.RequestServices.GetRequiredService<DatabaseContext>();
+
+    DataRequestModel.ClearData();
+
+   
+
+    DataRequestModel.SiteSetting =
+        dbcontext.SiteSettings.FirstOrDefault()
+        ?? new SiteSetting(); // null kalmasın
+   
+    //DataRequestModel.About =
+    //    dbcontext.Abouts.FirstOrDefault(x => x.Language.ToString() == lang)
+    //    ?? new About();
+    //DataRequestModel.Services =
+    //    dbcontext.Services.Where(x => x.Language.ToString() == lang)
+    //            .OrderBy(s => s.Title).ToList();
+   
+    return next();
+});
 
 app.MapControllerRoute(
            name: "areas",

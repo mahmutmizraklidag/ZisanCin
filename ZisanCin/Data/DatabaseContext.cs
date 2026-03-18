@@ -18,6 +18,7 @@ namespace ZisanCin.Data
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Faq> Faqs { get; set; }
         public DbSet<BodyMassIndex> BodyMassIndex { get; set; }
+        public DbSet<PdfWrite> PdfWrites { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

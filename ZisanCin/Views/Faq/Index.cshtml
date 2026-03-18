@@ -1,4 +1,11 @@
-﻿<main class="page-content">
+﻿@model IEnumerable<Faq>
+@{
+	ViewData["Title"] = "SSS";
+	ViewData["MetaDescription"] = "Diyetisyen Zişan CİN Sıkça Sorulan Sorular";
+	ViewData["MetaKeywords"] = "Diyetisyen Zişan CİN Sıkça Sorulan Sorular";
+
+}
+<main class="page-content">
 
 	<div class="lg:min-h-125 md:min-h-100 sm:min-h-87.5 min-h-75 bg-cover bg-center bg-light relative z-1 w-full overflow-hidden flex" style="background-image:url(images/banner/bnr1.webp);">
 		<div class="container relative z-1 h-auto table">
@@ -25,11 +32,11 @@
 		<div class="absolute z-9 bottom-[20%] 3xl:right-[18%] right-[5%] max-xl:hidden"><img class="animate-move3" src="images/banner/item4.png" alt=""></div>
 		<div class="h-full w-25 min-w-25 absolute bottom-0 flex justify-between items-center flex-col py-6.25 px-3.75 left-0 border-r border-white/10 z-1 max-xl:hidden">
 			<ul class="flex gap-7.5 [writing-mode:sideways-lr]">
-				<li><a class="text-xs font-semibold uppercase text-white tracking-[1px]" href="https://x.com/">twitter</a></li>
-				<li><a class="text-xs font-semibold uppercase text-white tracking-[1px]" href="https://www.facebook.com/">Facebook</a></li>
-				<li><a class="text-xs font-semibold uppercase text-white tracking-[1px]" href="https://www.instagram.com/">Instagram</a></li>
+				<li><a class="text-xs font-semibold uppercase text-white tracking-[1px]" href="@DataRequestModel.SiteSetting.Instagram" target="_blank">Instagram</a></li>
+				<li><a class="text-xs font-semibold uppercase text-white tracking-[1px]" href="@DataRequestModel.SiteSetting.YouTube" target="_blank">Youtube</a></li>
+				<li><a class="text-xs font-semibold uppercase text-white tracking-[1px]" href="@DataRequestModel.SiteSetting.Facebook" target="_blank">Facebook</a></li>
 			</ul>
-			<a href="javascript:void(0);" class="btn btn-white btn-sm !py-2 !px-4 shadow-btn [writing-mode:sideways-lr] !rounded-2xl">LET’S TALK</a>
+			<a href="javascript:void(0);" class="btn btn-white btn-sm !py-2 !px-4 shadow-btn [writing-mode:sideways-lr] !rounded-2xl">Hadi Başlayalım</a>
 		</div>
 	</div>
 
@@ -50,70 +57,33 @@
 						
 						</div>
 						<div class="myAccordion style-3 mb-8.75 wow fadeInUp" data-wow-delay="0.4s" data-wow-duration="0.8s" id="accordionExample">
-							<div class="accordion-item">
-								<h2 class="accordion-header open">
-									<button class="accordion-button" type="button">
-										How much do you charge for pedicure ?
-									</button>
-									<span class="arrow active">
-										<i class="icon feather icon-chevron-right [.arrow.active_&]:hidden block"></i>
-										<i class="icon feather icon-chevron-down [.arrow.active_&]:block hidden"></i>
-									</span>
-								</h2>
-								<div class="accordion-content show">
-									<div class="content-inner">
-										<p class="mb-0">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its. The point of using Lorem Ipsum is that it has a more-or-less normal distribution</p>
+							@{
+								var index = 0;
+							}
+
+							@foreach (var item in Model)
+							{
+								var isFirst = index == 0;
+
+								<div class="accordion-item">
+									<h2 class="accordion-header @(isFirst ? "open" : "")">
+										<button class="accordion-button" type="button">
+											@item.Question
+										</button>
+										<span class="arrow @(isFirst ? "active" : "")">
+											<i class="icon feather icon-chevron-right [.arrow.active_&]:hidden block"></i>
+											<i class="icon feather icon-chevron-down [.arrow.active_&]:block hidden"></i>
+										</span>
+									</h2>
+									<div class="accordion-content @(isFirst ? "show" : "")">
+										<div class="content-inner">
+											@Html.Raw(item.Answer)
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="accordion-item">
-								<h2 class="accordion-header">
-									<button class="accordion-button" type="button">
-										What types of treatments do you offer?
-									</button>
-									<span class="arrow">
-										<i class="icon feather icon-chevron-right [.arrow.active_&]:hidden block"></i>
-										<i class="icon feather icon-chevron-down [.arrow.active_&]:block hidden"></i>
-									</span>
-								</h2>
-								<div class="accordion-content">
-									<div class="content-inner">
-										<p class="mb-0">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its. The point of using Lorem Ipsum is that it has a more-or-less normal distribution</p>
-									</div>
-								</div>
-							</div>
-							<div class="accordion-item">
-								<h2 class="accordion-header">
-									<button class="accordion-button" type="button">
-										How do i book my appointment ?
-									</button>
-									<span class="arrow">
-										<i class="icon feather icon-chevron-right [.arrow.active_&]:hidden block"></i>
-										<i class="icon feather icon-chevron-down [.arrow.active_&]:block hidden"></i>
-									</span>
-								</h2>
-								<div class="accordion-content">
-									<div class="content-inner">
-										<p class="mb-0">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its. The point of using Lorem Ipsum is that it has a more-or-less normal distribution</p>
-									</div>
-								</div>
-							</div>
-							<div class="accordion-item">
-								<h2 class="accordion-header">
-									<button class="accordion-button" type="button">
-										Can i cancel my appointment
-									</button>
-									<span class="arrow">
-										<i class="icon feather icon-chevron-right [.arrow.active_&]:hidden block"></i>
-										<i class="icon feather icon-chevron-down [.arrow.active_&]:block hidden"></i>
-									</span>
-								</h2>
-								<div class="accordion-content">
-									<div class="content-inner">
-										<p class="mb-0">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its. The point of using Lorem Ipsum is that it has a more-or-less normal distribution</p>
-									</div>
-								</div>
-							</div>
+
+								index++;
+							}
 						</div>
 					</div>
 				</div>
@@ -132,9 +102,12 @@
 				<div class="md:w-7/12 w-full order-1 md:order-2">
 					<div class="2xxl:py-37.5 2xl:py-35 xl:py-30 lg:py-25 py-12.5 md:ml-10">
 						<div class="relative z-2">
-							<h2 class="2xxl:text-6xxl xl:text-5xxl sm:text-4xxl text-[32px] font-bold capitalize sm:mb-7.5 mb-3.75 !text-white" data-wow-delay="0.2s" data-wow-duration="0.8s">Want to schedule an appointment?</h2>
-							<a href="appointment.html" class="btn btn-lg btn-white group wow fadeInUp" data-wow-delay="0.6s" data-wow-duration="0.8s">
-								Read More
+							<h2 class="2xxl:text-6xxl xl:text-5xxl sm:text-4xxl text-[32px] font-bold capitalize sm:mb-7.5 mb-3.75 !text-white"
+								data-wow-delay="0.2s" data-wow-duration="0.8s">
+								Vücudunuzun Biyolojik Sobalarını Birlikte Yakalım Mı?
+							</h2>
+							<a asp-controller="Contact" asp-action="Index" class="btn btn-lg btn-white group wow fadeInUp" data-wow-delay="0.6s" data-wow-duration="0.8s">
+                                Hadi Başlayalım
 								<span class="size-11 min-w-11 bg-secondary rounded-2lg text-white inline-flex items-center justify-center -my-2.75 -mr-4.5 ml-3 group-hover:bg-white group-hover:text-heading"><i class="feather icon-arrow-right group-hover:animate-toRightFromLeft"></i></span>
 							</a>
 						</div>

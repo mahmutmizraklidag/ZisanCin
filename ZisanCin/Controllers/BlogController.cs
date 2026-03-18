@@ -1,16 +1,27 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ZisanCin.Data;
 
 namespace ZisanCin.Controllers
 {
     public class BlogController : Controller
     {
+        private readonly DatabaseContext _context;
+
+        public BlogController(DatabaseContext context)
+        {
+            _context = context;
+        }
+        [Route("blog")]
         public IActionResult Index()
         {
-            return View();
+            var blogs = _context.Blogs.ToList();
+            return View(blogs);
         }
-        public IActionResult Detail()
+        [Route("blog/{slug}")]
+        public IActionResult Detail(string slug)
         {
-            return View();
+            var blog = _context.Blogs.FirstOrDefault(b => b.Slug == slug);
+            return View(blog);
         }
     }
 }

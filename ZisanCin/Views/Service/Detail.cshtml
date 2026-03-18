@@ -1,15 +1,82 @@
-﻿<main class="page-content">
+﻿@model Service
+@{
+	var site = DataRequestModel.SiteSetting;
+
+	ViewData["Title"] = Model?.MetaTitle ?? "Hizmetlerimiz";
+	ViewData["MetaDescription"] = Model?.MetaDescription ?? site?.MetaDescription ?? "Hizmetlerimiz";
+	ViewData["MetaKeywords"] = Model?.Keywords ?? site?.Keywords ?? "Hizmetlerimiz";
+}
+
+<style>
+	.service-detail-box {
+		align-items: stretch;
+	}
+
+	.service-detail-image {
+		width: 465px;
+		min-width: 465px;
+		height: 758px;
+		overflow: hidden;
+	}
+
+		.service-detail-image img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			display: block;
+		}
+
+	.service-detail-content {
+		height: 758px;
+		overflow-y: auto;
+		scrollbar-color: #71B606 transparent;
+		scrollbar-width: thin;
+	}
+
+		.service-detail-content::-webkit-scrollbar {
+			width: 8px;
+		}
+
+		.service-detail-content::-webkit-scrollbar-thumb {
+			background: #71B606;
+			border-radius: 20px;
+		}
+
+		.service-detail-content::-webkit-scrollbar-track {
+			background: transparent;
+		}
+
+	@@media (max-width: 1023px) {
+		.service-detail-image {
+			width: 100%;
+			min-width: 100%;
+			height: auto;
+		}
+
+			.service-detail-image img {
+				height: auto;
+				max-height: 500px;
+			}
+
+		.service-detail-content {
+			height: auto;
+			overflow-y: visible;
+		}
+	}
+</style>
+
+<main class="page-content">
 
 	<div class="lg:min-h-125 md:min-h-100 sm:min-h-87.5 min-h-75 bg-cover bg-center bg-light relative z-1 w-full overflow-hidden flex" style="background-image:url('@Url.Content("~/images/banner/bnr1.webp")');">
 		<div class="container relative z-1 h-auto table">
 			<div class="row">
 				<div class="lg:w-2/3">
 					<div class="table-cell lg:h-125 md:h-100 sm:h-87.5 h-75 align-middle pt-17.5 pb-5 xl:ps-17.5 max-md:text-center">
-						<h1 class="2xxl:text-7xl xl:text-6xxl md:text-[48px] text-4xl font-bold mb-1.25 leading-[1.2] break-word !text-white wow fadeInUp" data-wow-delay="0.2s" data-wow-duration="0.8s">Services Details</h1>
+						<h1 class="2xxl:text-7xl xl:text-6xxl md:text-[48px] text-4xl font-bold mb-1.25 leading-[1.2] break-word !text-white wow fadeInUp" data-wow-delay="0.2s" data-wow-duration="0.8s">@Model.Title</h1>
 						<nav class="wow fadeInUp" data-wow-delay="0.4s" data-wow-duration="0.8s">
 							<ul class="inline-block rounded-5xl lg:py-2.5 py-1.5 lg:px-7.5 px-5 bg-white shadow-breadcrumb">
-								<li class="inline-block lg:text-base text-sm font-normal capitalize text-primary"><a href="index.html">Home</a></li>
-								<li class="inline-block lg:text-base text-sm font-normal capitalize text-primary pl-2 relative before:content-['\f101'] before:float-left before:text-primary before:font-bold before:font-['Font_Awesome_5_Free'] before:text-sm before:pr-3 before:top-0.5 before:relative">Services Details</li>
+								<li class="inline-block lg:text-base text-sm font-normal capitalize text-primary"><a asp-controller="Home" asp-action="Index">Anasayfa</a></li>
+								<li class="inline-block lg:text-base text-sm font-normal capitalize text-primary pl-2 relative before:content-['\f101'] before:float-left before:text-primary before:font-bold before:font-['Font_Awesome_5_Free'] before:text-sm before:pr-3 before:top-0.5 before:relative">@Model.Title</li>
 							</ul>
 						</nav>
 					</div>
@@ -25,9 +92,9 @@
 		<div class="absolute z-9 bottom-[20%] 3xl:right-[18%] right-[5%] max-xl:hidden"><img class="animate-move3" src="@Url.Content("~/images/banner/item4.png")" alt=""></div>
 		<div class="h-full w-25 min-w-25 absolute bottom-0 flex justify-between items-center flex-col py-6.25 px-3.75 left-0 border-r border-white/10 z-1 max-xl:hidden">
 			<ul class="flex gap-7.5 [writing-mode:sideways-lr]">
-				<li><a class="text-xs font-semibold uppercase text-white tracking-[1px]" href="https://x.com/">twitter</a></li>
-				<li><a class="text-xs font-semibold uppercase text-white tracking-[1px]" href="https://www.facebook.com/">Facebook</a></li>
-				<li><a class="text-xs font-semibold uppercase text-white tracking-[1px]" href="https://www.instagram.com/">Instagram</a></li>
+				<li><a class="text-xs font-semibold uppercase text-white tracking-[1px]" href="@DataRequestModel.SiteSetting.Instagram" target="_blank">Instagram</a></li>
+				<li><a class="text-xs font-semibold uppercase text-white tracking-[1px]" href="@DataRequestModel.SiteSetting.YouTube" target="_blank">Youtube</a></li>
+				<li><a class="text-xs font-semibold uppercase text-white tracking-[1px]" href="@DataRequestModel.SiteSetting.Facebook" target="_blank">Facebook</a></li>
 			</ul>
 			<a asp-controller="Contact" asp-action="Index" class="btn btn-white btn-sm !py-2 !px-4 shadow-btn [writing-mode:sideways-lr] !rounded-2xl">Hadi Başlayalım</a>
 		</div>
@@ -36,85 +103,20 @@
 	<section class="2xxl:py-25 xl:17.5 md:py-12.5 sm:py-10 py-7.5 service-single bg-light">
 		<div class="container">
 			<div class="w-full">
-				<div class="flex max-lg:flex-col">
-					<div class="xl:w-116.25 xl:min-w-116.25 lg:w-97.5 lg:min-w-97.5 w-full sm:h-105 h-75 lg:rounded-s-xxl max-lg:rounded-t-xxl overflow-hidden">
-						<img src="@Url.Content("~/images/services/img.webp")" alt="/" class="size-full object-cover">
+				<div class="flex max-lg:flex-col service-detail-box">
+					<div class="service-detail-image lg:rounded-s-xxl max-lg:rounded-t-xxl">
+						<img src="@Url.Content("~/images/services/img.webp")" alt="@Model.Title">  @*Resim Boyutları 465X758 *@
 					</div>
-					<div class="sm:p-8.75 p-5 bg-white lg:rounded-e-xxl rounded-b-xxl">
-						<h4 class="lg:text-[38px] sm:text-3xxl text-2xxl capitalize">
-							<a href="shop-standard.html">Nutritional Counseling</a>
+					<div class="sm:p-8.75 p-5 lg:rounded-e-xxl rounded-b-xxl service-detail-content">
+						<h4 class="lg:text-[38px] sm:text-3xxl text-2xxl capitalize mb-4">
+							@Model.Title
 						</h4>
-						<p class="2xxl:text-lg xl:text-base sm:text-2sm text-sm font-normal leading-normal">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled book.</p>
-						<p class="2xxl:text-lg xl:text-base sm:text-2sm text-sm font-normal leading-normal">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has nged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing softwa.</p>
+						@Html.Raw(Model.Description)
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
-
-	<section class="2xxl:py-25 xl:17.5 md:py-12.5 sm:py-10 py-7.5 bg-light p-0">
-		<div class="container">
-			<div class="grid grid-cols-12 gap-5 box-hover-wrapper">
-				<div class="col-span-4">
-					<div class="relative overflow-hidden box-hover">
-						<div class="relative overflow-hidden rounded-2xl">
-							<img src="@Url.Content("~/images/services/1.webp")" alt="" class="w-full">
-						</div>
-						<div class="absolute bottom-0 xl:p-6.25 p-5 bg-primary/80 rounded-2xl h-full flex flex-col duration-500 overflow-scroll custom-scroll rotate-z-180 translate-y-full [scrollbar-width:none] [.box-hover.active_&]:translate-0 [.box-hover.active_&]:rotate-z-0 max-lg:hidden">
-							<h3 class="text-[25px] font-semibold mb-0 text-white">Nutritional Counseling</h3>
-							<p class="text-white text-2sm leading-normal">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has nged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing softwa. and more recently with desktop publishing softwa nown printer took a galley of type and scrambled it to make a type specimen book. It has nged. </p>
-						</div>
-					</div>
-				</div>
-				<div class="col-span-4">
-					<div class="relative overflow-hidden box-hover">
-						<div class="relative overflow-hidden rounded-2xl">
-							<img src="@Url.Content("~/images/services/2.webp")" alt="" class="w-full">
-						</div>
-						<div class="absolute bottom-0 xl:p-6.25 p-5 bg-primary/80 rounded-2xl h-full flex flex-col duration-500 overflow-scroll custom-scroll rotate-z-180 translate-y-full [scrollbar-width:none] [.box-hover.active_&]:translate-0 [.box-hover.active_&]:rotate-z-0 max-lg:hidden">
-							<h3 class="text-[25px] font-semibold mb-0 text-white">Nutritional Counseling</h3>
-							<p class="text-white text-2sm leading-normal">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has nged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing softwa. and more recently with desktop publishing softwa nown printer took a galley of type and scrambled it to make a type specimen book. It has nged. </p>
-						</div>
-					</div>
-				</div>
-				<div class="col-span-4">
-					<div class="relative overflow-hidden box-hover">
-						<div class="relative overflow-hidden rounded-2xl">
-							<img src="@Url.Content("~/images/services/3.webp")" alt="" class="w-full">
-						</div>
-						<div class="absolute bottom-0 xl:p-6.25 p-5 bg-primary/80 rounded-2xl h-full flex flex-col duration-500 overflow-scroll custom-scroll rotate-z-180 translate-y-full [scrollbar-width:none] [.box-hover.active_&]:translate-0 [.box-hover.active_&]:rotate-z-0 max-lg:hidden">
-							<h3 class="text-[25px] font-semibold mb-0 text-white">Nutritional Counseling</h3>
-							<p class="text-white text-2sm leading-normal">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has nged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing softwa. and more recently with desktop publishing softwa nown printer took a galley of type and scrambled it to make a type specimen book. It has nged. </p>
-						</div>
-					</div>
-				</div>
-				<div class="col-span-6">
-					<div class="relative overflow-hidden box-hover active">
-						<div class="relative overflow-hidden rounded-2xl">
-							<img src="@Url.Content("~/images/services/4.webp")" alt="" class="w-full">
-						</div>
-						<div class="absolute bottom-0 xl:p-9 p-7.5 bg-primary/80 rounded-2xl h-full flex flex-col duration-500 overflow-scroll custom-scroll rotate-z-180 translate-y-full [scrollbar-width:none] [.box-hover.active_&]:translate-0 [.box-hover.active_&]:rotate-z-0 max-lg:hidden">
-							<h3 class="xl:text-3xxl text-3xl font-semibold mb-0 text-white">Nutritional Counseling</h3>
-							<p class="text-white xl:text-lg text-base leading-normal">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has nged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing softwa. and more recently with desktop publishing softwa nown printer took a galley of type and scrambled it to make a type specimen book. It has nged. </p>
-						</div>
-					</div>
-				</div>
-				<div class="col-span-6">
-					<div class="relative overflow-hidden box-hover">
-						<div class="relative overflow-hidden rounded-2xl">
-							<img src="@Url.Content("~/images/services/5.webp")" alt="" class="w-full">
-						</div>
-						<div class="absolute bottom-0 xl:p-9 p-7.5 bg-primary/80 rounded-2xl h-full flex flex-col duration-500 overflow-scroll custom-scroll rotate-z-180 translate-y-full [scrollbar-width:none] [.box-hover.active_&]:translate-0 [.box-hover.active_&]:rotate-z-0 max-lg:hidden">
-							<h3 class="xl:text-3xxl text-3xl font-semibold mb-0 text-white">Nutritional Counseling</h3>
-							<p class="text-white xl:text-lg text-base leading-normal">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has nged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing softwa. and more recently with desktop publishing softwa nown printer took a galley of type and scrambled it to make a type specimen book. It has nged. </p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-
-	
 
 	<section class="bg-no-repeat bg-cover bg-center" style="background-image: url('@Url.Content("~/images/background/bg2.png")');">
 		<div class="container">
@@ -127,9 +129,12 @@
 				<div class="md:w-7/12 w-full order-1 md:order-2">
 					<div class="2xxl:py-37.5 2xl:py-35 xl:py-30 lg:py-25 py-12.5 md:ml-10">
 						<div class="relative z-2">
-							<h2 class="2xxl:text-6xxl xl:text-5xxl sm:text-4xxl text-[32px] font-bold capitalize sm:mb-7.5 mb-3.75 !text-white" data-wow-delay="0.2s" data-wow-duration="0.8s">Want to schedule an appointment?</h2>
-							<a href="appointment.html" class="btn btn-lg btn-white group wow fadeInUp" data-wow-delay="0.6s" data-wow-duration="0.8s">
-								Read More
+							<h2 class="2xxl:text-6xxl xl:text-5xxl sm:text-4xxl text-[32px] font-bold capitalize sm:mb-7.5 mb-3.75 !text-white"
+								data-wow-delay="0.2s" data-wow-duration="0.8s">
+								Vücudunuzun Biyolojik Sobalarını Birlikte Yakalım Mı?
+							</h2>
+							<a asp-controller="Contact" asp-action="Index" class="btn btn-lg btn-white group wow fadeInUp" data-wow-delay="0.6s" data-wow-duration="0.8s">
+								Hadi Başlayalım
 								<span class="size-11 min-w-11 bg-secondary rounded-2lg text-white inline-flex items-center justify-center -my-2.75 -mr-4.5 ml-3 group-hover:bg-white group-hover:text-heading"><i class="feather icon-arrow-right group-hover:animate-toRightFromLeft"></i></span>
 							</a>
 						</div>

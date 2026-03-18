@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using ZisanCin.Data;
 using ZisanCin.Entities;
@@ -20,13 +19,30 @@ namespace ZisanCin.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var services = _context.Services.Where(s => s.IsHome).Take(3).OrderByDescending(b => b.Id).ToList();
+            var blogs = _context.Blogs.OrderByDescending(b => b.CreatedAt).Take(3).ToList();
+            var about = _context.Abouts.FirstOrDefault();
+
+            var model = new HomePageVm
+            {
+                Services = services,
+                Blogs = blogs,
+                About = about ?? new About(),
+                BodyMass = new BodyMassIndex()
+            };
+
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CalculateBmiAjax(BodyMassIndex model)
+        public async Task<IActionResult> CalculateBmiAjax([Bind(Prefix = "BodyMass")] BodyMassIndex model)
         {
+            ModelState.Remove("Id");
+            ModelState.Remove("Result");
+            ModelState.Remove("Status");
+            ModelState.Remove("CreateDate");
+
             if (!ModelState.IsValid)
             {
                 var errors = ModelState

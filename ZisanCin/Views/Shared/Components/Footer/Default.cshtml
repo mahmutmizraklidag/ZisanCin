@@ -11,7 +11,7 @@
 								<div class="mb-6">
 									<a asp-controller="Home" asp-action="Index"><img src="@Url.Content("~/images/logo.svg")" alt="" class="w-45"></a>
 								</div>
-								<p class="text-2sm mb-5 leading-[1.7]"> Lorem ipsum dolor sit amet consectetur adipiscing elit aliquam</p>
+								<p class="text-2sm mb-5 leading-[1.7]"> Yasaklarla değil, sürdürülebilir alışkanlıklarla yanınızdayım. Bilimsel temelli ve size özel beslenme stratejileriyle kalıcı değişimi birlikte yönetelim.</p>
 								
 							</div>
 						</div>
@@ -31,9 +31,9 @@
 							<div class="mb-7.5 widget-address">
 								<h2 class="footer-title">Bize Ulaşın</h2>
 								<ul>
-									<li class="relative py-2 text-2sm leading-5 font-medium"><a href="tel:+11234567890"><i class="feather icon-phone-call text-primary text-xl"></i> +1 123 456 7890</a></li>
-									<li class="relative py-2 text-2sm leading-5 font-medium"><a href="mailto:info@example.com"><i class="feather icon-mail text-primary text-xl"></i> info@example.com</a></li>
-									<li class="relative py-2 text-2sm leading-5 font-medium"><a href="#"><i class="feather icon-map-pin text-primary text-xl"></i> 794 Mcallister St San Francisco, 94102</a></li>
+									<li class="relative py-2 text-2sm leading-5 font-medium"><a href="tel:@DataRequestModel.SiteSetting.Phone"><i class="feather icon-phone-call text-primary text-xl"></i> @DataRequestModel.SiteSetting.Phone</a></li>
+									<li class="relative py-2 text-2sm leading-5 font-medium"><a href="mailto:@DataRequestModel.SiteSetting.Email"><i class="feather icon-mail text-primary text-xl"></i> @DataRequestModel.SiteSetting.Email</a></li>
+									<li class="relative py-2 text-2sm leading-5 font-medium"><a href="#"><i class="feather icon-map-pin text-primary text-xl"></i> @DataRequestModel.SiteSetting.Address</a></li>
 								</ul>
 							</div>
 
@@ -43,31 +43,40 @@
 							<div class="mb-7.5 widget_services">
 								<h2 class="footer-title">Bizi Takip Edin</h2>
 								<ul class="flex gap-6">
-									<li>
-										<a href="https://www.linkedin.com" target="_blank" class="text-primary">
-											<i class="fa-brands fa-linkedin"></i>
-										</a>
-									</li>
-									<li>
-										<a href="https://www.instagram.com" target="_blank" class="text-primary">
-											<i class="fa-brands fa-instagram"></i>
-										</a>
-									</li>
-									<li>
-										<a href="https://www.facebook.com" target="_blank" class="text-primary">
-											<i class="fa-brands fa-facebook-f"></i>
-										</a>
-									</li>
-									<li>
-										<a href="https://twitter.com" target="_blank" class="text-primary">
-											<i class="fa-brands fa-x-twitter"></i>
-										</a>
-									</li>
-									<li>
-										<a href="https://www.youtube.com" target="_blank" class="text-primary">
-											<i class="fa-brands fa-youtube"></i>
-										</a>
-									</li>
+									@if (!string.IsNullOrEmpty(DataRequestModel.SiteSetting.YouTube))
+									{
+										<li>
+											<a href="@DataRequestModel.SiteSetting.YouTube" target="_blank" class="text-primary">
+												<i class="fa-brands fa-youtube"></i>
+											</a>
+										</li>
+									}
+									@if (!string.IsNullOrEmpty(DataRequestModel.SiteSetting.Instagram))
+									{
+										<li>
+											<a href="@DataRequestModel.SiteSetting.Instagram" target="_blank" class="text-primary">
+												<i class="fa-brands fa-instagram"></i>
+											</a>
+										</li>
+									}
+									@if (!string.IsNullOrEmpty(DataRequestModel.SiteSetting.Facebook))
+									{
+										<li>
+											<a href="@DataRequestModel.SiteSetting.Facebook" target="_blank" class="text-primary">
+												<i class="fa-brands fa-facebook-f"></i>
+											</a>
+										</li>
+                                    }
+									@if (!string.IsNullOrEmpty(DataRequestModel.SiteSetting.Twitter))
+									{
+										<li>
+											<a href="@DataRequestModel.SiteSetting.Twitter" target="_blank" class="text-primary">
+												<i class="fa-brands fa-x-twitter"></i>
+											</a>
+										</li>
+                                    }
+									
+									
 								</ul>
 							</div>
 						</div>

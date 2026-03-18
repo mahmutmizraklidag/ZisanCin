@@ -1,4 +1,13 @@
-﻿@model ZisanCin.Entities.BodyMassIndex
+﻿@using System.Text.RegularExpressions
+@using System.Net
+@using System.Globalization
+@model HomePageVm
+@{
+    ViewData["Title"] = string.IsNullOrEmpty(DataRequestModel.SiteSetting.MetaTitle) ? "Anasayfa" : DataRequestModel.SiteSetting.MetaTitle;
+    ViewData["MetaDescription"] = string.IsNullOrEmpty(DataRequestModel.SiteSetting.MetaDescription) ? "Anasayfa Zişan CİN" : DataRequestModel.SiteSetting.MetaDescription;
+    ViewData["MetaKeywords"] = string.IsNullOrEmpty(DataRequestModel.SiteSetting.Keywords) ? "Anasayfa Zişan CİN" : DataRequestModel.SiteSetting.Keywords;
+    var trCulture = new CultureInfo("tr-TR");
+}
 <main class="page-content">
     <div class="relative z-1 bg-linear-(--banner-2-gradient) overflow-hidden sm:bg-center bg-left bgxl-cover 2xl:h-237.5 xl:h-205 lg:h-170 md:h-150 h-auto"
          style="background-image: url(images/hero-banner/banner-1.webp);">
@@ -8,20 +17,18 @@
                     <div class="md:w-1/2 w-full self-center">
                         <div class="relative ml-2.5 z-1">
                             <span class="2xxl:text-6xl 2xl:text-4xxl text-3xl relative text-primary-second font-arizonia before:absolute before:top-[-65%] before:right-[105%] before:w-8 before:h-12.5 before:animate-move4 before:bg-no-repeat before:bg-bottom before:bg-contain before:bg-sub-title-before after:absolute after:-bottom-1.25 after:left-0 after:size-full after:bg-no-repeat after:bg-bottom after:bg-contain after:bg-sub-title-after max-xl:before:hidden">
-                                Best
-                                Nutrition
+                                En İyi Beslenme
                             </span>
                             <h1 class="2xxl:text-7xl xl:text-5xxl md:text-[36px] sm:text-3xxl text-2xxl font-bold leading-[1.2] mt-2.5 mb-1.25 text-white wow fadeInUp"
                                 data-wow-delay="0.2s" data-wow-duration="0.8s">
-                                Fuel Your Body, Nourish
-                                Your Life
+                                En İyi Diyet, Farkında Olmadan Yapılan Diyettir
                             </h1>
-                            <p class="xl:text-xl lg:text-lg text-base font-medium lg:mb-7.5 mb-5 text-white">
+                            @* <p class="xl:text-xl lg:text-lg text-base font-medium lg:mb-7.5 mb-5 text-white">
                                 It is a long established fact that a reader will be distracted by the
                                 readable content of a page when looking at its layout. The point of
                                 using Lorem Ipsum is that it has
-                            </p>
-                            <div class="flex flex-wrap items-center wow fadeInUp" data-wow-delay="0.8s"
+                            </p> *@
+                           @*  <div class="flex flex-wrap items-center wow fadeInUp" data-wow-delay="0.8s"
                                  data-wow-duration="0.8s">
                                 <a href="about-us.html"
                                    class="btn btn-lg btn-white hover-secondary group wow fadeInUp"
@@ -31,7 +38,7 @@
                                         <i class="feather icon-arrow-right group-hover:animate-toRightFromLeft"></i>
                                     </span>
                                 </a>
-                            </div>
+                            </div> *@
                         </div>
                     </div>
                     <div class="md:w-1/2 w-full">
@@ -46,21 +53,21 @@
             <ul class="flex gap-7.5 [writing-mode:tb-rl]">
                 <li>
                     <a class="text-sm uppercase text-white tracking-[1px]"
-                       href="https://www.instagram.com/">Instagram</a>
+                       href="@DataRequestModel.SiteSetting.Facebook">Facebook</a>
                 </li>
                 <li>
                     <a class="text-sm uppercase text-white tracking-[1px]"
-                       href="https://www.facebook.com/">Facebook</a>
+                       href="@DataRequestModel.SiteSetting.Instagram">Instagram</a>
                 </li>
                 <li>
                     <a class="text-sm uppercase text-white tracking-[1px]"
-                       href="https://x.com/">twitter</a>
+                       href="@DataRequestModel.SiteSetting.YouTube">Youtube</a>
                 </li>
             </ul>
-            <a href="contact-us.html"
+            <a asp-controller="Contact" asp-action="Index"
                class="btn btn-white btn-sm !py-2 !px-4 shadow-btn [writing-mode:tb-rl] !rounded-2xl hover:!bg-primary hover:!border-primary">
-                LET'S
-                TALK
+                Hadi
+                Başlayalım
             </a>
         </div>
         <div class="absolute animate-move4 h-auto md:top-1/4 top-[65%] md:right-2/5 sm:right-1/5 right-[10%] max-xl:w-15 max-lg:!w-12.5">
@@ -119,41 +126,37 @@
                                     </clipPath>
                                 </defs>
                             </svg>
-                            About Us
+                            Hakkımda
                         </div>
                         <h2 class="2xxl:text-5xxl xl:text-4xxl lg:text-4xl sm:text-3xxl text-2xxl font-bold capitalize wow fadeInUp"
                             data-wow-delay="0.2s" data-wow-duration="0.8s">
-                            Transforming Lives
-                            <br>Through Nutrition
+                           @Model.About.HomeTitle
                         </h2>
                         <p class="xl:text-lg sm:text-base text-sm font-light max-w-212.5 mx-auto"
                            data-wow-delay="0.4s" data-wow-duration="0.8s">
-                            It is a long established fact
-                            that a reader will be distracted by the readable content of a page when
-                            looking at its layout.
+                            @Model.About.HomeDescription
                         </p>
                     </div>
-                    <ul class="flex flex-wrap text-secondary font-medium mb-7.5 wow fadeInUp"
-                        data-wow-delay="0.6s" data-wow-duration="0.8s">
+                    <ul class="flex flex-wrap text-secondary font-medium mb-7.5 wow fadeInUp" data-wow-delay="0.6s" data-wow-duration="0.8s">
                         <li class="sm:w-[45%] w-full mb-3.75 me-3.75 bg-light py-3.75 pr-5 pl-12.5 rounded-xxl leading-normal relative before:absolute before:left-5 before:font-black before:content-['\f109'] before:font-['flaticon'] before:text-primary before:top-3.5">
-                            Nutrition program
+                            Kişiye Özel Beslenme Planı
                         </li>
                         <li class="sm:w-[45%] w-full mb-3.75 me-3.75 bg-light py-3.75 pr-5 pl-12.5 rounded-xxl leading-normal relative before:absolute before:left-5 before:font-black before:content-['\f109'] before:font-['flaticon'] before:text-primary before:top-3.5">
-                            Daily recipes
+                            Pratik ve Sağlıklı Tarifler
                         </li>
                         <li class="sm:w-[45%] w-full mb-3.75 me-3.75 bg-light py-3.75 pr-5 pl-12.5 rounded-xxl leading-normal relative before:absolute before:left-5 before:font-black before:content-['\f109'] before:font-['flaticon'] before:text-primary before:top-3.5">
-                            Consultation
+                            Birebir Danışmanlık
                         </li>
                         <li class="sm:w-[45%] w-full mb-3.75 me-3.75 bg-light py-3.75 pr-5 pl-12.5 rounded-xxl leading-normal relative before:absolute before:left-5 before:font-black before:content-['\f109'] before:font-['flaticon'] before:text-primary before:top-3.5">
-                            Support 24/7
+                            Sürekli İletişim ve Takip
                         </li>
                     </ul>
                     <div class="flex flex-wrap items-center wow fadeInUp" data-wow-delay="0.8s"
                          data-wow-duration="0.8s">
-                        <a href="appointment.html" class="btn btn-lg btn-icon btn-primary wow fadeInUp"
+                        <a asp-controller="About" asp-action="Index" class="btn btn-lg btn-icon btn-primary wow fadeInUp"
                            data-wow-delay="0.6s" data-wow-duration="0.8s"
                            style="visibility: visible; animation-duration: 0.8s; animation-delay: 0.6s; animation-name: fadeInUp;">
-                            Read More
+                            Daha Fazla
                             <span class="size-11 min-w-11 bg-white rounded-2lg text-heading inline-flex items-center justify-center -my-2.75 -mr-4.5 ml-3">
                                 <i class="feather icon-arrow-right group-hover:animate-toRightFromLeft"></i>
                             </span>
@@ -191,97 +194,39 @@
                                     <rect width="20" height="20" fill="white" />
                                 </clipPath>
                             </defs>
-                        </svg>Our Services
+                        </svg>Hizmetlerimiz
                     </span>
                     <h2 class="2xxl:text-5xxl lg:text-[38px] sm:text-[32px] text-2xxl font-bold capitalize mb-0">
-                        The Best Quality Service<br> You Can Get
+                        Sağlıklı Yaşamı Bir Alışkanlığa<br> Dönüştürme Zamanı
                     </h2>
                 </div>
                 <div class="row box-hover-wrapper">
-                    <div class="xl:w-1/4 md:w-1/2 w-full mb-7.5 wow fadeInUp">
-                        <div class="rounded-xxl h-full relative flex flex-col bg-white duration-700 box-hover [.box-hover.active]:bg-primary">
-                            <div class="relative overflow-hidden rounded-t-xxl">
-                                <img src="images/services/img1.webp" alt="" class="w-full">
-                            </div>
-                            <div class="p-7.5 flex-1 flex-col flex">
-                                <h3 class="text-xl mb-2.5 duration-700 [.box-hover.active_&]:text-white">
-                                    Nutritional Counseling
-                                </h3>
-                                <p class="mb-6.25 duration-700 [.box-hover.active_&]:text-white">
-                                    It is a
-                                    long established fact that a reader will be distracted.
-                                </p>
-                                <a href="service-detail.html"
-                                   class="mt-auto font-medium text-primary duration-700 [.box-hover.active_&]:text-white">
-                                    View
-                                    All Details <i class="feather icon-arrow-right-circle inline-block text-base"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="xl:w-1/4 md:w-1/2 w-full mb-7.5 wow fadeInUp">
-                        <div class="rounded-xxl h-full relative flex flex-col bg-white duration-700 box-hover [.box-hover.active]:bg-primary active">
-                            <div class="relative overflow-hidden rounded-t-xxl">
-                                <img src="images/services/img2.webp" alt="" class="w-full">
-                            </div>
-                            <div class="p-7.5 flex-1 flex-col flex">
-                                <h3 class="text-xl mb-2.5 duration-700 [.box-hover.active_&]:text-white">
-                                    Weight Management
-                                </h3>
-                                <p class="mb-6.25 duration-700 [.box-hover.active_&]:text-white">
-                                    It is a
-                                    long established fact that a reader will be distracted.
-                                </p>
-                                <a href="service-detail.html"
-                                   class="mt-auto font-medium text-primary duration-700 [.box-hover.active_&]:text-white">
-                                    View
-                                    All Details <i class="feather icon-arrow-right-circle inline-block text-base"></i>
-                                </a>
+                    @foreach (var item in Model.Services)
+                    {
+                        <div class="xl:w-1/3 md:w-1/2 w-full mb-7.5 wow fadeInUp">
+                            <div class="rounded-xxl h-full relative flex flex-col bg-white duration-700 box-hover [.box-hover.active]:bg-primary">
+                                <div class="relative overflow-hidden rounded-t-xxl">
+                                    <img src="images/services/img1.webp" alt="@item.Title" class="w-full">
+                                </div>
+                                <div class="p-7.5 flex-1 flex-col flex">
+                                    <h3 class="text-xl mb-2.5 duration-700 [.box-hover.active_&]:text-white">@item.Title</h3>
+                                    <p class="mb-6.25 duration-700 [.box-hover.active_&]:text-white">
+                                        @if (!string.IsNullOrEmpty(item.Description))
+                                        {
+                                            // HTML etiketlerini temizle (Regex ile)
+                                            var plainText = System.Text.RegularExpressions.Regex.Replace(item.Description, "<.*?>", String.Empty);
+        
+                                            // İlk 100 karakteri al ve ... ekle
+                                            var shortText = plainText.Length > 100 ? plainText.Substring(0, 100) + "..." : plainText;
+        
+                                            @Html.Raw(shortText)
+                                        }
+                                    </p>
+                                    <a asp-controller="Service" asp-action="Detail" asp-route-slug="@item.Slug" class="mt-auto font-medium text-primary duration-700 [.box-hover.active_&]:text-white">Daha Fazla... <i class="feather icon-arrow-right-circle inline-block text-base"></i></a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="xl:w-1/4 md:w-1/2 w-full mb-7.5 wow fadeInUp">
-                        <div class="rounded-xxl h-full relative flex flex-col bg-white duration-700 box-hover [.box-hover.active]:bg-primary">
-                            <div class="relative overflow-hidden rounded-t-xxl">
-                                <img src="images/services/img3.webp" alt="" class="w-full">
-                            </div>
-                            <div class="p-7.5 flex-1 flex-col flex">
-                                <h3 class="text-xl mb-2.5 duration-700 [.box-hover.active_&]:text-white">
-                                    Meal Planning Services
-                                </h3>
-                                <p class="mb-6.25 duration-700 [.box-hover.active_&]:text-white">
-                                    It is a
-                                    long established fact that a reader will be distracted.
-                                </p>
-                                <a href="service-detail.html"
-                                   class="mt-auto font-medium text-primary duration-700 [.box-hover.active_&]:text-white">
-                                    View
-                                    All Details <i class="feather icon-arrow-right-circle inline-block text-base"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="xl:w-1/4 md:w-1/2 w-full mb-7.5 wow fadeInUp">
-                        <div class="rounded-xxl h-full relative flex flex-col bg-white duration-700 box-hover [.box-hover.active]:bg-primary">
-                            <div class="relative overflow-hidden rounded-t-xxl">
-                                <img src="images/services/img4.webp" alt="" class="w-full">
-                            </div>
-                            <div class="p-7.5 flex-1 flex-col flex">
-                                <h3 class="text-xl mb-2.5 duration-700 [.box-hover.active_&]:text-white">
-                                    Nutrition Education
-                                </h3>
-                                <p class="mb-6.25 duration-700 [.box-hover.active_&]:text-white">
-                                    It is a
-                                    long established fact that a reader will be distracted.
-                                </p>
-                                <a href="service-detail.html"
-                                   class="mt-auto font-medium text-primary duration-700 [.box-hover.active_&]:text-white">
-                                    View
-                                    All Details <i class="feather icon-arrow-right-circle inline-block text-base"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+                    }
                 </div>
             </div>
         </div>
@@ -309,12 +254,13 @@
             <div class="bg-secondary h-full xl:py-31.25 xl:px-20 sm:py-21.25 sm:px-12.5 py-12.5 px-7.5 wow fadeInUp"
                  data-wow-delay="0.4s"
                  style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInUp;">
-                <div class="2xl:w-105 w-full">
-                    <div class="mb-10">
-                        <h2 class="2xxl:text-5xl lg:text-[38px] sm:text-[32px] text-2xxl font-bold capitalize mb-0 text-white">
-                            Vücut Kitle İndeksini <br class="hidden lg:block">Hesapla
-                        </h2>
-                    </div>
+                <div class="w-full">
+                        <div class="mb-10 max-w-[760px] w-full">
+                            <h2 class="2xxl:text-5xl lg:text-[42px] sm:text-[34px] text-2xxl font-bold leading-[1.2] mb-0 text-white">
+                                Vücut Kitle İndeksini
+                                <span class="block">Hesapla</span>
+                            </h2>
+                        </div>
 
                     <div class="custom-tab">
                         <ul class="flex flex-wrap gap-3 mb-5" id="myTab1" role="tablist">
@@ -324,76 +270,116 @@
                                 </button>
                             </li>
                         </ul>
+                            <style>
+                                #bmiForm .row {
+                                    display: flex;
+                                    flex-wrap: wrap;
+                                }
 
+                                #bmiForm .col-md-6 {
+                                    width: 50%;
+                                }
+
+                                #bmiForm .col-12 {
+                                    width: 100%;
+                                }
+
+                                @@media (max-width: 767px) {
+                                    #bmiForm .col-md-6 {
+                                        width: 100%;
+                                    }
+                                }
+
+                                #bmiForm .bmi-select option {
+                                    color: #000 !important;
+                                    background-color: #fff !important;
+                                }
+                            </style>
                         <div class="tab-content-area" id="myTabContent">
                             <div class="tab-content active">
-                                <form id="bmiForm" class="bmi-form">
-                                    @Html.AntiForgeryToken()
+                                    <form id="bmiForm" class="bmi-form">
+                                        @Html.AntiForgeryToken()
 
-                                    <div class="relative mb-5">
-                                        <label asp-for="Name" class="block mb-2 text-base text-white font-medium"></label>
-                                        <input asp-for="Name"
-                                               placeholder="Ad Soyad"
-                                               class="h-15 py-3.75 px-6.25 rounded-2xl border border-white/50 bg-white/[0.08] text-white text-2sm block w-full" />
-                                        <span class="text-danger text-sm field-validation-valid" data-valmsg-for="Name"></span>
-                                    </div>
+                                        <div class="row g-4">
+                                            <div class="col-12">
+                                                <div class="relative">
+                                                    <label asp-for="BodyMass.Name" class="block mb-2 text-base text-white font-medium"></label>
+                                                    <input asp-for="BodyMass.Name"
+                                                           placeholder="Ad Soyad"
+                                                           class="h-15 py-3.75 px-6.25 rounded-2xl border border-white/50 bg-white/[0.08] text-white text-2sm block w-full" />
+                                                    <span asp-validation-for="BodyMass.Name" class="text-danger text-sm"></span>
+                                                </div>
+                                            </div>
 
-                                    <div class="relative mb-5">
-                                        <label asp-for="Phone" class="block mb-2 text-base text-white font-medium"></label>
-                                        <input asp-for="Phone"
-                                               placeholder="Telefon"
-                                               class="h-15 py-3.75 px-6.25 rounded-2xl border border-white/50 bg-white/[0.08] text-white text-2sm block w-full" />
-                                        <span class="text-danger text-sm field-validation-valid" data-valmsg-for="Phone"></span>
-                                    </div>
+                                            <div class="col-12">
+                                                <div class="relative">
+                                                    <label asp-for="BodyMass.Phone" class="block mb-2 text-base text-white font-medium"></label>
+                                                    <input asp-for="BodyMass.Phone"
+                                                           placeholder="Telefon"
+                                                           class="h-15 py-3.75 px-6.25 rounded-2xl border border-white/50 bg-white/[0.08] text-white text-2sm block w-full" />
+                                                    <span asp-validation-for="BodyMass.Phone" class="text-danger text-sm"></span>
+                                                </div>
+                                            </div>
 
-                                    <div class="relative mb-5">
-                                        <label asp-for="Age" class="block mb-2 text-base text-white font-medium"></label>
-                                        <input asp-for="Age" type="number" min="1" max="120"
-                                               placeholder="Yaş"
-                                               class="h-15 py-3.75 px-6.25 rounded-2xl border border-white/50 bg-white/[0.08] text-white text-2sm block w-full" />
-                                        <span class="text-danger text-sm field-validation-valid" data-valmsg-for="Age"></span>
-                                    </div>
+                                            <div class="col-md-6">
+                                                <div class="relative">
+                                                    <label asp-for="BodyMass.Age" class="block mb-2 text-base text-white font-medium"></label>
+                                                    <input asp-for="BodyMass.Age" type="number" min="1" max="120"
+                                                           placeholder="Yaş"
+                                                           class="h-15 py-3.75 px-6.25 rounded-2xl border border-white/50 bg-white/[0.08] text-white text-2sm block w-full" />
+                                                    <span asp-validation-for="BodyMass.Age" class="text-danger text-sm"></span>
+                                                </div>
+                                            </div>
 
-                                    <div class="relative mb-5">
-                                        <label asp-for="Gender" class="block mb-2 text-base text-white font-medium"></label>
-                                        <select asp-for="Gender"
-                                                class="h-15 py-3.75 px-6.25 rounded-2xl border border-white/50 bg-white/[0.08] text-white text-2sm block w-full">
-                                            <option value="">Cinsiyet Seçiniz</option>
-                                            <option value="Erkek">Erkek</option>
-                                            <option value="Kadın">Kadın</option>
-                                        </select>
-                                        <span class="text-danger text-sm field-validation-valid" data-valmsg-for="Gender"></span>
-                                    </div>
+                                            <div class="col-md-6">
+                                                <div class="relative">
+                                                    <label asp-for="BodyMass.Gender" class="block mb-2 text-base text-white font-medium"></label>
+                                                    <select asp-for="BodyMass.Gender"
+                                                            class="h-15 py-3.75 px-6.25 rounded-2xl border border-white/50 bg-white/[0.08] text-white text-2sm block w-full bmi-select">
+                                                        <option value="">Cinsiyet Seçiniz</option>
+                                                        <option value="Erkek">Erkek</option>
+                                                        <option value="Kadın">Kadın</option>
+                                                    </select>
+                                                    <span asp-validation-for="BodyMass.Gender" class="text-danger text-sm"></span>
+                                                </div>
+                                            </div>
 
-                                    <div class="relative mb-5">
-                                        <label asp-for="Height" class="block mb-2 text-base text-white font-medium"></label>
-                                        <input asp-for="Height" type="number" step="0.1" min="50" max="250"
-                                               placeholder="CM"
-                                               class="h-15 py-3.75 px-6.25 rounded-2xl border border-white/50 bg-white/[0.08] text-white text-2sm block w-full" />
-                                        <span class="text-danger text-sm field-validation-valid" data-valmsg-for="Height"></span>
-                                    </div>
+                                            <div class="col-md-6">
+                                                <div class="relative">
+                                                    <label asp-for="BodyMass.Height" class="block mb-2 text-base text-white font-medium"></label>
+                                                    <input asp-for="BodyMass.Height" type="number" step="0.1" min="50" max="250"
+                                                           placeholder="CM"
+                                                           class="h-15 py-3.75 px-6.25 rounded-2xl border border-white/50 bg-white/[0.08] text-white text-2sm block w-full" />
+                                                    <span asp-validation-for="BodyMass.Height" class="text-danger text-sm"></span>
+                                                </div>
+                                            </div>
 
-                                    <div class="relative mb-5">
-                                        <label asp-for="Weight" class="block mb-2 text-base text-white font-medium"></label>
-                                        <input asp-for="Weight" type="number" step="0.1" min="10" max="500"
-                                               placeholder="KG"
-                                               class="h-15 py-3.75 px-6.25 rounded-2xl border border-white/50 bg-white/[0.08] text-white text-2sm block w-full" />
-                                        <span class="text-danger text-sm field-validation-valid" data-valmsg-for="Weight"></span>
-                                    </div>
+                                            <div class="col-md-6">
+                                                <div class="relative">
+                                                    <label asp-for="BodyMass.Weight" class="block mb-2 text-base text-white font-medium"></label>
+                                                    <input asp-for="BodyMass.Weight" type="number" step="0.1" min="10" max="500"
+                                                           placeholder="KG"
+                                                           class="h-15 py-3.75 px-6.25 rounded-2xl border border-white/50 bg-white/[0.08] text-white text-2sm block w-full" />
+                                                    <span asp-validation-for="BodyMass.Weight" class="text-danger text-sm"></span>
+                                                </div>
+                                            </div>
 
-                                    <button id="bmiSubmitBtn" name="submit" type="submit" value="Submit"
-                                            class="btn btn-lg btn-icon btn-primary">
-                                        Hesapla
-                                        <span class="size-11 min-w-11 bg-white rounded-2lg text-heading inline-flex items-center justify-center -my-2.75 -mr-4.5 ml-3">
-                                            <i class="feather icon-arrow-right group-hover:animate-toRightFromLeft"></i>
-                                        </span>
-                                    </button>
-                                </form>
+                                            <div class="col-12">
+                                                <button id="bmiSubmitBtn" name="submit" type="submit" value="Submit"
+                                                        class="btn btn-lg btn-icon btn-primary">
+                                                    Hesapla
+                                                    <span class="size-11 min-w-11 bg-white rounded-2lg text-heading inline-flex items-center justify-center -my-2.75 -mr-4.5 ml-3">
+                                                        <i class="feather icon-arrow-right group-hover:animate-toRightFromLeft"></i>
+                                                    </span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
 
                                 <div id="bmiResultBox" class="mt-6 hidden">
                                     <div class="p-4 rounded-2xl border border-white/30 bg-white/[0.08] text-white">
-                                        <p class="mb-2"><strong>VKI:</strong> <span id="bmiValue"></span></p>
-                                        <p class="mb-0"><strong>Durum:</strong> <span id="bmiStatus"></span></p>
+                                        <p class="mb-2 text-white"><strong>VKI:</strong> <span id="bmiValue"></span></p>
+                                            <p class="mb-0 text-white"><strong>Durum:</strong> <span id="bmiStatus"></span></p>
                                     </div>
                                 </div>
 
@@ -420,71 +406,74 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 
-    <script>
-        document.getElementById("bmiForm").addEventListener("submit", async function (e) {
-            e.preventDefault();
+        <script>
+                document.getElementById("bmiForm").addEventListener("submit", async function (e) {
+                    e.preventDefault();
 
-            const form = this;
-            const submitBtn = document.getElementById("bmiSubmitBtn");
-            const resultBox = document.getElementById("bmiResultBox");
-            const errorBox = document.getElementById("bmiErrorBox");
-            const successBox = document.getElementById("bmiSuccessBox");
-            const errorText = document.getElementById("bmiErrorText");
-            const successText = document.getElementById("bmiSuccessText");
+                    const form = this;
+                    const submitBtn = document.getElementById("bmiSubmitBtn");
+                    const resultBox = document.getElementById("bmiResultBox");
+                    const errorBox = document.getElementById("bmiErrorBox");
+                    const successBox = document.getElementById("bmiSuccessBox");
+                    const errorText = document.getElementById("bmiErrorText");
+                    const successText = document.getElementById("bmiSuccessText");
 
-            document.querySelectorAll("[data-valmsg-for]").forEach(x => x.textContent = "");
-            errorBox.classList.add("hidden");
-            successBox.classList.add("hidden");
+                    document.querySelectorAll("[data-valmsg-for]").forEach(x => x.textContent = "");
+                    errorBox.classList.add("hidden");
+                    successBox.classList.add("hidden");
 
-            submitBtn.disabled = true;
+                    submitBtn.disabled = true;
 
-            try {
-                const formData = new FormData(form);
+                    try {
+                        const formData = new FormData(form);
 
-                const response = await fetch('@Url.Action("CalculateBmiAjax", "Home")', {
-                    method: "POST",
-                    body: formData,
-                    headers: {
-                        "RequestVerificationToken": formData.get("__RequestVerificationToken")
+                        const response = await fetch('@Url.Action("CalculateBmiAjax", "Home")', {
+                            method: "POST",
+                            body: formData,
+                            headers: {
+                                "RequestVerificationToken": formData.get("__RequestVerificationToken")
+                            }
+                        });
+
+                        const data = await response.json();
+
+                        if (!data.success) {
+                            resultBox.classList.add("hidden");
+
+                            if (data.errors) {
+                                for (const key in data.errors) {
+                                    const span = document.querySelector(`[data-valmsg-for='${key}']`);
+                                    if (span) {
+                                        span.textContent = data.errors[key];
+                                    }
+                                }
+                            }
+
+                            if (data.message) {
+                                errorText.textContent = data.message;
+                                errorBox.classList.remove("hidden");
+                            }
+
+                            return;
+                        }
+
+                        document.getElementById("bmiValue").textContent = data.bmi;
+                        document.getElementById("bmiStatus").textContent = data.status;
+                        resultBox.classList.remove("hidden");
+
+                        successText.textContent = data.message;
+                        successBox.classList.remove("hidden");
+
+                        form.reset();
+                    } catch (err) {
+                        resultBox.classList.add("hidden");
+                        errorText.textContent = "İşlem sırasında bir hata oluştu.";
+                        errorBox.classList.remove("hidden");
+                    } finally {
+                        submitBtn.disabled = false;
                     }
                 });
-
-                const data = await response.json();
-
-                if (!data.success) {
-                    if (data.errors) {
-                        for (const key in data.errors) {
-                            const span = document.querySelector(`[data-valmsg-for='${key}']`);
-                            if (span) {
-                                span.textContent = data.errors[key];
-                            }
-                        }
-                    }
-
-                    if (data.message) {
-                        errorText.textContent = data.message;
-                        errorBox.classList.remove("hidden");
-                    }
-
-                    return;
-                }
-
-                document.getElementById("bmiValue").textContent = data.bmi;
-                document.getElementById("bmiStatus").textContent = data.status;
-                resultBox.classList.remove("hidden");
-
-                successText.textContent = data.message;
-                successBox.classList.remove("hidden");
-
-                form.reset();
-            } catch (err) {
-                errorText.textContent = "İşlem sırasında bir hata oluştu.";
-                errorBox.classList.remove("hidden");
-            } finally {
-                submitBtn.disabled = false;
-            }
-        });
-    </script>
+        </script>
 }
 
     @*Blog*@
@@ -519,120 +508,65 @@
                                     <rect width="20" height="20" fill="white"></rect>
                                 </clipPath>
                             </defs>
-                        </svg>Our Services
+                        </svg>Son Yazılarım
                     </span>
                     <h2 class="2xxl:text-5xxl lg:text-[38px] sm:text-[32px] text-2xxl capitalize mb-0">
-                        News And Update
+                        Beslenmenin Bilimi<br>Sağlıklı Yaşam Rehberim
                     </h2>
                 </div>
                 <div class="xl:w-5/12 md:w-1/4 w-full lg:text-end max-md:hidden wow fadeInUp"
                      data-wow-delay="0.4s" data-wow-duration="0.8s">
-                    <a href="blog-details.html" class="font-medium underline text-primary">
-                        View All Post
+                    <a asp-controller="Blog" asp-action="Index" class="font-medium underline text-primary">
+                        Tümünü Gör
                         <i class="feather icon-arrow-right inline-block text-base"></i>
                     </a>
                 </div>
             </div>
             <div class="row">
-                <div class="xl:w-1/3 md:w-1/2 mb-7.5 wow fadeInUp" data-wow-delay="0.6s"
-                     data-wow-duration="0.8s">
-                    <div class="relative z-1 p-5 filter drop-shadow-[0_0_12.5px_rgba(var(--secondary-rgb),0.07)] h-full duration-200 after:bg-white after:absolute after:size-full after:top-0 after:left-0 after:-z-1 after:mask-[url(../images/bg02.svg)] after:mask-position-[right_bottom] after:rounded-3xl after:rounded-ee-none hover:-translate-y-2 group">
-                        <div class="rounded-xxl h-62.5 mb-3.75 overflow-hidden relative before:absolute before:top-0 before:-left-[75%] before:z-0 before:block before:w-1/2 before:h-full before:skew-x-[-25deg] before:bg-linear-(--img-hover-gradient) group-hover:before:animate-dzShine">
-                            <img src="images/blog/grid/pic1.webp" alt="" class="size-full object-cover">
-                        </div>
-                        <div class="p-2.5">
-                            <h3 class="xl:text-2xl text-xl font-semibold mb-2">
-                                <a href="blog-details.html">Healthy Eating Habits for a Better Life</a>
-                            </h3>
-                            <p class="text-2sm">
-                                It is a long established fact that a reader will be
-                                distracted by the readable content.
-                            </p>
-                            <div class="mb-0 mt-6.25 mr-8.75">
-                                <ul class="flex items-center flex-wrap gap-1.25">
-                                    <li class="bg-primary text-white rounded-xxl font-medium text-2xs py-1.25 pr-3.75 pl-5.75 leading-[1.4] relative inline-flex mr-1.25 items-center gap-1 flex-wrap after:absolute after:size-1.5 after:rounded-full after:bg-white after:left-2.5">
-                                        17 May 2025
-                                    </li>
-                                    <li class="bg-primary text-white rounded-xxl font-medium text-2xs py-1.25 pr-3.75 pl-5.75 leading-[1.4] relative inline-flex mr-1.25 items-center gap-1 flex-wrap after:absolute after:size-1.5 after:rounded-full after:bg-white after:left-2.5">
-                                        By <a href="javascript:void(0);">Nashid Martines</a>
-                                    </li>
-                                </ul>
+                @foreach (var item in Model.Blogs)
+                {
+                    var descriptionText = Regex.Replace(item.Description ?? "", "<.*?>", string.Empty);
+                    descriptionText = WebUtility.HtmlDecode(descriptionText).Trim();
+
+                    var shortDescription = descriptionText.Length > 100
+                        ? descriptionText.Substring(0, 100).Trim() + "..."
+                        : descriptionText;
+
+                    var formattedDate = item.CreatedAt.ToString("dd MMM yyyy", trCulture);
+
+                    <div class="xl:w-1/3 md:w-1/2 mb-7.5 wow fadeInUp" data-wow-delay="0.6s"
+                         data-wow-duration="0.8s">
+                        <div class="relative z-1 p-5 filter drop-shadow-[0_0_12.5px_rgba(var(--secondary-rgb),0.07)] h-full duration-200 after:bg-white after:absolute after:size-full after:top-0 after:left-0 after:-z-1 after:mask-[url(../images/bg02.svg)] after:mask-position-[right_bottom] after:rounded-3xl after:rounded-ee-none hover:-translate-y-2 group">
+                            <div class="rounded-xxl h-62.5 mb-3.75 overflow-hidden relative before:absolute before:top-0 before:-left-[75%] before:z-0 before:block before:w-1/2 before:h-full before:skew-x-[-25deg] before:bg-linear-(--img-hover-gradient) group-hover:before:animate-dzShine">
+                                <img src="images/blog/grid/pic1.webp" alt="" class="size-full object-cover">
                             </div>
-                        </div>
-                        <a href="blog-details.html"
-                           class="btn btn-square btn-secondary !rounded-full !size-12 min-w-12 !absolute right-0 bottom-0">
-                            <i class="feather icon-arrow-up-right"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="xl:w-1/3 md:w-1/2 mb-7.5 wow fadeInUp" data-wow-delay="0.8s"
-                     data-wow-duration="0.8s">
-                    <div class="relative z-1 p-5 filter drop-shadow-[0_0_12.5px_rgba(var(--secondary-rgb),0.07)] h-full duration-200 after:bg-white after:absolute after:size-full after:top-0 after:left-0 after:-z-1 after:mask-[url(../images/bg02.svg)] after:mask-position-[right_bottom] after:rounded-3xl after:rounded-ee-none hover:-translate-y-2 group">
-                        <div class="rounded-xxl h-62.5 mb-3.75 overflow-hidden relative before:absolute before:top-0 before:-left-[75%] before:z-0 before:block before:w-1/2 before:h-full before:skew-x-[-25deg] before:bg-linear-(--img-hover-gradient) group-hover:before:animate-dzShine">
-                            <img src="images/blog/grid/pic2.webp" alt="" class="size-full object-cover">
-                        </div>
-                        <div class="dz-info">
-                            <h3 class="xl:text-2xl text-xl font-semibold mb-2">
-                                <a href="blog-details.html">
-                                    Discover the Power of Balanced Daily
-                                    Nutrition
-                                </a>
-                            </h3>
-                            <p class="text-2sm">
-                                It is a long established fact that a reader will be
-                                distracted by the readable content.
-                            </p>
-                            <div class="mb-0 mt-6.25 mr-8.75">
-                                <ul class="flex items-center flex-wrap gap-1.25">
-                                    <li class="bg-primary text-white rounded-xxl font-medium text-2xs py-1.25 pr-3.75 pl-5.75 leading-[1.4] relative inline-flex mr-1.25 items-center gap-1 flex-wrap after:absolute after:size-1.5 after:rounded-full after:bg-white after:left-2.5">
-                                        17 May 2025
-                                    </li>
-                                    <li class="bg-primary text-white rounded-xxl font-medium text-2xs py-1.25 pr-3.75 pl-5.75 leading-[1.4] relative inline-flex mr-1.25 items-center gap-1 flex-wrap after:absolute after:size-1.5 after:rounded-full after:bg-white after:left-2.5">
-                                        By <a href="javascript:void(0);">Nashid Martines</a>
-                                    </li>
-                                </ul>
+                            <div class="p-2.5">
+                                <h3 class="xl:text-2xl text-xl font-semibold mb-2">
+                                    <a asp-controller="Blog" asp-action="Detail" asp-route-slug="@item.Slug">@item.Title</a>
+                                </h3>
+
+                                <p class="text-2sm">
+                                    @shortDescription
+                                </p>
+                                <div class="mb-0 mt-6.25 mr-8.75">
+                                    <ul class="flex items-center flex-wrap gap-1.25">
+                                        <li class="bg-primary text-white rounded-xxl font-medium text-2xs py-1.25 pr-3.75 pl-5.75 leading-[1.4] relative inline-flex mr-1.25 items-center gap-1 flex-wrap after:absolute after:size-1.5 after:rounded-full after:bg-white after:left-2.5">
+                                            @formattedDate
+                                        </li>
+                                        <li class="bg-primary text-white rounded-xxl font-medium text-2xs py-1.25 pr-3.75 pl-5.75 leading-[1.4] relative inline-flex mr-1.25 items-center gap-1 flex-wrap after:absolute after:size-1.5 after:rounded-full after:bg-white after:left-2.5">
+                                            Zişan CİN
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
+                            <a asp-controller="Blog" asp-action="Detail" asp-route-slug="@item.Slug"
+                                   class="btn btn-square btn-secondary !rounded-full !size-12 min-w-12 !absolute right-0 bottom-0">
+                                <i class="feather icon-arrow-up-right"></i>
+                            </a>
                         </div>
-                        <a href="blog-details.html"
-                           class="btn btn-square btn-secondary !rounded-full !size-12 min-w-12 !absolute right-0 bottom-0">
-                            <i class="feather icon-arrow-up-right"></i>
-                        </a>
                     </div>
-                </div>
-                <div class="xl:w-1/3 md:w-1/2 mb-7.5 wow fadeInUp" data-wow-delay="1.0s"
-                     data-wow-duration="0.8s">
-                    <div class="relative z-1 p-5 filter drop-shadow-[0_0_12.5px_rgba(var(--secondary-rgb),0.07)] h-full duration-200 after:bg-white after:absolute after:size-full after:top-0 after:left-0 after:-z-1 after:mask-[url(../images/bg02.svg)] after:mask-position-[right_bottom] after:rounded-3xl after:rounded-ee-none hover:-translate-y-2 group">
-                        <div class="rounded-xxl h-62.5 mb-3.75 overflow-hidden relative before:absolute before:top-0 before:-left-[75%] before:z-0 before:block before:w-1/2 before:h-full before:skew-x-[-25deg] before:bg-linear-(--img-hover-gradient) group-hover:before:animate-dzShine">
-                            <img src="images/blog/grid/pic3.webp" alt="" class="size-full object-cover">
-                        </div>
-                        <div class="dz-info">
-                            <h3 class="xl:text-2xl text-xl font-semibold mb-2">
-                                <a href="blog-details.html">
-                                    Eat Well, Live Strong, Stay Energized
-                                    Always
-                                </a>
-                            </h3>
-                            <p class="text-2sm">
-                                It is a long established fact that a reader will be
-                                distracted by the readable content.
-                            </p>
-                            <div class="mb-0 mt-6.25 mr-8.75">
-                                <ul class="flex items-center flex-wrap gap-1.25">
-                                    <li class="bg-primary text-white rounded-xxl font-medium text-2xs py-1.25 pr-3.75 pl-5.75 leading-[1.4] relative inline-flex mr-1.25 items-center gap-1 flex-wrap after:absolute after:size-1.5 after:rounded-full after:bg-white after:left-2.5">
-                                        17 May 2025
-                                    </li>
-                                    <li class="bg-primary text-white rounded-xxl font-medium text-2xs py-1.25 pr-3.75 pl-5.75 leading-[1.4] relative inline-flex mr-1.25 items-center gap-1 flex-wrap after:absolute after:size-1.5 after:rounded-full after:bg-white after:left-2.5">
-                                        By <a href="javascript:void(0);">Nashid Martines</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <a href="blog-details.html"
-                           class="btn btn-square btn-secondary !rounded-full !size-12 min-w-12 !absolute right-0 bottom-0">
-                            <i class="feather icon-arrow-up-right"></i>
-                        </a>
-                    </div>
-                </div>
+                }
+               
             </div>
         </div>
     </section>
@@ -653,12 +587,11 @@
                         <div class="relative z-2">
                             <h2 class="2xxl:text-6xxl xl:text-5xxl sm:text-4xxl text-[32px] font-bold capitalize sm:mb-7.5 mb-3.75 !text-white"
                                 data-wow-delay="0.2s" data-wow-duration="0.8s">
-                                Want to schedule an
-                                appointment?
+                                Vücudunuzun Biyolojik Sobalarını Birlikte Yakalım Mı?
                             </h2>
-                            <a href="appointment.html" class="btn btn-lg btn-white group wow fadeInUp"
+                            <a asp-controller="Contact" asp-action="Index" class="btn btn-lg btn-white group wow fadeInUp"
                                data-wow-delay="0.6s" data-wow-duration="0.8s">
-                                Read More
+                                Hemen Başlayalım
                                 <span class="size-11 min-w-11 bg-secondary rounded-2lg text-white inline-flex items-center justify-center -my-2.75 -mr-4.5 ml-3 group-hover:bg-white group-hover:text-heading">
                                     <i class="feather icon-arrow-right group-hover:animate-toRightFromLeft"></i>
                                 </span>

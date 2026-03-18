@@ -54,7 +54,7 @@
             if (!allowed.Contains(ext))
                 return "invalid";
 
-            var folder = Path.Combine(env.WebRootPath, "uploads/cv");
+            var folder = Path.Combine(env.WebRootPath, "uploads");
 
             if (!Directory.Exists(folder))
                 Directory.CreateDirectory(folder);
@@ -67,7 +67,12 @@
                 await file.CopyToAsync(stream);
             }
 
-            return "/uploads/cv/" + fileName;
+            return "/uploads/" + fileName;
+        }
+
+        internal static async Task<string?> UploadCvAsync(IFormFile pdfFİlePath)
+        {
+            throw new NotImplementedException();
         }
     }
 }

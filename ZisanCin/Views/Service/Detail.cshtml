@@ -83,7 +83,7 @@
 				</div>
 			</div>
 			<div class="absolute right-[-2%] bottom-[-2%] float-right max-3xl:w-130 max-lg:hidden">
-				<img src="@Url.Content("~/images/banner/bnr-pic.webp")" alt="" class="wow fadeInUp" data-wow-delay="0.2s" data-wow-duration="0.8s">
+				<img src="@Url.Content("~/images/banner/background.png")" alt="" class="wow fadeInUp" data-wow-delay="0.2s" data-wow-duration="0.8s">
 			</div>
 		</div>
 		<div class="absolute z-9 bottom-[5%] right-[45%] max-xl:hidden"><img class="animate-move1" src="@Url.Content("~/images/banner/item1.png")" alt=""></div>
@@ -92,9 +92,9 @@
 		<div class="absolute z-9 bottom-[20%] 3xl:right-[18%] right-[5%] max-xl:hidden"><img class="animate-move3" src="@Url.Content("~/images/banner/item4.png")" alt=""></div>
 		<div class="h-full w-25 min-w-25 absolute bottom-0 flex justify-between items-center flex-col py-6.25 px-3.75 left-0 border-r border-white/10 z-1 max-xl:hidden">
 			<ul class="flex gap-7.5 [writing-mode:sideways-lr]">
-				<li><a class="text-xs font-semibold uppercase text-white tracking-[1px]" href="@DataRequestModel.SiteSetting.Instagram" target="_blank">Instagram</a></li>
-				<li><a class="text-xs font-semibold uppercase text-white tracking-[1px]" href="@DataRequestModel.SiteSetting.YouTube" target="_blank">Youtube</a></li>
 				<li><a class="text-xs font-semibold uppercase text-white tracking-[1px]" href="@DataRequestModel.SiteSetting.Facebook" target="_blank">Facebook</a></li>
+				<li><a class="text-xs font-semibold uppercase text-white tracking-[1px]" href="@DataRequestModel.SiteSetting.YouTube" target="_blank">Youtube</a></li>
+				<li><a class="text-xs font-semibold uppercase text-white tracking-[1px]" href="@DataRequestModel.SiteSetting.Instagram" target="_blank">Instagram</a></li>
 			</ul>
 			<a asp-controller="Contact" asp-action="Index" class="btn btn-white btn-sm !py-2 !px-4 shadow-btn [writing-mode:sideways-lr] !rounded-2xl">Hadi Başlayalım</a>
 		</div>
@@ -105,7 +105,7 @@
 			<div class="w-full">
 				<div class="flex max-lg:flex-col service-detail-box">
 					<div class="service-detail-image lg:rounded-s-xxl max-lg:rounded-t-xxl">
-						<img src="@Url.Content("~/images/services/img.webp")" alt="@Model.Title">  @*Resim Boyutları 465X758 *@
+						<img src="@Url.Content("~/img/" +Model.Image)" alt="@Model.Title">  @*Resim Boyutları 465X758 *@
 					</div>
 					<div class="sm:p-8.75 p-5 lg:rounded-e-xxl rounded-b-xxl service-detail-content">
 						<h4 class="lg:text-[38px] sm:text-3xxl text-2xxl capitalize mb-4">
@@ -123,15 +123,15 @@
 			<div class="row">
 				<div class="md:w-5/12 w-full order-2 md:order-1 p-0">
 					<div class="md:absolute bottom-0 left-0 md:w-1/2 w-full overflow-hidden">
-						<img src="@Url.Content("~/images/background/img3.png")" alt="" class="w-full">
+						<img src="@Url.Content("~/images/background/CTA.png")" alt="" class="w-full">
 					</div>
-				</div>
+				</div> 
 				<div class="md:w-7/12 w-full order-1 md:order-2">
 					<div class="2xxl:py-37.5 2xl:py-35 xl:py-30 lg:py-25 py-12.5 md:ml-10">
 						<div class="relative z-2">
 							<h2 class="2xxl:text-6xxl xl:text-5xxl sm:text-4xxl text-[32px] font-bold capitalize sm:mb-7.5 mb-3.75 !text-white"
 								data-wow-delay="0.2s" data-wow-duration="0.8s">
-								Vücudunuzun Biyolojik Sobalarını Birlikte Yakalım Mı?
+								Hafiflemek Hiç Bu Kadar Kolay Olmamıştı
 							</h2>
 							<a asp-controller="Contact" asp-action="Index" class="btn btn-lg btn-white group wow fadeInUp" data-wow-delay="0.6s" data-wow-duration="0.8s">
 								Hadi Başlayalım

@@ -2,7 +2,7 @@
 	ViewData["Title"] = "İletişim";
 	ViewData["MetaDescription"] = "Diyetisyen Zişan CİN iletişim";
 	ViewData["MetaKeywords"] = "Diyetisyen Zişan CİN iletişim";
-
+	var reCaptchaSiteKey = ViewBag.ReCaptchaSiteKey as string;
 }
 <style>
 	.bg-light2{
@@ -32,7 +32,7 @@
 				</div>
 			</div>
 			<div class="absolute right-[-2%] bottom-[-2%] float-right max-3xl:w-130 max-lg:hidden">
-				<img src="images/banner/bnr-pic.webp" alt="" class="wow fadeInUp" data-wow-delay="0.2s" data-wow-duration="0.8s">
+				<img src="images/banner/background.png" alt="" class="wow fadeInUp" data-wow-delay="0.2s" data-wow-duration="0.8s">
 			</div>
 		</div>
 		<div class="absolute z-9 bottom-[5%] right-[45%] max-xl:hidden"><img class="animate-move1" src="images/banner/item1.png" alt=""></div>
@@ -41,9 +41,9 @@
 		<div class="absolute z-9 bottom-[20%] 3xl:right-[18%] right-[5%] max-xl:hidden"><img class="animate-move3" src="images/banner/item4.png" alt=""></div>
 		<div class="h-full w-25 min-w-25 absolute bottom-0 flex justify-between items-center flex-col py-6.25 px-3.75 left-0 border-r border-white/10 z-1 max-xl:hidden">
 			<ul class="flex gap-7.5 [writing-mode:sideways-lr]">
-				<li><a class="text-xs font-semibold uppercase text-white tracking-[1px]" href="@DataRequestModel.SiteSetting.Instagram" target="_blank">Instagram</a></li>
-				<li><a class="text-xs font-semibold uppercase text-white tracking-[1px]" href="@DataRequestModel.SiteSetting.YouTube" target="_blank">Youtube</a></li>
 				<li><a class="text-xs font-semibold uppercase text-white tracking-[1px]" href="@DataRequestModel.SiteSetting.Facebook" target="_blank">Facebook</a></li>
+				<li><a class="text-xs font-semibold uppercase text-white tracking-[1px]" href="@DataRequestModel.SiteSetting.YouTube" target="_blank">Youtube</a></li>
+				<li><a class="text-xs font-semibold uppercase text-white tracking-[1px]" href="@DataRequestModel.SiteSetting.Instagram" target="_blank">Instagram</a></li>
 			</ul>
 			<a asp-controller="Contact" asp-action="" class="btn btn-white btn-sm !py-2 !px-4 shadow-btn [writing-mode:sideways-lr] !rounded-2xl">Hadi Başlayalım</a>
 		</div>
@@ -97,6 +97,12 @@
 										<textarea name="Message" class="py-2.5 px-5 bg-light2 w-full outline-none text-black rounded-2lg min-h-68.75 h-full" id="Message" rows="10" placeholder="Mesajınız..."></textarea>
 									</div>
 								</div>
+								@if (!string.IsNullOrWhiteSpace(reCaptchaSiteKey))
+								{
+									<div class="col-lg-12 mb-3">
+										<div class="g-recaptcha" data-sitekey="@reCaptchaSiteKey"></div>
+									</div>
+								}
 								<div class="w-full">
 									<button type="submit" name="submit" value="submit" class="btn btn-lg btn-icon btn-primary btn-shadow">
 										Görder <span class="size-11 min-w-11 bg-white rounded-2lg text-heading inline-flex items-center justify-center -my-2.75 -mr-4.5 ml-3"><i class="feather icon-arrow-right group-hover:animate-toRightFromLeft"></i></span>
@@ -159,7 +165,7 @@
 							</div>
 							<div class="overflow-hidden">
 								<h5 class="text-lg mb-0 font-semibold">Çalışma Saatleri</h5>
-								<p class="text-base font-light mb-0">Mon-Thu: 8:00am-5:00pm <br> Fri: 8:00am-1:00pm</p>
+								<p class="text-base font-light mb-0">Pzt-Cum: 9:30 - 19:00 <br> Cts: 9:30 - 18:00</p>
 							</div>
 						</div>
 
@@ -255,36 +261,33 @@
 </style>
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script>
-    $("#iletisimFormu").submit(function (e) {
-        e.preventDefault();
+	$("#iletisimFormu").submit(function(e) {
+	e.preventDefault();
 
-        // Önceki mesajları gizle
-        $(".sent-message, .error-message").hide();
+	// Önceki mesajları gizle
+	$(".sent-message, .error-message").hide();
 
-        var entity = {
-            Name: $("#Name").val(),
-            Phone: $("#Phone").val(),
-            Email: $("#Email").val(),
-            Subject: $("#Subject").val(),
-            Message: $("#Message").val()
-        };
+	// serialize() formu ve içindeki g-recaptcha-response dahil her şeyi otomatik toplar
+	var formData = $(this).serialize();
 
-        $.ajax({
-            method: "POST",
-            url: "/Contact/Index",
-            data: entity,
-            success: function (res) {
-                if (res.success) {
-                    $("#iletisimFormu")[0].reset();
-                    $(".sent-message").fadeIn().delay(5000).fadeOut();
-                } else {
-                    $(".error-message").html(res.message || "Bir hata oluştu.").fadeIn();
-                }
-            },
-            error: function () {
-                $(".error-message").html("Sunucu hatası! Lütfen tekrar deneyin.").fadeIn();
-            }
-        });
-    });
+	$.ajax({
+	method: "POST",
+	url: "/Contact/Index",
+	data: formData,
+	success: function(res) {
+	if (res.success) {
+	$("#iletisimFormu")[0].reset();
+	grecaptcha.reset(); // Başarılı gönderimden sonra reCAPTCHA'yı sıfırla
+	$(".sent-message").fadeIn().delay(5000).fadeOut();
+	} else {
+	$(".error-message").html(res.message || "Bir hata oluştu.").fadeIn();
+	}
+	},
+	error: function() {
+	$(".error-message").html("Sunucu hatası! Lütfen tekrar deneyin.").fadeIn();
+	}
+	});
+	});
 </script>

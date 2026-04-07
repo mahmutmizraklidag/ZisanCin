@@ -12,6 +12,12 @@ builder.Services.AddDbContext<DatabaseContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer"));
 });
 
+
+builder.Services.Configure<GoogleReCaptchaSettings>(
+    builder.Configuration.GetSection("GoogleReCaptcha"));
+
+builder.Services.AddHttpClient();
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 

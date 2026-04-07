@@ -22,13 +22,14 @@ namespace ZisanCin.Controllers
             var services = _context.Services.Where(s => s.IsHome).Take(3).OrderByDescending(b => b.Id).ToList();
             var blogs = _context.Blogs.OrderByDescending(b => b.CreatedAt).Take(3).ToList();
             var about = _context.Abouts.FirstOrDefault();
-
+            var slider=_context.Sliders.FirstOrDefault();
             var model = new HomePageVm
             {
                 Services = services,
                 Blogs = blogs,
                 About = about ?? new About(),
-                BodyMass = new BodyMassIndex()
+                BodyMass = new BodyMassIndex(),
+                Slider=slider
             };
 
             return View(model);

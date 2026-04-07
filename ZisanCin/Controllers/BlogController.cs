@@ -14,7 +14,7 @@ namespace ZisanCin.Controllers
         [Route("blog")]
         public IActionResult Index()
         {
-            var blogs = _context.Blogs.ToList();
+            var blogs = _context.Blogs.OrderByDescending(x=>x.CreatedAt).ToList();
             return View(blogs);
         }
         [Route("blog/{slug}")]

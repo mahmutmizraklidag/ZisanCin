@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using ZisanCin.Data;
 using ZisanCin.Entities;
+using ZisanCin.Utils;
 
 namespace ZisanCin.Areas.admin.Controllers
 {
@@ -27,23 +28,7 @@ namespace ZisanCin.Areas.admin.Controllers
             return View(await _context.SiteSettings.ToListAsync());
         }
 
-        // GET: admin/SiteSettings/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var siteSetting = await _context.SiteSettings
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (siteSetting == null)
-            {
-                return NotFound();
-            }
-
-            return View(siteSetting);
-        }
 
         // GET: admin/SiteSettings/Create
         public IActionResult Create()
@@ -56,10 +41,11 @@ namespace ZisanCin.Areas.admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Phone,Email,Address,mapLink,Facebook,Instagram,Twitter,LinkedIn,YouTube,YouTubeLink,Logo,SmtpServer,SmtpPort,SmtpEmail,EmailPassword,Keywords,MetaDescription,MetaTitle")] SiteSetting siteSetting)
+        public async Task<IActionResult> Create(SiteSetting siteSetting, IFormFile? Logo)
         {
             if (ModelState.IsValid)
             {
+                if (Logo is not null) siteSetting.Logo = await FileHelper.FileLoaderAsync(Logo);
                 _context.Add(siteSetting);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -88,34 +74,44 @@ namespace ZisanCin.Areas.admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Phone,Email,Address,mapLink,Facebook,Instagram,Twitter,LinkedIn,YouTube,YouTubeLink,Logo,SmtpServer,SmtpPort,SmtpEmail,EmailPassword,Keywords,MetaDescription,MetaTitle")] SiteSetting siteSetting)
+        public async Task<IActionResult> Edit(int id, SiteSetting siteSetting, IFormFile? Logo)
         {
             if (id != siteSetting.Id)
             {
                 return NotFound();
             }
-
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
+                return View(siteSetting);
+            var dbSiteSetting = await _context.SiteSettings.FindAsync(id);
+            if (dbSiteSetting is null) return NotFound();
+            dbSiteSetting.Phone = siteSetting.Phone;
+            dbSiteSetting.Email = siteSetting.Email;
+            dbSiteSetting.Address = siteSetting.Address;
+            dbSiteSetting.mapLink = siteSetting.mapLink;
+            dbSiteSetting.Facebook = siteSetting.Facebook;
+            dbSiteSetting.Instagram = siteSetting.Instagram;
+            dbSiteSetting.Twitter = siteSetting.Twitter;
+            dbSiteSetting.LinkedIn = siteSetting.LinkedIn;
+            dbSiteSetting.YouTube = siteSetting.YouTube;
+            dbSiteSetting.YouTubeLink = siteSetting.YouTubeLink;
+            dbSiteSetting.SmtpServer = siteSetting.SmtpServer;
+            dbSiteSetting.SmtpPort = siteSetting.SmtpPort;
+            dbSiteSetting.SmtpEmail = siteSetting.SmtpEmail;
+            dbSiteSetting.EmailPassword = siteSetting.EmailPassword;
+            dbSiteSetting.Keywords = siteSetting.Keywords;
+            dbSiteSetting.MetaDescription = siteSetting.MetaDescription;
+            dbSiteSetting.MetaTitle = siteSetting.MetaTitle;
+            if (Logo is not null)
             {
-                try
+                if (!string.IsNullOrEmpty(dbSiteSetting.Logo))
                 {
-                    _context.Update(siteSetting);
-                    await _context.SaveChangesAsync();
+                    FileHelper.DeleteFile(dbSiteSetting.Logo);
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!SiteSettingExists(siteSetting.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                dbSiteSetting.Logo = await FileHelper.FileLoaderAsync(Logo);
             }
-            return View(siteSetting);
+           
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index", "SiteSettings", new { area = "Admin" });
         }
 
         // GET: admin/SiteSettings/Delete/5
@@ -144,13 +140,17 @@ namespace ZisanCin.Areas.admin.Controllers
             var siteSetting = await _context.SiteSettings.FindAsync(id);
             if (siteSetting != null)
             {
+                if (!string.IsNullOrEmpty(siteSetting.Logo))
+                {
+                    FileHelper.DeleteFile(siteSetting.Logo);
+                }
+               
                 _context.SiteSettings.Remove(siteSetting);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
         private bool SiteSettingExists(int id)
         {
             return _context.SiteSettings.Any(e => e.Id == id);

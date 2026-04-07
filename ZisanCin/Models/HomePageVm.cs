@@ -8,12 +8,14 @@ namespace ZisanCin.Models
         public IEnumerable<Blog> Blogs { get; set; }
         public About About { get; set; }
         public BodyMassIndex BodyMass { get; set; }
+        public Slider Slider { get; set; }
         public HomePageVm()
         {
             Services = new List<Service>();
             Blogs = new List<Blog>();
             About = new About();
             BodyMass = new BodyMassIndex();
+            Slider = new Slider();
         }
     }
 }

@@ -1,94 +1,191 @@
 ﻿<!DOCTYPE html>
 <html lang="tr" data-theme-color="skin-6">
 <head>
+    <!-- Google Tag Manager -->
+    <script>
+            (function(w, d, s, l, i) {
+                w[l] = w[l] || []; w[l].push({ 'gtm.start':
+                    new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0],
+                        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                            'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-NJ5CVMND');</script>
+        <!-- End Google Tag Manager -->
+        <!-- Character Encoding -->
+        <meta charset="UTF-8">
 
-    <!-- Character Encoding -->
-    <meta charset="UTF-8">
+        <!-- Responsive Design -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Responsive Design -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Title -->
+        <title>@ViewData["Title"] | Zişan CİN</title>
+        <meta name="description" content="@ViewData["MetaDescription"]" />
+        <meta name="keywords" content="@ViewData["MetaKeywords"]" />
 
-    <!-- Title -->
-    <title>@ViewData["Title"] | Zişan CİN</title>
-    <meta name="description" content="@ViewData["MetaDescription"]" />
-    <meta name="keywords" content="@ViewData["MetaKeywords"]" />
-
-    <!-- SEO Meta Tags -->
-    <meta name="title" content="@ViewData["Title"] | Zişan CİN">
+        <!-- SEO Meta Tags -->
+        <meta name="title" content="@ViewData["Title"] | Zişan CİN">
     
-    <meta name="author" content="DexignZone">
-    <meta name="robots" content="index, follow">
+        <meta name="author" content="DexignZone">
+        <meta name="robots" content="index, follow">
 
-    <!-- CANONICAL URL -->
-    <link rel="canonical" href="https://diyetcin.com">
+        <!-- CANONICAL URL -->
+        <link rel="canonical" href="https://diyetcin.com">
 
-    <!-- FAVICONS ICON -->
-    <link rel="icon" type="image/png" href="/images/favicon.png">
+        <!-- FAVICONS ICON -->
+        <link rel="icon" type="image/png" href="/images/fav/fav-dark-16.png" media="(prefers-color-scheme: dark)">
+        <link rel="icon" type="image/png" href="/images/fav/fav-dark-32.png" media="(prefers-color-scheme: dark)">
+        <link rel="icon" type="image/png" href="/images/fav/fav-dark-64.png" media="(prefers-color-scheme: dark)">
 
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="@ViewData["Title"] | Zişan CİN">
-    <meta property="og:description" content="@ViewData["MetaDescription"]">
-    <meta property="og:url" content="https://clinicmaster.dexignzone.com/tailwind/social-image.png">
-    <meta property="og:image" content="https://clinicmaster.dexignzone.com/tailwind/social-image.png">
-    <meta property="og:site_name" content="Zişan CİN">
+        <link rel="icon" type="image/png" href="/images/fav/fav-light-16.png" media="(prefers-color-scheme: light)">
+        <link rel="icon" type="image/png" href="/images/fav/fav-light-32.png" media="(prefers-color-scheme: light)">
+        <link rel="icon" type="image/png" href="/images/fav/fav-light--64.png" media="(prefers-color-scheme: light)">
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="@ViewData["Title"] | Zişan CİN">
-    <meta name="twitter:description" content="@ViewData["MetaDescription"]">
-    <meta name="twitter:image" content="https://clinicmaster.dexignzone.com/tailwind/social-image.png">
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="@ViewData["Title"] | Zişan CİN">
+        <meta property="og:description" content="@ViewData["MetaDescription"]">
+        <meta property="og:url" content="https://clinicmaster.dexignzone.com/tailwind/social-image.png">
+        <meta property="og:image" content="https://clinicmaster.dexignzone.com/tailwind/social-image.png">
+        <meta property="og:site_name" content="Zişan CİN">
 
-    <!-- IE Compatibility -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <!-- Twitter Card -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="@ViewData["Title"] | Zişan CİN">
+        <meta name="twitter:description" content="@ViewData["MetaDescription"]">
+        <meta name="twitter:image" content="https://clinicmaster.dexignzone.com/tailwind/social-image.png">
 
-    <meta name="format-detection" content="telephone=no">
+        <!-- IE Compatibility -->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <link rel="stylesheet" type="text/css" href="/assets/vendor/swiper/swiper-bundle.min.css">
+        <meta name="format-detection" content="telephone=no">
 
-    <link rel="stylesheet" type="text/css" href="/assets/icons/fontawesome/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="/assets/icons/flaticon/flaticon.css">
-    <link rel="stylesheet" type="text/css" href="/assets/icons/feather/css/iconfont.css">
+        <link rel="stylesheet" type="text/css" href="/assets/vendor/swiper/swiper-bundle.min.css">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/assets/icons/fontawesome/css/all.min.css">
+        <link rel="stylesheet" type="text/css" href="/assets/icons/flaticon/flaticon.css">
+        <link rel="stylesheet" type="text/css" href="/assets/icons/feather/css/iconfont.css">
 
-    <!-- Custom Stylesheet -->
-    <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
-</head>
-<body id="bg" class="bg-light">
-    <div class="page-wraper">
-        <div class="fixed size-full left-0 top-0 z-9999999 flex items-center justify-center bg-white" id="dzPreloader">
-            <div>
-                <span class="size-12 rounded-full border-2 border-secondary border-b-transparent box-border animate-rotation mx-auto block mb-5 absolute right-7.5 top-10 after:box-border after:absolute after:inset-0 after:m-auto after:border-2 after:border-primary after:border-t-transparent after:size-6 after:rounded-full after:animate-rotationBack after:origin-center"></span>
-                <img src="@Url.Content("~/images/logo.gif")" alt="/" class="w-100 block mx-auto">
-                <span class="loader"></span>
+        <!-- Custom Stylesheet -->
+        <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=AW-11274274690"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+
+            gtag('config', 'AW-11274274690');
+        </script>
+        <style>
+            .side-contact-btn {
+            position: fixed;
+            bottom: 18px;
+            z-index: 99999;
+            width: 56px;
+            height: 56px;
+            border-radius: 999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff !important;
+            font-size: 22px;
+            box-shadow: 0 10px 30px rgba(0,0,0,.18);
+            transition: all .25s ease;
+            }
+
+            .side-contact-btn:hover {
+            transform: scale(1.08);
+            color: #fff !important;
+            }
+
+            .side-phone-btn {
+            left: 18px;
+            background: linear-gradient(135deg, #ff7a00, #ff9f43);
+            }
+
+            .side-whatsapp-btn {
+            right: 18px;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            }
+
+            @@media (max-width: 767.98px) {
+            .side-contact-btn {
+            width: 52px;
+            height: 52px;
+            bottom: 14px;
+            font-size: 20px;
+            }
+
+            .side-phone-btn {
+            left: 14px;
+            }
+
+            .side-whatsapp-btn {
+            right: 14px;
+            }
+            }
+        </style>
+    
+    </head>
+    <body id="bg" class="bg-light">
+        <!-- Google Tag Manager (noscript) -->
+        <noscript>
+            <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NJ5CVMND"
+                    height="0" width="0" style="display:none;visibility:hidden"></iframe>
+        </noscript>
+        <!-- End Google Tag Manager (noscript) -->
+
+        <div class="page-wraper">
+            <div class="fixed size-full left-0 top-0 z-9999999 flex items-center justify-center bg-white" id="dzPreloader">
+                <div>
+                    <span class="size-12 rounded-full border-2 border-secondary border-b-transparent box-border animate-rotation mx-auto block mb-5 absolute right-7.5 top-10 after:box-border after:absolute after:inset-0 after:m-auto after:border-2 after:border-primary after:border-t-transparent after:size-6 after:rounded-full after:animate-rotationBack after:origin-center"></span>
+                    <img src="@Url.Content("~/images/logo.gif")" alt="/" class="w-100 block mx-auto">
+                    <span class="loader"></span>
+                </div>
             </div>
-        </div>
-        @await Component.InvokeAsync("Navbar")
-        <div id="smooth-wrapper">
-            <div id="smooth-content">
-               
+
+            @await Component.InvokeAsync("Navbar")
+
+            <div id="smooth-wrapper">
+                <div id="smooth-content">
                     @RenderBody()
-               
-                @await Component.InvokeAsync("Footer")
+                    @await Component.InvokeAsync("Footer")
+                </div>
             </div>
-           
         </div>
-    </div>
 
-    <!-- JAVASCRIPT FILES ========================================= -->
-    <script src="@Url.Content("~/assets/vendor/swiper/swiper-bundle.min.js")"></script>
-    <script src="@Url.Content("~/assets/vendor/imagesloaded/imagesloaded.js")"></script>
-    <script defer src="@Url.Content("~/assets/vendor/gsap/gsap.min.js")"></script>
-    <script defer src="@Url.Content("~/assets/vendor/gsap/ScrollSmoother.js")"></script>
-    <script defer src="@Url.Content("~/assets/vendor/gsap/ScrollTrigger.min.js")"></script>
-    <script src="@Url.Content("~/assets/vendor/xmenu/xmenu.js")"></script>
-    <script src="@Url.Content("~/assets/js/dz.carousel.js")"></script>
-    <script src="@Url.Content("~/assets/js/dz.ajax.js")"></script>
-    <script src="@Url.Content("~/assets/js/animation.js")"></script>
-    <script src="@Url.Content("~/assets/js/custom.js")"></script>
-    @await RenderSectionAsync("Scripts", required: false)
-</body>
+        <!-- Sol Telefon Butonu -->
+        <a href="tel:@DataRequestModel.SiteSetting.Phone"
+               class="side-contact-btn side-phone-btn"
+               aria-label="Telefon ile ara"
+               title="Bizi Arayın">
+            <i class="fas fa-phone-alt"></i>
+        </a>
+
+        <!-- Sağ WhatsApp Butonu -->
+        <a href="https://wa.me/905337046503?text=Merhaba%2C%20web%20siteniz%20%C3%BCzerinden%20ula%C5%9F%C4%B1yorum.%0ABilgi%20almak%20istiyorum."
+               target="_blank"
+               rel="noopener noreferrer"
+               class="side-contact-btn side-whatsapp-btn"
+               aria-label="WhatsApp ile iletişime geç"
+               title="WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+
+        <!-- JAVASCRIPT FILES ========================================= -->
+        <script src="@Url.Content("~/assets/vendor/swiper/swiper-bundle.min.js")"></script>
+        <script src="@Url.Content("~/assets/vendor/imagesloaded/imagesloaded.js")"></script>
+        <script defer src="@Url.Content("~/assets/vendor/gsap/gsap.min.js")"></script>
+        <script defer src="@Url.Content("~/assets/vendor/gsap/ScrollSmoother.js")"></script>
+        <script defer src="@Url.Content("~/assets/vendor/gsap/ScrollTrigger.min.js")"></script>
+        <script src="@Url.Content("~/assets/vendor/xmenu/xmenu.js")"></script>
+        <script src="@Url.Content("~/assets/js/dz.carousel.js")"></script>
+        <script src="@Url.Content("~/assets/js/dz.ajax.js")"></script>
+        <script src="@Url.Content("~/assets/js/animation.js")"></script>
+        <script src="@Url.Content("~/assets/js/custom.js")"></script>
+        @await RenderSectionAsync("Scripts", required: false)
+    </body>
 </html>

@@ -6,7 +6,7 @@
 
 				<!-- Website Logo -->
 				<div class="flex items-center align-middle xl:w-41.25 w-33.75 sm:h-20 h-15.25 max-xl:me-2 border-r border-secondary/10 pr-3.75 mr-4.5 logo-dark">
-					<a asp-controller="Home" asp-action="Index" class="table-cell align-middle"><img loading="lazy" src="@Url.Content("~/images/logo.svg")" alt="logo" class="object-contain"></a>
+					<a asp-controller="Home" asp-action="Index" class="table-cell align-middle"><img loading="lazy" src="@Url.Content("~/img/"+DataRequestModel.SiteSetting.Logo)" alt="logo" class="object-contain"></a>
 				</div>
 
 				<button class="xmenu-toggler lg:hidden float-right my-2.5 lg:ml-7 ml-5 size-11 bg-secondary rounded-2lg relative cursor-pointer max-lg:order-1 max-sm:ms-auto" aria-label="Toggle navigation menu" type="button">
@@ -18,7 +18,7 @@
 				<div class="flex lg:basis-auto lg:grow max-lg:flex-col lg:justify-start font-title max-lg:fixed max-lg:h-full max-lg:px-5 max-lg:top-0 max-lg:-left-75 max-lg:z-9999 max-lg:bg-white max-lg:w-72 max-lg:overflow-auto max-lg:duration-700 header-nav custom-scroll">
 					<div class="flex items-center relative z-9 py-6.25 lg:hidden w-33.75 h-15.25">
 						<a asp-controller="Home" asp-action="Index" class="table-cell align-middle">
-							<img loading="lazy" src="@Url.Content("~/images/logo.svg")" alt="logo" width="400" height="120" class="object-contain duration-500">
+							<img loading="lazy" src="@Url.Content("~/img/" + DataRequestModel.SiteSetting.Logo)" alt="logo" width="400" height="120" class="object-contain duration-500">
 						</a>
 					</div>
 					<ul class="lg:flex flex-wrap navbar-nav">

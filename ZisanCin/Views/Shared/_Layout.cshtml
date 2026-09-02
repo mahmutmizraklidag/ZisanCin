@@ -1,4 +1,97 @@
 ﻿<!DOCTYPE html>
+@using System.Text.Json
+@using ZisanCin.Utils
+@{
+    var seoSite = DataRequestModel.SiteSetting ?? new SiteSetting();
+    var seoPageTitle = ViewData["Title"]?.ToString();
+    var seoFullTitle = ViewData["FullTitle"]?.ToString();
+    if (string.IsNullOrWhiteSpace(seoFullTitle))
+    {
+        seoFullTitle = string.IsNullOrWhiteSpace(seoPageTitle)
+            ? SeoDefaults.DefaultTitle
+            : seoPageTitle.Contains("Zişan", StringComparison.OrdinalIgnoreCase)
+                ? seoPageTitle
+                : $"{seoPageTitle} | Diyetisyen Zişan Cin";
+    }
+    var seoDescription = ViewData["MetaDescription"]?.ToString();
+    if (string.IsNullOrWhiteSpace(seoDescription))
+        seoDescription = SeoDefaults.DefaultDescription;
+
+    var seoCanonicalPath = ViewData["CanonicalPath"]?.ToString() ?? Context.Request.Path.Value ?? "/";
+    var seoCanonicalUrl = SeoDefaults.AbsoluteUrl(seoCanonicalPath);
+    var seoImage = SeoDefaults.AbsoluteUrl(ViewData["OgImage"]?.ToString() ?? "/images/about/hakkimizda.png");
+    var seoBusinessImage = SeoDefaults.AbsoluteUrl("/images/about/hakkimizda.png");
+    var seoRobots = ViewData["Robots"]?.ToString() ?? "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
+    var seoOgType = ViewData["OgType"]?.ToString() ?? "website";
+    var seoLogo = SeoDefaults.AbsoluteUrl(string.IsNullOrWhiteSpace(seoSite.Logo) ? "/images/logo.svg" : $"/img/{seoSite.Logo}");
+    var seoSameAs = new[] { seoSite.Instagram, seoSite.Facebook, seoSite.YouTube, seoSite.LinkedIn, seoSite.Twitter }
+        .Where(link => !string.IsNullOrWhiteSpace(link))
+        .ToArray();
+
+    var seoBusiness = new Dictionary<string, object?>
+    {
+        ["@type"] = "ProfessionalService",
+        ["@id"] = $"{SeoDefaults.BaseUrl}/#business",
+        ["name"] = "Diyetisyen Zişan Cin",
+        ["alternateName"] = "Diyet Cin",
+        ["url"] = SeoDefaults.AbsoluteUrl("/"),
+        ["logo"] = seoLogo,
+        ["image"] = seoBusinessImage,
+        ["description"] = SeoDefaults.DefaultDescription,
+        ["telephone"] = seoSite.Phone,
+        ["email"] = seoSite.Email,
+        ["address"] = new Dictionary<string, object?>
+        {
+            ["@type"] = "PostalAddress",
+            ["streetAddress"] = seoSite.Address,
+            ["addressLocality"] = "Bayraklı",
+            ["addressRegion"] = "İzmir",
+            ["postalCode"] = "35030",
+            ["addressCountry"] = "TR"
+        },
+        ["areaServed"] = new object[]
+        {
+            new Dictionary<string, object?> { ["@type"] = "AdministrativeArea", ["name"] = "Bayraklı, İzmir" },
+            new Dictionary<string, object?> { ["@type"] = "City", ["name"] = "İzmir" }
+        },
+        ["sameAs"] = seoSameAs,
+        ["founder"] = new Dictionary<string, object?> { ["@id"] = $"{SeoDefaults.BaseUrl}/#zisan-cin" }
+    };
+
+    var seoGraph = new Dictionary<string, object?>
+    {
+        ["@context"] = "https://schema.org",
+        ["@graph"] = new object[]
+        {
+            new Dictionary<string, object?>
+            {
+                ["@type"] = "WebSite",
+                ["@id"] = $"{SeoDefaults.BaseUrl}/#website",
+                ["url"] = SeoDefaults.AbsoluteUrl("/"),
+                ["name"] = SeoDefaults.SiteName,
+                ["inLanguage"] = "tr-TR",
+                ["publisher"] = new Dictionary<string, object?> { ["@id"] = $"{SeoDefaults.BaseUrl}/#business" }
+            },
+            seoBusiness,
+            new Dictionary<string, object?>
+            {
+                ["@type"] = "Person",
+                ["@id"] = $"{SeoDefaults.BaseUrl}/#zisan-cin",
+                ["name"] = "Zişan Cin",
+                ["jobTitle"] = "Diyetisyen",
+                ["url"] = SeoDefaults.AbsoluteUrl("/hakkimizda"),
+                ["image"] = seoBusinessImage,
+                ["worksFor"] = new Dictionary<string, object?> { ["@id"] = $"{SeoDefaults.BaseUrl}/#business" },
+                ["sameAs"] = seoSameAs
+            }
+        }
+    };
+
+    var seoJsonOptions = new JsonSerializerOptions
+    {
+        DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
+    };
+}
 <html lang="tr" data-theme-color="skin-6">
 <head>
     <!-- Google Tag Manager -->
@@ -16,19 +109,12 @@
         <!-- Responsive Design -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <!-- Title -->
-        <title>@ViewData["Title"] | Zişan CİN</title>
-        <meta name="description" content="@ViewData["MetaDescription"]" />
-        <meta name="keywords" content="@ViewData["MetaKeywords"]" />
-
-        <!-- SEO Meta Tags -->
-        <meta name="title" content="@ViewData["Title"] | Zişan CİN">
-    
-        <meta name="author" content="DexignZone">
-        <meta name="robots" content="index, follow">
-
-        <!-- CANONICAL URL -->
-        <link rel="canonical" href="https://diyetcin.com">
+        <title>@seoFullTitle</title>
+        <meta name="description" content="@seoDescription">
+        <meta name="author" content="Diyetisyen Zişan Cin">
+        <meta name="robots" content="@seoRobots">
+        <link rel="canonical" href="@seoCanonicalUrl">
+        <link rel="sitemap" type="application/xml" href="/sitemap.xml">
 
         <!-- FAVICONS ICON -->
         <link rel="icon" type="image/png" href="/images/fav/fav-dark-16.png" media="(prefers-color-scheme: dark)">
@@ -37,20 +123,33 @@
 
         <link rel="icon" type="image/png" href="/images/fav/fav-light-16.png" media="(prefers-color-scheme: light)">
         <link rel="icon" type="image/png" href="/images/fav/fav-light-32.png" media="(prefers-color-scheme: light)">
-        <link rel="icon" type="image/png" href="/images/fav/fav-light--64.png" media="(prefers-color-scheme: light)">
+        <link rel="icon" type="image/png" href="/images/fav/fav-light-64.png" media="(prefers-color-scheme: light)">
 
-        <meta property="og:type" content="website">
-        <meta property="og:title" content="@ViewData["Title"] | Zişan CİN">
-        <meta property="og:description" content="@ViewData["MetaDescription"]">
-        <meta property="og:url" content="https://clinicmaster.dexignzone.com/tailwind/social-image.png">
-        <meta property="og:image" content="https://clinicmaster.dexignzone.com/tailwind/social-image.png">
-        <meta property="og:site_name" content="Zişan CİN">
+        <meta property="og:type" content="@seoOgType">
+        <meta property="og:title" content="@seoFullTitle">
+        <meta property="og:description" content="@seoDescription">
+        <meta property="og:url" content="@seoCanonicalUrl">
+        <meta property="og:image" content="@seoImage">
+        <meta property="og:image:alt" content="Diyetisyen Zişan Cin">
+        <meta property="og:site_name" content="@SeoDefaults.SiteName">
+        <meta property="og:locale" content="tr_TR">
 
         <!-- Twitter Card -->
         <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="@ViewData["Title"] | Zişan CİN">
-        <meta name="twitter:description" content="@ViewData["MetaDescription"]">
-        <meta name="twitter:image" content="https://clinicmaster.dexignzone.com/tailwind/social-image.png">
+        <meta name="twitter:title" content="@seoFullTitle">
+        <meta name="twitter:description" content="@seoDescription">
+        <meta name="twitter:image" content="@seoImage">
+
+        @if (ViewData["PreloadImage"] is string preloadImage && !string.IsNullOrWhiteSpace(preloadImage))
+        {
+            <link rel="preload" as="image" href="@Url.Content(preloadImage)" fetchpriority="high">
+        }
+
+        <script type="application/ld+json">@Html.Raw(JsonSerializer.Serialize(seoGraph, seoJsonOptions))</script>
+        @if (ViewData["StructuredData"] is object structuredData)
+        {
+            <script type="application/ld+json">@Html.Raw(JsonSerializer.Serialize(structuredData, seoJsonOptions))</script>
+        }
 
         <!-- IE Compatibility -->
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -142,7 +241,7 @@
             <div class="fixed size-full left-0 top-0 z-9999999 flex items-center justify-center bg-white" id="dzPreloader">
                 <div>
                     <span class="size-12 rounded-full border-2 border-secondary border-b-transparent box-border animate-rotation mx-auto block mb-5 absolute right-7.5 top-10 after:box-border after:absolute after:inset-0 after:m-auto after:border-2 after:border-primary after:border-t-transparent after:size-6 after:rounded-full after:animate-rotationBack after:origin-center"></span>
-                    <img src="@Url.Content("~/images/logo.gif")" alt="/" class="w-100 block mx-auto">
+                    <img src="@Url.Content("~/images/logo.gif")" alt="Diyetisyen Zişan Cin" class="w-100 block mx-auto">
                     <span class="loader"></span>
                 </div>
             </div>

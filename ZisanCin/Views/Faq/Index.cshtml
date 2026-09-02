@@ -1,8 +1,24 @@
 ﻿@model IEnumerable<Faq>
 @{
-	ViewData["Title"] = "SSS";
-	ViewData["MetaDescription"] = "Diyetisyen Zişan CİN Sıkça Sorulan Sorular";
+	ViewData["Title"] = "Bayraklı Diyetisyen SSS";
+	ViewData["MetaDescription"] = "Bayraklı Diyetisyen Zişan Cin'in beslenme danışmanlığı, randevu ve takip süreciyle ilgili sık sorulan soruların yanıtlarını inceleyin.";
 	ViewData["MetaKeywords"] = "Diyetisyen Zişan CİN Sıkça Sorulan Sorular";
+	ViewData["CanonicalPath"] = "/sikca-sorulan-sorular";
+	ViewData["StructuredData"] = new Dictionary<string, object?>
+	{
+		["@context"] = "https://schema.org",
+		["@type"] = "FAQPage",
+		["mainEntity"] = Model.Select(item => new Dictionary<string, object?>
+		{
+			["@type"] = "Question",
+			["name"] = item.Question,
+			["acceptedAnswer"] = new Dictionary<string, object?>
+			{
+				["@type"] = "Answer",
+				["text"] = System.Net.WebUtility.HtmlDecode(System.Text.RegularExpressions.Regex.Replace(item.Answer ?? string.Empty, "<[^>]+>", " ")).Trim()
+			}
+		}).ToArray()
+	};
 
 }
 <main class="page-content">
@@ -12,10 +28,10 @@
 			<div class="row">
 				<div class="lg:w-2/3">
 					<div class="table-cell lg:h-125 md:h-100 sm:h-87.5 h-75 align-middle pt-17.5 pb-5 xl:ps-17.5 max-md:text-center">
-						<h1 class="2xxl:text-7xl xl:text-6xxl md:text-[48px] text-4xl font-bold mb-1.25 leading-[1.2] break-word !text-white wow fadeInUp" data-wow-delay="0.2s" data-wow-duration="0.8s">SSS</h1>
+						<h1 class="2xxl:text-7xl xl:text-6xxl md:text-[48px] text-4xl font-bold mb-1.25 leading-[1.2] break-word !text-white wow fadeInUp" data-wow-delay="0.2s" data-wow-duration="0.8s">Diyetisyen SSS</h1>
 						<nav class="wow fadeInUp" data-wow-delay="0.4s" data-wow-duration="0.8s">
 							<ul class="inline-block rounded-5xl lg:py-2.5 py-1.5 lg:px-7.5 px-5 bg-white shadow-breadcrumb">
-								<li class="inline-block lg:text-base text-sm font-normal capitalize text-primary"><a asp-controller="Hpme" asp-action="Index">Anasayfa</a></li>
+							<li class="inline-block lg:text-base text-sm font-normal capitalize text-primary"><a asp-controller="Home" asp-action="Index">Anasayfa</a></li>
 								<li class="inline-block lg:text-base text-sm font-normal capitalize text-primary pl-2 relative before:content-['\f101'] before:float-left before:text-primary before:font-bold before:font-['Font_Awesome_5_Free'] before:text-sm before:pr-3 before:top-0.5 before:relative">SSS</li>
 							</ul>
 						</nav>
@@ -46,7 +62,7 @@
 				<div class="2xl:w-5/12 lg:w-1/2 w-full mb-7.5">
 					<div class="relative wow fadeInUp" data-wow-delay="1.0s" data-wow-duration="0.8s">
 						<div class="rounded-2xl relative overflow-hidden">
-							<img src="images/about/sss.png" alt="" class="w-full">
+							<img src="images/about/sss.png" alt="Beslenme danışmanlığı hakkında sık sorulan sorular" loading="lazy" class="w-full">
 						</div>
 					</div>
 				</div>

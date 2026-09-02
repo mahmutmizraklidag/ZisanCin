@@ -3,9 +3,13 @@
 @using System.Globalization
 @model HomePageVm
 @{
-    ViewData["Title"] = string.IsNullOrEmpty(DataRequestModel.SiteSetting.MetaTitle) ? "Anasayfa" : DataRequestModel.SiteSetting.MetaTitle;
-    ViewData["MetaDescription"] = string.IsNullOrEmpty(DataRequestModel.SiteSetting.MetaDescription) ? "Anasayfa Zişan CİN" : DataRequestModel.SiteSetting.MetaDescription;
+    ViewData["Title"] = "Bayraklı Diyetisyen";
+    ViewData["FullTitle"] = "Bayraklı Diyetisyen Zişan Cin | İzmir Beslenme Danışmanlığı";
+    ViewData["MetaDescription"] = "İzmir Bayraklı'da Diyetisyen Zişan Cin ile kişiye özel, bilimsel ve sürdürülebilir yüz yüze veya online beslenme danışmanlığı alın.";
     ViewData["MetaKeywords"] = string.IsNullOrEmpty(DataRequestModel.SiteSetting.Keywords) ? "Anasayfa Zişan CİN" : DataRequestModel.SiteSetting.Keywords;
+    ViewData["CanonicalPath"] = "/";
+    ViewData["OgImage"] = string.IsNullOrWhiteSpace(Model.Slider?.Image) ? "/images/about/hakkimizda.png" : $"/img/{Model.Slider.Image}";
+    ViewData["PreloadImage"] = string.IsNullOrWhiteSpace(Model.Slider?.Image) ? "/images/hero-banner/banner-1.webp" : $"~/img/{Model.Slider.Image}";
     var trCulture = new CultureInfo("tr-TR");
 }
 <main class="page-content">
@@ -43,7 +47,7 @@
                     </div>
                     <div class="md:w-1/2 w-full">
                         <div class="2xxl:ml-7.5 2xxl:w-180 2xl:w-162.5 xl:w-145 lg:w-120 sm:w-92.5 w-75 max-md:mx-auto">
-                            <img src="img/@Model.Slider.Image" alt="@Model.Slider.Title">
+                            <img src="img/@Model.Slider.Image" alt="Bayraklı Diyetisyen Zişan Cin" fetchpriority="high">
                         </div>
                     </div>
                 </div>
@@ -90,7 +94,7 @@
                 <div class="lg:w-1/2 w-full mb-12.5">
                     <div class="2xl:pr-5 lg:pr-7.5 lg:pl-21.25 relative">
                         <div class="rounded-full z-1 lg:border-[10px] border-[5px] border-light relative overflow-hidden max-lg:mx-auto lg:w-auto md:w-115 sm:w-87.5 w-57.5">
-                            <img src="img/@Model.About.HomeImage" alt="" class="rounded-full">
+                            <img src="img/@Model.About.HomeImage" alt="Diyetisyen Zişan Cin" loading="lazy" class="rounded-full">
                         </div>
                         <div class="absolute top-1/2 left-1/2 h-auto 2xl:w-187.5 xl:w-152.5 lg:w-115 md:w-155 sm:w-117.5 w-82.5 xl:ml-10 lg:ml-12.5 md:ml-5 ml-2.5 2xl:-mt-2.5 animate-circleWrapper">
                             <img src="images/about/bg.png" alt="">
@@ -207,7 +211,7 @@
                         <div class="xl:w-1/3 md:w-1/2 w-full mb-7.5 wow fadeInUp">
                             <div class="rounded-xxl h-full relative flex flex-col bg-white duration-700 box-hover [.box-hover.active]:bg-primary">
                                 <div class="relative overflow-hidden rounded-t-xxl">
-                                    <img src="img/@item.Image"
+                                    <img src="img/@item.Image" loading="lazy"
                                          alt="@item.Title"
                                          style="width:100%; height:315px; object-fit:cover; object-position:center -90px; display:block;" />
                                 </div>
@@ -536,7 +540,7 @@
                          data-wow-duration="0.8s">
                         <div class="relative z-1 p-5 filter drop-shadow-[0_0_12.5px_rgba(var(--secondary-rgb),0.07)] h-full duration-200 after:bg-white after:absolute after:size-full after:top-0 after:left-0 after:-z-1 after:mask-[url(../images/bg02.svg)] after:mask-position-[right_bottom] after:rounded-3xl after:rounded-ee-none hover:-translate-y-2 group">
                             <div class="rounded-xxl h-62.5 mb-3.75 overflow-hidden relative before:absolute before:top-0 before:-left-[75%] before:z-0 before:block before:w-1/2 before:h-full before:skew-x-[-25deg] before:bg-linear-(--img-hover-gradient) group-hover:before:animate-dzShine">
-                                <img src="img/@item.Image" alt="" class="size-full object-cover">
+                                <img src="img/@item.Image" alt="@item.Title" loading="lazy" class="size-full object-cover">
                             </div>
                             <div class="p-2.5">
                                 <h3 class="xl:text-2xl text-xl font-semibold mb-2">

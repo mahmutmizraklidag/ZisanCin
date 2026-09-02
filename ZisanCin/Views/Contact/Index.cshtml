@@ -1,7 +1,16 @@
 ﻿@{
-	ViewData["Title"] = "İletişim";
-	ViewData["MetaDescription"] = "Diyetisyen Zişan CİN iletişim";
+	ViewData["Title"] = "Bayraklı Diyetisyen İletişim";
+	ViewData["MetaDescription"] = "Bayraklı Diyetisyen Zişan Cin'e ulaşın. İzmir Bayraklı'daki ofis adresi, telefon ve randevu iletişim bilgilerini görüntüleyin.";
 	ViewData["MetaKeywords"] = "Diyetisyen Zişan CİN iletişim";
+	ViewData["CanonicalPath"] = "/iletisim";
+	ViewData["StructuredData"] = new Dictionary<string, object?>
+	{
+		["@context"] = "https://schema.org",
+		["@type"] = "ContactPage",
+		["name"] = "Bayraklı Diyetisyen İletişim",
+		["url"] = "https://diyetcin.com/iletisim",
+		["mainEntity"] = new Dictionary<string, object?> { ["@id"] = "https://diyetcin.com/#business" }
+	};
 	var reCaptchaSiteKey = ViewBag.ReCaptchaSiteKey as string;
 }
 <style>

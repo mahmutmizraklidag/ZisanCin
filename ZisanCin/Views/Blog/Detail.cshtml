@@ -3,9 +3,27 @@
 @{
 	var site = DataRequestModel.SiteSetting;
 
-	ViewData["Title"] = Model?.MetaTitle ?? "Blog";
-	ViewData["MetaDescription"] = Model?.MetaDescription ?? site?.MetaDescription ?? "Blog";
+	var plainDescription = System.Net.WebUtility.HtmlDecode(System.Text.RegularExpressions.Regex.Replace(Model?.Description ?? string.Empty, "<[^>]+>", " ")).Trim();
+	ViewData["Title"] = !string.IsNullOrWhiteSpace(Model?.MetaTitle) ? Model.MetaTitle : Model?.Title ?? "Diyetisyen Blogu";
+	ViewData["MetaDescription"] = !string.IsNullOrWhiteSpace(Model?.MetaDescription) ? Model.MetaDescription : (plainDescription.Length > 155 ? plainDescription[..152] + "..." : plainDescription);
 	ViewData["MetaKeywords"] = Model?.Keywords ?? site?.Keywords ?? "Blog";
+	ViewData["CanonicalPath"] = $"/blog/{Model?.Slug}";
+	ViewData["OgType"] = "article";
+	ViewData["OgImage"] = string.IsNullOrWhiteSpace(Model?.Image) ? "/images/about/hakkimizda.png" : $"/img/{Model.Image}";
+	ViewData["StructuredData"] = new Dictionary<string, object?>
+	{
+		["@context"] = "https://schema.org",
+		["@type"] = "BlogPosting",
+		["headline"] = Model?.Title,
+		["description"] = ViewData["MetaDescription"],
+		["datePublished"] = Model?.CreatedAt.ToString("yyyy-MM-dd"),
+		["dateModified"] = Model?.CreatedAt.ToString("yyyy-MM-dd"),
+		["mainEntityOfPage"] = $"https://diyetcin.com/blog/{Model?.Slug}",
+		["image"] = string.IsNullOrWhiteSpace(Model?.Image) ? "https://diyetcin.com/images/about/hakkimizda.png" : $"https://diyetcin.com/img/{Model.Image}",
+		["author"] = new Dictionary<string, object?> { ["@id"] = "https://diyetcin.com/#zisan-cin" },
+		["publisher"] = new Dictionary<string, object?> { ["@id"] = "https://diyetcin.com/#business" },
+		["inLanguage"] = "tr-TR"
+	};
 	var trCulture = new CultureInfo("tr-TR");
 }
 <main class="page-content sm:pt-21.5 pt-16">
@@ -29,7 +47,7 @@
 						</ul>
 					</div>
 					<div class="sm:rounded-3xl rounded-xxl relative overflow-hidden">
-						<img loading="lazy" src="@Url.Content("~/img/"+ Model.Image)" alt="img" class="size-full object-cover">
+						<img loading="lazy" src="@Url.Content("~/img/"+ Model.Image)" alt="@Model.Title" class="size-full object-cover">
 					</div>
 				</div>
 				<div class="mb-15 w-full">

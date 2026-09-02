@@ -1,24 +1,32 @@
 ﻿@model PdfWrite
-@{
-    var site = DataRequestModel.SiteSetting;
-
-    ViewData["Title"] = Model?.MetaTitle ?? "Yazılar";
-    ViewData["MetaDescription"] = Model?.MetaDescription ?? site?.MetaDescription ?? "Yazılar";
-    ViewData["MetaKeywords"] = Model?.MetaKeywords ?? site?.Keywords ?? "Yazılar";
-}
 @using System.Text.Json
 
 @{
     ViewData["Title"] = !string.IsNullOrWhiteSpace(Model?.MetaTitle)
         ? Model.MetaTitle
-        : (!string.IsNullOrWhiteSpace(Model?.Name) ? Model.Name : "Hizmet Detayları");
+        : (!string.IsNullOrWhiteSpace(Model?.Name) ? Model.Name : "Diyetisyen Yazıları");
+    ViewData["MetaDescription"] = !string.IsNullOrWhiteSpace(Model?.MetaDescription)
+        ? Model.MetaDescription
+        : $"Diyetisyen Zişan Cin'in {Model?.Name} başlıklı bilgilendirici yazısını okuyun.";
+    ViewData["MetaKeywords"] = Model?.MetaKeywords;
+    ViewData["CanonicalPath"] = $"/yazilar/{Model?.Slug}";
+    ViewData["StructuredData"] = new Dictionary<string, object?>
+    {
+        ["@context"] = "https://schema.org",
+        ["@type"] = "DigitalDocument",
+        ["name"] = Model?.Name,
+        ["description"] = ViewData["MetaDescription"],
+        ["url"] = $"https://diyetcin.com/yazilar/{Model?.Slug}",
+        ["inLanguage"] = "tr-TR",
+        ["author"] = new Dictionary<string, object?> { ["@id"] = "https://diyetcin.com/#zisan-cin" }
+    };
 
     var pdfUrl = !string.IsNullOrWhiteSpace(Model?.PdfFİlePath)
         ? Url.Content(Model.PdfFİlePath)
         : "";
 
     var pdfUrlJson = JsonSerializer.Serialize(pdfUrl);
-    var pageTitle = !string.IsNullOrWhiteSpace(Model?.Name) ? Model.Name : "Hizmet Detayları";
+    var pageTitle = !string.IsNullOrWhiteSpace(Model?.Name) ? Model.Name : "Diyetisyen Yazıları";
 }
 
 <style>

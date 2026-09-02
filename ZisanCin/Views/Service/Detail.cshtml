@@ -2,9 +2,22 @@
 @{
 	var site = DataRequestModel.SiteSetting;
 
-	ViewData["Title"] = Model?.MetaTitle ?? "Hizmetlerimiz";
-	ViewData["MetaDescription"] = Model?.MetaDescription ?? site?.MetaDescription ?? "Hizmetlerimiz";
+	ViewData["Title"] = !string.IsNullOrWhiteSpace(Model?.MetaTitle) ? Model.MetaTitle : $"{Model?.Title} | Beslenme Danışmanlığı";
+	ViewData["MetaDescription"] = !string.IsNullOrWhiteSpace(Model?.MetaDescription) ? Model.MetaDescription : $"Diyetisyen Zişan Cin'den {Model?.Title?.ToLowerInvariant()} hizmeti hakkında bilgi alın. Bayraklı, İzmir ve online danışmanlık seçeneklerini keşfedin.";
 	ViewData["MetaKeywords"] = Model?.Keywords ?? site?.Keywords ?? "Hizmetlerimiz";
+	ViewData["CanonicalPath"] = $"/hizmetlerimiz/{Model?.Slug}";
+	ViewData["OgImage"] = string.IsNullOrWhiteSpace(Model?.Image) ? "/images/about/hakkimizda.png" : $"/img/{Model.Image}";
+	ViewData["StructuredData"] = new Dictionary<string, object?>
+	{
+		["@context"] = "https://schema.org",
+		["@type"] = "Service",
+		["name"] = Model?.Title,
+		["description"] = System.Net.WebUtility.HtmlDecode(System.Text.RegularExpressions.Regex.Replace(Model?.Description ?? string.Empty, "<[^>]+>", " ")).Trim(),
+		["url"] = $"https://diyetcin.com/hizmetlerimiz/{Model?.Slug}",
+		["image"] = string.IsNullOrWhiteSpace(Model?.Image) ? "https://diyetcin.com/images/about/hakkimizda.png" : $"https://diyetcin.com/img/{Model.Image}",
+		["provider"] = new Dictionary<string, object?> { ["@id"] = "https://diyetcin.com/#business" },
+		["areaServed"] = new[] { "Bayraklı", "İzmir", "Türkiye" }
+	};
 }
 
 <style>

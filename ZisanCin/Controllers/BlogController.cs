@@ -21,6 +21,9 @@ namespace ZisanCin.Controllers
         public IActionResult Detail(string slug)
         {
             var blog = _context.Blogs.FirstOrDefault(b => b.Slug == slug);
+            if (blog is null)
+                return NotFound();
+
             return View(blog);
         }
     }

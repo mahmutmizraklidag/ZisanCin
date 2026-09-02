@@ -15,6 +15,9 @@ namespace ZisanCin.Controllers
         public IActionResult Index(string slug)
         {
             var pdfWrite = _context.PdfWrites.FirstOrDefault(p => p.Slug == slug);
+            if (pdfWrite is null)
+                return NotFound();
+
             return View(pdfWrite);
         }
     }

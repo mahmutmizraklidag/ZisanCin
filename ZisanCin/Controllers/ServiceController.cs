@@ -22,6 +22,9 @@ namespace ZisanCin.Controllers
         public IActionResult Detail(string slug)
         {
             var service = _context.Services.FirstOrDefault(s => s.Slug == slug);
+            if (service is null)
+                return NotFound();
+
             return View(service);
         }
     }

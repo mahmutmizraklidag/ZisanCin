@@ -1,8 +1,27 @@
 ﻿@model IEnumerable<Service>
 @{
-	ViewData["Title"] = "Hizmetler";
-	ViewData["MetaDescription"] = "Diyetisyen Zişan CİN Hizmetler";
+	ViewData["Title"] = "Beslenme Danışmanlığı Hizmetleri";
+	ViewData["MetaDescription"] = "Bayraklı Diyetisyen Zişan Cin'in yüz yüze, online ve kurumsal beslenme danışmanlığı hizmetlerini inceleyin; size uygun desteği seçin.";
 	ViewData["MetaKeywords"] = "Diyetisyen Zişan CİN Hizmetler";
+	ViewData["CanonicalPath"] = "/hizmetlerimiz";
+	ViewData["StructuredData"] = new Dictionary<string, object?>
+	{
+		["@context"] = "https://schema.org",
+		["@type"] = "CollectionPage",
+		["name"] = "Beslenme Danışmanlığı Hizmetleri",
+		["url"] = "https://diyetcin.com/hizmetlerimiz",
+		["mainEntity"] = new Dictionary<string, object?>
+		{
+			["@type"] = "ItemList",
+			["itemListElement"] = Model.Select((item, index) => new Dictionary<string, object?>
+			{
+				["@type"] = "ListItem",
+				["position"] = index + 1,
+				["name"] = item.Title,
+				["url"] = $"https://diyetcin.com/hizmetlerimiz/{item.Slug}"
+			}).ToArray()
+		}
+	};
 
 }
 <main class="page-content">
@@ -70,8 +89,7 @@
 						<div class="xl:w-1/3 md:w-1/2 w-full mb-7.5 wow fadeInUp">
 							<div class="rounded-xxl h-full relative flex flex-col bg-white duration-700 box-hover [.box-hover.active]:bg-primary">
 								<div class="relative overflow-hidden rounded-t-xxl" style="height:315px;">
-									<img src="img/@item.Image"
-										 alt="@item.Title"
+									<img src="img/@item.Image" alt="@item.Title" loading="lazy"
 										 style="width:100%; height:315px; object-fit:cover; object-position:center -90px; display:block;" />
 								</div>
 

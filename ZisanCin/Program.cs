@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using ZisanCin.Data;
 using ZisanCin.Entities;
@@ -17,6 +18,17 @@ builder.Services.Configure<GoogleReCaptchaSettings>(
     builder.Configuration.GetSection("GoogleReCaptcha"));
 
 builder.Services.AddHttpClient();
+builder.Services.AddResponseCompression(options =>
+{
+    options.EnableForHttps = true;
+    options.Providers.Add<BrotliCompressionProvider>();
+    options.Providers.Add<GzipCompressionProvider>();
+});
+builder.Services.AddRouting(options =>
+{
+    options.LowercaseUrls = true;
+    options.AppendTrailingSlash = false;
+});
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -47,7 +59,22 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
+app.UseResponseCompression();
+app.UseStaticFiles(new StaticFileOptions
+{
+    OnPrepareResponse = context =>
+    {
+        context.Context.Response.Headers.CacheControl = "public,max-age=2592000";
+    }
+});
+
+app.Use(async (context, next) =>
+{
+    if (context.Request.Path.StartsWithSegments("/admin", StringComparison.OrdinalIgnoreCase))
+        context.Response.Headers["X-Robots-Tag"] = "noindex, nofollow, noarchive";
+
+    await next();
+});
 
 app.UseRouting();
 

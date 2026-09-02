@@ -4,9 +4,26 @@
 @using System.Net
 
 @{
-	ViewData["Title"] = "Blog";
-	ViewData["MetaDescription"] = "Diyetisyen Zişan CİN Son Yazılar";
+	ViewData["Title"] = "Diyetisyen Blogu";
+	ViewData["MetaDescription"] = "Diyetisyen Zişan Cin'in sağlıklı beslenme, kilo yönetimi ve güncel beslenme bilimi üzerine hazırladığı uzman yazılarını okuyun.";
 	ViewData["MetaKeywords"] = "Diyetisyen Zişan CİN Son Yazılar";
+	ViewData["CanonicalPath"] = "/blog";
+	ViewData["StructuredData"] = new Dictionary<string, object?>
+	{
+		["@context"] = "https://schema.org",
+		["@type"] = "Blog",
+		["name"] = "Diyetisyen Zişan Cin Blogu",
+		["url"] = "https://diyetcin.com/blog",
+		["inLanguage"] = "tr-TR",
+		["publisher"] = new Dictionary<string, object?> { ["@id"] = "https://diyetcin.com/#business" },
+		["blogPost"] = Model.Select(item => new Dictionary<string, object?>
+		{
+			["@type"] = "BlogPosting",
+			["headline"] = item.Title,
+			["url"] = $"https://diyetcin.com/blog/{item.Slug}",
+			["datePublished"] = item.CreatedAt.ToString("yyyy-MM-dd")
+		}).ToArray()
+	};
 
 	var trCulture = new CultureInfo("tr-TR");
 }
@@ -16,7 +33,7 @@
 		<div class="row">
 			<div class="lg:w-2/3">
 				<div class="table-cell lg:h-125 md:h-100 sm:h-87.5 h-75 align-middle pt-17.5 pb-5 xl:ps-17.5 max-md:text-center">
-					<h1 class="2xxl:text-7xl xl:text-6xxl md:text-[48px] text-4xl font-bold mb-1.25 leading-[1.2] break-word !text-white wow fadeInUp" data-wow-delay="0.2s" data-wow-duration="0.8s">Merak Ettikleriniz</h1>
+					<h1 class="2xxl:text-7xl xl:text-6xxl md:text-[48px] text-4xl font-bold mb-1.25 leading-[1.2] break-word !text-white wow fadeInUp" data-wow-delay="0.2s" data-wow-duration="0.8s">Diyetisyen Blogu</h1>
 					<nav class="wow fadeInUp" data-wow-delay="0.4s" data-wow-duration="0.8s">
 						<ul class="inline-block rounded-5xl lg:py-2.5 py-1.5 lg:px-7.5 px-5 bg-white shadow-breadcrumb">
 							<li class="inline-block lg:text-base text-sm font-normal capitalize text-primary"><a asp-controller="Home" asp-action="Index">Anasayfa</a></li>
@@ -63,7 +80,7 @@
 						<div class="xl:w-1/3 md:w-1/2 w-full mb-7.5 wow fadeInUp" data-wow-delay="0.2s" data-wow-duration="0.8s">
 							<div class="relative z-1 lg:p-7.5 p-5 h-full duration-200 bg-white rounded-3xl group">
 								<div class="rounded-xxl mb-6.25 sm:h-62.5 h-50 relative overflow-hidden before:absolute before:top-0 before:-left-[75%] before:z-0 before:block before:w-1/2 before:h-full before:skew-x-[-25deg] before:bg-linear-(--img-hover-gradient) group-hover:before:animate-dzShine">
-									<img src="img/@item.Image" alt="" class="size-full object-cover">
+									<img src="img/@item.Image" alt="@item.Title" loading="lazy" class="size-full object-cover">
 								</div>
 
 								<div class="relative">

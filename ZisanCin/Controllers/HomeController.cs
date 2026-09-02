@@ -17,6 +17,7 @@ namespace ZisanCin.Controllers
             _context = context;
         }
 
+        [HttpGet("")]
         public IActionResult Index()
         {
             var services = _context.Services.Where(s => s.IsHome).Take(3).OrderByDescending(b => b.Id).ToList();
